@@ -1,30 +1,28 @@
-'use client';
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { LogoFull } from '@/components/shared/logo';
-import { Button } from '@/components/ui/button';
+"use client";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { LogoFull } from "@/components/shared/logo";
+import { Button } from "@/components/ui/button";
 
 const LINKS = [
-    { label: 'Sobre', href: '#sobre' },
-    { label: 'Especialidades', href: '#especialidades' },
-    { label: 'Como Funciona', href: '#como-funciona' },
-    { label: 'Doações', href: '#doacoes' },
-    { label: 'Contato', href: '#contato' },
+    { label: "Sobre", href: "#sobre" },
+    { label: "Especialidades", href: "#especialidades" },
+    { label: "Como Funciona", href: "#como-funciona" },
+    { label: "Doações", href: "#doacoes" },
+    { label: "Contato", href: "#contato" },
 ];
 
 export function Navbar() {
     const [solid, setSolid] = useState(false);
     useEffect(() => {
         const onScroll = () => setSolid(window.scrollY > 48);
-        window.addEventListener('scroll', onScroll);
-        return () => window.removeEventListener('scroll', onScroll);
+        window.addEventListener("scroll", onScroll);
+        return () => window.removeEventListener("scroll", onScroll);
     }, []);
     return (
         <nav
             className={`fixed top-0 left-0 right-0 z-[300] transition-[background,box-shadow] ${
-                solid
-                    ? 'bg-white shadow-[0_1px_0_var(--color-border-soft)'
-                    : ''
+                solid ? "bg-white shadow-[0_1px_0_var(--color-border-soft)" : ""
             }`}
         >
             <div className="wrap">

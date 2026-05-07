@@ -16,24 +16,24 @@ import { Footer } from "@/components/landing/footer";
 import { DoacaoModal } from "@/components/landing/doacao-modal";
 
 export default function HomePage() {
-  return (
-    <>
-      <Navbar />
-      <HeroCarousel />
-      <StatsBar />
-      <QuemSomos />
-      <ComoFunciona />
-      <Especialidades />
-      <PlataformaSection />
-      <Parceiros />
-      <Sobre />
-      <Depoimentos />
-      <MVV />
-      <FAQ />
-      <Doacoes />
-      <Contato />
-      <Footer />
-      <DoacaoModal />
-    </>
-  );
+    return (
+        <>
+            <Navbar />
+            <HeroCarousel />
+            <StatsBar />
+            <QuemSomos />
+            <ComoFunciona />
+            <Especialidades />
+            <PlataformaSection />
+            <Parceiros />
+            <Sobre />
+            <Depoimentos />
+            <MVV />
+            <FAQ />
+            <Doacoes />
+            <Contato />
+            <Footer />
+            <DoacaoModal />
+        </>
+    );
 }
