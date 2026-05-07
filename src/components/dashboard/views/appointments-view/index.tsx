@@ -4,7 +4,7 @@ import Image from "next/image";
 import { CheckCircle, Volume2, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useQueue } from "@/stores/queue";
+import { useQueue } from "@/shared/stores/queue";
 
 export function AppointmentsView() {
     const items = useQueue((s) => s.items);

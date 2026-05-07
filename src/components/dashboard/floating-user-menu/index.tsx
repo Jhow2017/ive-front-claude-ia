@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { User, Settings, Bell, ArrowRight, LogOut } from "lucide-react";
-import { useAuth, profileForRole } from "@/stores/auth";
+import { useAuth, profileForRole } from "@/shared/stores/auth";
 
 export function FloatingUserMenu() {
     const router = useRouter();

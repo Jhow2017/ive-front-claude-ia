@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardSub } from "@/components/
 import { Badge } from "@/components/ui/badge";
 import { AvatarIlus } from "@/components/shared/avatar-ilus";
 import { ConsultasBarChart, ReceitaAreaChart, FreqLineChart } from "@/components/dashboard/charts";
-import { useAuth } from "@/stores/auth";
+import { useAuth } from "@/shared/stores/auth";
 
 const FAM_METRICS = [
     { l: "Próxima sessão", v: "29 abr", d: "Ter · 14h00", cls: "up", delta: "Confirmada" },

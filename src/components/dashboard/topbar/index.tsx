@@ -11,8 +11,8 @@ import {
     Calendar,
     CheckCircle,
 } from "lucide-react";
-import { PAGE_TITLES } from "@/lib/nav";
-import { useUI } from "@/stores/ui";
+import { PAGE_TITLES } from "@/shared/lib/nav";
+import { useUI } from "@/shared/stores/ui";
 
 const NOTIFS = [
     {

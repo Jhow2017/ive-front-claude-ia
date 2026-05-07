@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Monitor } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LogoMark } from "@/components/shared/logo";
-import { useQueue } from "@/stores/queue";
+import { useQueue } from "@/shared/stores/queue";
 
 export function PanelView() {
     const items = useQueue((s) => s.items);

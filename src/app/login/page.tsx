@@ -9,7 +9,7 @@ import { ArrowRight } from "lucide-react";
 import { LogoMark } from "@/components/shared/logo";
 import { Button } from "@/components/ui/button";
 import { Input, FormField } from "@/components/ui/input";
-import { useAuth, type Role } from "@/stores/auth";
+import { useAuth, type Role } from "@/shared/stores/auth";
 
 const TABS: { k: Role; l: string; placeholder: string }[] = [
     { k: "admin", l: "Admin", placeholder: "admin@iverde.com.br" },

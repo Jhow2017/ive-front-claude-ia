@@ -7,7 +7,7 @@ import { QrCode, CreditCard, Receipt, Heart } from "lucide-react";
 import { Dialog, DialogHeader } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input, FormField } from "@/components/ui/input";
-import { useUI } from "@/stores/ui";
+import { useUI } from "@/shared/stores/ui";
 
 const PIX_KEY = "pix@institutoverde-esperanca.org.br";
 const PRESETS = [30, 50, 100, 200];

@@ -5,10 +5,10 @@ import { usePathname } from "next/navigation";
 import { ChevronLeft, ChevronDown } from "lucide-react";
 import { LogoMark } from "@/components/shared/logo";
 import { NavIcon } from "../nav-icon";
-import { getNav, type NavGroup } from "@/lib/nav";
-import { useAuth, profileForRole } from "@/stores/auth";
-import { useUI } from "@/stores/ui";
-import { cn } from "@/lib/utils";
+import { getNav, type NavGroup } from "@/shared/lib/nav";
+import { useAuth, profileForRole } from "@/shared/stores/auth";
+import { useUI } from "@/shared/stores/ui";
+import { cn } from "@/shared/lib/utils";
 
 export function Sidebar() {
     const role = useAuth((s) => s.role);

@@ -1,4 +1,4 @@
-import type { Role } from "@/stores/auth";
+import type { Role } from "@/shared/stores/auth";
 
 export interface NavChild {
     id: string;

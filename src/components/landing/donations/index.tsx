@@ -1,7 +1,7 @@
 "use client";
 import { Users, Zap, Activity, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useUI } from "@/stores/ui";
+import { useUI } from "@/shared/stores/ui";
 
 const STATS = [
     { Ic: Users, v: "47", l: "crianças atendidas via programa social em 2024" },

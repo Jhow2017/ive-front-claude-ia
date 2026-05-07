@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogHeader, DialogFooter } from "@/components/ui/dialog";
 import { AvatarIlus } from "@/components/shared/avatar-ilus";
-import { useAuth } from "@/stores/auth";
+import { useAuth } from "@/shared/stores/auth";
 
 const DAYS = [
     { d: "Seg", dt: "27", today: false },

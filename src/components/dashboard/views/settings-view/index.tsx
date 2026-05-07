@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Mail, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useAuth, profileForRole } from "@/stores/auth";
+import { useAuth, profileForRole } from "@/shared/stores/auth";
 
 const VARS = ["{nome_paciente}", "{data}", "{hora}", "{profissional}", "{especialidade}", "{sala}"];
 
