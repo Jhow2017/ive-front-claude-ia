@@ -1,19 +1,19 @@
 import { Navbar } from "@/components/landing/navbar";
 import { HeroCarousel } from "@/components/landing/hero-carousel";
 import { StatsBar } from "@/components/landing/stats-bar";
-import { QuemSomos } from "@/components/landing/quem-somos";
-import { ComoFunciona } from "@/components/landing/como-funciona";
-import { Especialidades } from "@/components/landing/especialidades";
-import { PlataformaSection } from "@/components/landing/plataforma";
-import { Parceiros } from "@/components/landing/parceiros";
-import { Sobre } from "@/components/landing/sobre";
-import { Depoimentos } from "@/components/landing/depoimentos";
+import { WhoWeAre } from "@/components/landing/who-we-are";
+import { HowItWorks } from "@/components/landing/how-it-works";
+import { Specialties } from "@/components/landing/specialties";
+import { PlatformSection } from "@/components/landing/platform";
+import { Partners } from "@/components/landing/partners";
+import { About } from "@/components/landing/about";
+import { Testimonials } from "@/components/landing/testimonials";
 import { MVV } from "@/components/landing/mvv";
 import { FAQ } from "@/components/landing/faq";
-import { Doacoes } from "@/components/landing/doacoes";
-import { Contato } from "@/components/landing/contato";
+import { Donations } from "@/components/landing/donations";
+import { Contact } from "@/components/landing/contact";
 import { Footer } from "@/components/landing/footer";
-import { DoacaoModal } from "@/components/landing/doacao-modal";
+import { DonationModal } from "@/components/landing/donation-modal";
 
 export default function HomePage() {
     return (
@@ -21,19 +21,19 @@ export default function HomePage() {
             <Navbar />
             <HeroCarousel />
             <StatsBar />
-            <QuemSomos />
-            <ComoFunciona />
-            <Especialidades />
-            <PlataformaSection />
-            <Parceiros />
-            <Sobre />
-            <Depoimentos />
+            <WhoWeAre />
+            <HowItWorks />
+            <Specialties />
+            <PlatformSection />
+            <Partners />
+            <About />
+            <Testimonials />
             <MVV />
             <FAQ />
-            <Doacoes />
-            <Contato />
+            <Donations />
+            <Contact />
             <Footer />
-            <DoacaoModal />
+            <DonationModal />
         </>
     );
 }
