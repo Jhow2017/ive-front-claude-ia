@@ -28,7 +28,7 @@ export function Navbar({ solid: forceSolid = false }: { solid?: boolean }) {
             }`}
         >
             <div className="wrap">
-                <div className="flex items-center h-68px gap-9">
+                <div className="flex items-center h-17 gap-9">
                     <LogoFull dark />
                     <ul className="hidden md:flex gap-7 list-none flex-1">
                         {LINKS.map((l) => (
