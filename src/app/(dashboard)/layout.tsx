@@ -1,7 +1,7 @@
 "use client";
 import { Sidebar } from "@/components/dashboard/sidebar";
 import { Topbar } from "@/components/dashboard/topbar";
-import { FloatingUserMenu } from "@/components/dashboard/floating-user-menu";
+import { FloatingRoleSwitcher } from "@/components/dashboard/floating-role-switcher";
 import { BottomNav } from "@/components/dashboard/bottom-nav";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -15,7 +15,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 </div>
             </div>
             <BottomNav />
-            <FloatingUserMenu />
+            <FloatingRoleSwitcher />
         </div>
     );
 }
