@@ -3,6 +3,7 @@
 
 @theme inline {
     --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
     --color-g50: #f0faf3;
     --color-g100: #d9f0e1;
@@ -22,6 +23,10 @@
     --color-warn: #f59e0b;
     --color-info: #3b82f6;
     --color-purple: #7c3aed;
+    --color-amber: #f59e0b;
+    --color-rose: #e11d48;
+    --color-sky: #0284c7;
+    --color-violet: #7c3aed;
 
     /* shadcn tokens */
     --radius: 0.625rem;

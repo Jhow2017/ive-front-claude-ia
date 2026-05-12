@@ -5,24 +5,26 @@ import { LogoFull } from "@/components/shared/logo";
 import { Button } from "@/components/ui/button";
 
 const LINKS = [
-    { label: "Sobre", href: "#sobre" },
-    { label: "Especialidades", href: "#especialidades" },
-    { label: "Como Funciona", href: "#como-funciona" },
-    { label: "Doações", href: "#doacoes" },
-    { label: "Contato", href: "#contato" },
+    { label: "Sobre", href: "/#sobre" },
+    { label: "Especialidades", href: "/#especialidades" },
+    { label: "Como Funciona", href: "/#como-funciona" },
+    { label: "Doações", href: "/#doacoes" },
+    { label: "Transparência", href: "/transparency" },
+    { label: "Contato", href: "/#contato" },
 ];
 
-export function Navbar() {
-    const [solid, setSolid] = useState(false);
+export function Navbar({ solid: forceSolid = false }: { solid?: boolean }) {
+    const [scrolled, setScrolled] = useState(false);
     useEffect(() => {
-        const onScroll = () => setSolid(window.scrollY > 48);
+        const onScroll = () => setScrolled(window.scrollY > 48);
         window.addEventListener("scroll", onScroll);
         return () => window.removeEventListener("scroll", onScroll);
     }, []);
+    const solid = forceSolid || scrolled;
     return (
         <nav
             className={`fixed top-0 left-0 right-0 z-[300] transition-[background,box-shadow] ${
-                solid ? "bg-white shadow-[0_1px_0_var(--color-border-soft)" : ""
+                solid ? "bg-white shadow-[0_1px_0_var(--color-border-soft)]" : ""
             }`}
         >
             <div className="wrap">
@@ -31,12 +33,12 @@ export function Navbar() {
                     <ul className="hidden md:flex gap-7 list-none flex-1">
                         {LINKS.map((l) => (
                             <li key={l.label}>
-                                <a
+                                <Link
                                     href={l.href}
                                     className="text-sm font-medium text-(--color-muted) hover:text-(--color-text) transition-colors no-underline"
                                 >
                                     {l.label}
-                                </a>
+                                </Link>
                             </li>
                         ))}
                     </ul>
