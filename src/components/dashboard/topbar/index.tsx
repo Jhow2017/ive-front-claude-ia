@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { PAGE_TITLES } from "@/shared/lib/nav";
 import { useUI } from "@/shared/stores/ui";
+import { UserMenu } from "./user-menu";
 
 const NOTIFS = [
     {
@@ -146,6 +147,7 @@ export function Topbar() {
                         </div>
                     )}
                 </div>
+                <UserMenu />
             </div>
         </div>
     );

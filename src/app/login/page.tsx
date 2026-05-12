@@ -58,22 +58,6 @@ export default function LoginPage() {
                 <p className="text-sm text-(--color-muted) mb-6">
                     Entre com sua conta para continuar.
                 </p>
-                <div className="flex bg-(--color-bg) rounded-lg p-0.5 mb-5 gap-0.5">
-                    {TABS.map((t) => (
-                        <button
-                            key={t.k}
-                            type="button"
-                            onClick={() => setTab(t.k)}
-                            className={`flex-1 py-2 text-[13px] font-semibold rounded-md transition-all ${
-                                tab === t.k
-                                    ? "bg-white text-(--color-text) shadow-sm"
-                                    : "text-(--color-muted)"
-                            }`}
-                        >
-                            {t.l}
-                        </button>
-                    ))}
-                </div>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-3.5">
                     <FormField label="E-mail">
                         <Input

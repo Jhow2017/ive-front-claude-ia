@@ -184,4 +184,7 @@ export const PAGE_TITLES: Record<string, string> = {
     "/triage": "Triagem / Recepção",
     "/panel": "Painel da TV",
     "/appointments": "Meu Atendimento",
+    "/profile": "Meu Perfil",
+    "/change-password": "Trocar Senha",
+    "/help": "Ajuda e Suporte",
 };

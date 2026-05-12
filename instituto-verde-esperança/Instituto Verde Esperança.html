@@ -1,0 +1,1893 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instituto Verde Esperança</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --g50:#f0faf3;--g100:#d9f0e1;--g200:#aadbbf;--g500:#259a43;--g600:#1e7d37;--g700:#175f2a;
+      --bg:#f6f8f6;--white:#fff;--border:#e3eae4;--text:#0f1a10;--muted:#627065;
+      --f:'Plus Jakarta Sans',sans-serif;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:var(--f);background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+    .wrap{max-width:1216px;margin:0 auto;padding:0 40px}
+
+    /* ── ANIMATIONS ── */
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+    @keyframes floatSlow{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+    @keyframes bounce{0%,100%{transform:translateY(0)}40%{transform:translateY(-18px)}60%{transform:translateY(-8px)}}
+    @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+    @keyframes spinSlow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.7;transform:scale(.92)}}
+    @keyframes wiggle{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+    @keyframes wave{0%,100%{transform:rotate(0deg) translateX(0)}25%{transform:rotate(8deg) translateX(2px)}75%{transform:rotate(-6deg) translateX(-2px)}}
+    @keyframes drift{0%,100%{transform:translate(0,0)}33%{transform:translate(6px,-8px)}66%{transform:translate(-4px,5px)}}
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes blink{0%,90%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+    @keyframes scaleIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+
+    /* ── NAVBAR ── */
+    .nav{position:fixed;top:0;left:0;right:0;z-index:300;transition:background .25s,box-shadow .25s}
+    .nav.solid{background:var(--white);box-shadow:0 1px 0 var(--border)}
+    .nav-inner{display:flex;align-items:center;height:68px;gap:36px}
+    .nav-links{display:flex;gap:28px;list-style:none;flex:1}
+    .nav-links a{font-size:14px;font-weight:500;color:var(--muted);text-decoration:none;transition:color .15s}
+    .nav-links a:hover{color:var(--text)}
+    .nav-btns{display:flex;gap:8px;align-items:center}
+
+    /* ── BUTTONS ── */
+    .btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:8px;font-family:var(--f);font-size:14px;font-weight:600;cursor:pointer;transition:all .15s;text-decoration:none;border:none;line-height:1}
+    .btn-primary{background:var(--g500);color:#fff}.btn-primary:hover{background:var(--g600);transform:translateY(-1px);box-shadow:0 4px 14px rgba(37,154,67,.3)}
+    .btn-ghost{background:transparent;color:var(--text)}.btn-ghost:hover{background:var(--g50)}
+    .btn-outline{background:var(--white);color:var(--text);border:1px solid var(--border)}.btn-outline:hover{border-color:var(--g500);color:var(--g500)}
+    .btn-lg{padding:13px 24px;font-size:15px;border-radius:10px}
+    .btn-xl{padding:15px 28px;font-size:16px;border-radius:10px}
+
+    /* ── HERO ── */
+    .hero-stage{position:relative;overflow:hidden;margin-top:68px}
+    .hero-track{display:flex;transition:transform .7s cubic-bezier(.25,.46,.45,.94)}
+    .hero-slide{flex-shrink:0;width:100%;min-height:calc(100vh - 68px);display:flex;align-items:center;padding:56px 0 44px;position:relative;overflow:hidden}
+    .hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;position:relative;z-index:2;width:100%}
+    .hero-chip{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;padding:5px 12px;border-radius:999px;margin-bottom:18px;letter-spacing:.3px}
+    .chip-green{background:var(--g50);border:1px solid var(--g100);color:var(--g600)}
+    .chip-white{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);color:white}
+    .hero-h1{font-size:48px;font-weight:800;line-height:1.1;letter-spacing:-2px;margin-bottom:18px}
+    .hero-sub{font-size:16px;line-height:1.8;margin-bottom:28px;max-width:490px}
+    .hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+    .hero-stats{display:flex;gap:32px;margin-top:36px;padding-top:36px}
+    .hstat-val{font-size:22px;font-weight:800;letter-spacing:-.5px}
+    .hstat-lbl{font-size:11px;margin-top:1px}
+
+    /* carousel */
+    .c-dots{display:flex;gap:8px;justify-content:center;padding:24px 0;position:relative;z-index:3}
+    .c-dot{width:8px;height:8px;border-radius:999px;cursor:pointer;transition:all .28s}
+    .c-arr{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.1);transition:all .15s;z-index:10;border:none}
+    .c-arr-l{left:24px}.c-arr-r{right:24px}
+    .s1{background:var(--white)}.s1 .hero-h1{color:var(--text)}.s1 .hero-sub{color:var(--muted)}.s1 .hero-stats{border-top:1px solid var(--border)}.s1 .hstat-val{color:var(--text)}.s1 .hstat-lbl{color:var(--muted)}.s1 .c-arr{background:var(--white);border:1px solid var(--border);color:var(--muted)}.s1 .c-arr:hover{border-color:var(--g500);color:var(--g500)}.s1 .c-dot{background:rgba(37,154,67,.2)}.s1 .c-dot.on{width:28px;background:var(--g500)}
+    .s2{background:var(--g500)}.s2 .hero-h1{color:#fff}.s2 .hero-sub{color:rgba(255,255,255,.85)}.s2 .hero-stats{border-top:1px solid rgba(255,255,255,.2)}.s2 .hstat-val{color:#fff}.s2 .hstat-lbl{color:rgba(255,255,255,.65)}.s2 .btn-outline{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}.s2 .c-arr{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff}.s2 .c-arr:hover{background:rgba(255,255,255,.25)}.s2 .c-dot{background:rgba(255,255,255,.3)}.s2 .c-dot.on{width:28px;background:#fff}
+    .s3{background:#fef3e2}.s3 .hero-h1{color:var(--text)}.s3 .hero-sub{color:var(--muted)}.s3 .hero-stats{border-top:1px solid #f0ddb8}.s3 .hstat-val{color:var(--text)}.s3 .hstat-lbl{color:var(--muted)}.s3 .c-arr{background:var(--white);border:1px solid #e8d4a8;color:var(--muted)}.s3 .c-arr:hover{border-color:var(--g500);color:var(--g500)}.s3 .c-dot{background:rgba(37,154,67,.2)}.s3 .c-dot.on{width:28px;background:var(--g500)}
+
+    /* ── STATS BAR ── */
+    .statsbar{background:var(--g500);padding:48px 0}
+    .statsbar-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+    .sitem{text-align:center;padding:0 20px}
+    .sitem+.sitem{border-left:1px solid rgba(255,255,255,.18)}
+    .snum{font-size:38px;font-weight:800;color:#fff;letter-spacing:-1.5px}
+    .snum span{color:rgba(255,255,255,.55)}
+    .sdesc{font-size:13px;color:rgba(255,255,255,.65);margin-top:5px;line-height:1.5}
+
+    /* ── SECTIONS ── */
+    .sec{padding:96px 0;background:var(--bg)}
+    .sec-white{padding:96px 0;background:var(--white)}
+    .sec-green{padding:96px 0;background:var(--g50)}
+    .sec-dark-green{padding:96px 0;background:var(--g500)}
+    .sec-deepgreen{padding:96px 0;background:var(--g700)}
+    .sec-lbl{font-size:11px;font-weight:700;color:var(--g500);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:10px}
+    .sec-lbl-w{font-size:11px;font-weight:700;color:var(--g200);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:10px}
+    .sec-h2{font-size:38px;font-weight:800;letter-spacing:-1.2px;line-height:1.18;margin-bottom:16px}
+    .sec-h2-w{font-size:38px;font-weight:800;letter-spacing:-1.2px;line-height:1.18;margin-bottom:16px;color:#fff}
+    .sec-p{font-size:16px;color:var(--muted);line-height:1.75}
+    .sec-p-w{font-size:16px;color:rgba(255,255,255,.7);line-height:1.75}
+
+    /* ── QUEM SOMOS ── */
+    .qs-inner{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;margin-bottom:72px}
+    .qs-text p{font-size:15px;color:var(--muted);line-height:1.85;margin-bottom:16px}
+    .qs-text p:last-child{margin-bottom:0}
+    .qs-illus{position:relative;display:flex;align-items:center;justify-content:center}
+    .qs-illus-bg{position:absolute;width:260px;height:260px;border-radius:50%;background:var(--g100);opacity:.5;right:-20px;bottom:-20px}
+    .qs-illus-card{position:relative;z-index:1;background:white;border-radius:20px;border:1px solid var(--border);box-shadow:0 8px 32px rgba(37,154,67,.1);overflow:hidden;width:100%}
+    .qs-feats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+    .qs-feat{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:24px 20px;text-align:center;transition:box-shadow .18s}
+    .qs-feat:hover{box-shadow:0 6px 24px rgba(0,0,0,.07)}
+    .qs-feat-ico{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:22px}
+    .qs-feat-title{font-size:14px;font-weight:700;margin-bottom:8px}
+    .qs-feat-desc{font-size:12px;color:var(--muted);line-height:1.6}
+    /* ── PARCEIROS ── */
+    .parceiros-track-wrap{overflow:hidden;position:relative;margin-top:52px}
+    .parceiros-track-wrap::before,.parceiros-track-wrap::after{content:'';position:absolute;top:0;bottom:0;width:120px;z-index:2;pointer-events:none}
+    .parceiros-track-wrap::before{left:0;background:linear-gradient(to right,var(--white),transparent)}
+    .parceiros-track-wrap::after{right:0;background:linear-gradient(to left,var(--white),transparent)}
+    @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    .parceiros-track{display:flex;gap:0;animation:marquee 28s linear infinite;width:max-content}
+    .parceiros-track:hover{animation-play-state:paused}
+    .parceiro-item{display:flex;align-items:center;justify-content:center;padding:0 40px;flex-shrink:0;height:88px}
+    .parceiro-logo{opacity:.55;transition:opacity .2s;filter:grayscale(40%)}
+    .parceiro-logo:hover{opacity:1;filter:grayscale(0%)}
+
+    /* ── ESPECIALIDADES ── */
+    .esp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:52px}
+    .esp-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:26px;transition:all .18s;cursor:default}
+    .esp-card:hover{border-color:var(--g200);box-shadow:0 6px 24px rgba(37,154,67,.1);transform:translateY(-2px)}
+    .esp-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+    .esp-name{font-size:15px;font-weight:700;margin-bottom:6px}
+    .esp-desc{font-size:13px;color:var(--muted);line-height:1.6}
+
+    /* ── PLATFORM ── */
+    .plat-sec{background:#0e1810;padding:104px 0}
+    .plat-inner{display:grid;grid-template-columns:1fr 1.5fr;gap:88px;align-items:center}
+    .plat-lbl{font-size:11px;font-weight:700;color:var(--g500);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:10px}
+    .plat-h2{font-size:36px;font-weight:800;color:#fff;letter-spacing:-1px;line-height:1.2;margin-bottom:18px}
+    .plat-sub{font-size:15px;color:rgba(255,255,255,.5);line-height:1.75;margin-bottom:36px}
+    .plat-features{display:flex;flex-direction:column;gap:18px}
+    .pfeat{display:flex;gap:14px;align-items:flex-start}
+    .pfeat-ico{width:32px;height:32px;border-radius:8px;background:rgba(37,154,67,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .pfeat h4{font-size:14px;font-weight:600;color:#fff;margin-bottom:2px}
+    .pfeat p{font-size:13px;color:rgba(255,255,255,.45);line-height:1.55}
+    .dash-prev{background:#131f14;border-radius:16px;border:1px solid rgba(255,255,255,.07);overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.4)}
+    .dp-head{background:#0b130c;padding:13px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06)}
+    .dp-breadcrumb{font-size:11px;color:rgba(255,255,255,.35);font-weight:500}.dp-breadcrumb b{color:rgba(255,255,255,.7)}
+    .dp-acts{display:flex;gap:6px}
+    .dp-act{width:26px;height:26px;border-radius:6px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center}
+    .dp-layout{display:flex}
+    .dp-sidebar{width:168px;background:#0b130c;padding:14px 12px;border-right:1px solid rgba(255,255,255,.05);flex-shrink:0}
+    .dp-grp-lbl{font-size:9px;font-weight:700;color:rgba(255,255,255,.25);letter-spacing:1px;text-transform:uppercase;padding:0 8px;margin-bottom:4px;margin-top:12px}
+    .dp-grp-lbl:first-child{margin-top:0}
+    .dp-nav-item{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:6px;margin-bottom:1px;cursor:pointer}
+    .dp-nav-item.on{background:rgba(37,154,67,.12)}
+    .dp-nav-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.18);flex-shrink:0}
+    .dp-nav-item.on .dp-nav-dot{background:var(--g500)}
+    .dp-nav-txt{font-size:11px;color:rgba(255,255,255,.3)}
+    .dp-nav-item.on .dp-nav-txt{color:rgba(255,255,255,.85);font-weight:500}
+    .dp-content{flex:1;padding:16px;overflow:hidden;min-width:0}
+    .dp-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+    .dp-metric{background:#1a2419;border:1px solid rgba(255,255,255,.05);border-radius:8px;padding:11px 12px}
+    .dp-metric-lbl{font-size:9px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px}
+    .dp-metric-val{font-size:15px;font-weight:700;color:#fff}
+    .dp-metric-delta{font-size:9px;color:var(--g500);margin-top:1px;font-weight:500}
+    .dp-chart-card{background:#1a2419;border:1px solid rgba(255,255,255,.05);border-radius:8px;padding:12px;margin-bottom:12px}
+    .dp-chart-lbl{font-size:9px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px}
+    .dp-list-card{background:#1a2419;border:1px solid rgba(255,255,255,.05);border-radius:8px;padding:12px}
+    .dp-list-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+    .dp-list-row:last-child{border-bottom:none}
+    .dp-lr-name{font-size:11px;font-weight:500;color:rgba(255,255,255,.7)}
+    .dp-lr-time{font-size:9px;color:rgba(255,255,255,.25)}
+    .dp-lr-badge{background:rgba(37,154,67,.2);color:var(--g500);font-size:9px;font-weight:600;padding:2px 8px;border-radius:999px}
+
+    /* ── SOBRE ── */
+    .sobre-inner{display:grid;grid-template-columns:1fr 1fr;gap:88px;align-items:start}
+    .sobre-text p{font-size:15px;color:var(--muted);line-height:1.85;margin-bottom:18px}
+    .sobre-text p:last-child{margin-bottom:0}
+    .sobre-highlights{display:flex;flex-direction:column;gap:14px}
+    .shigh{padding:20px 22px;background:var(--g50);border-radius:12px;border:1px solid var(--g100)}
+    .shigh h4{font-size:14px;font-weight:700;margin-bottom:5px;color:var(--g700)}
+    .shigh p{font-size:13px;color:var(--muted);line-height:1.65}
+
+    /* ── DEPOIMENTOS CAROUSEL ── */
+    .depo-wrap{max-width:780px;margin:52px auto 0}
+    .depo-card-single{background:var(--white);border:1px solid var(--border);border-radius:18px;padding:44px 48px;box-shadow:0 4px 24px rgba(0,0,0,.06);position:relative;animation:scaleIn .3s ease}
+    .depo-quote-mark{position:absolute;top:28px;right:36px;font-size:80px;color:var(--g100);font-family:Georgia,serif;line-height:1;pointer-events:none;user-select:none}
+    .depo-avatar-row{display:flex;align-items:center;gap:16px;margin-bottom:24px}
+    .depo-av-ring{width:64px;height:64px;border-radius:50%;border:3px solid var(--g500);overflow:hidden;flex-shrink:0;background:var(--g50);display:flex;align-items:center;justify-content:center;position:relative}
+    .depo-verified{position:absolute;bottom:28px;left:68px;width:22px;height:22px;border-radius:50%;background:var(--g500);border:2px solid var(--white);display:flex;align-items:center;justify-content:center}
+    .depo-name{font-size:16px;font-weight:700}
+    .depo-role{font-size:13px;color:var(--muted);margin-top:2px}
+    .depo-text{font-size:16px;color:var(--text);line-height:1.85;font-style:italic}
+    .depo-nav{display:flex;gap:8px;justify-content:center;margin-top:28px}
+    .depo-dot{width:8px;height:8px;border-radius:999px;background:rgba(37,154,67,.2);cursor:pointer;transition:all .25s}
+    .depo-dot.on{width:28px;background:var(--g500)}
+    .depo-count{text-align:center;margin-top:24px;font-size:14px;color:var(--muted)}
+    .depo-count strong{color:var(--g600)}
+
+    /* ── MVV ── */
+    .mvv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px}
+    .mvv-card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:28px}
+    .mvv-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+    .mvv-txt{font-size:14px;color:rgba(255,255,255,.72);line-height:1.7}
+    .mvv-list{list-style:none;display:flex;flex-direction:column;gap:9px}
+    .mvv-list li{font-size:13px;color:rgba(255,255,255,.7);display:flex;align-items:flex-start;gap:8px;line-height:1.55}
+
+    /* ── FAQ ── */
+    .faq-wrap{max-width:720px;margin:52px auto 0}
+    .faq-item{border-bottom:1px solid var(--border)}
+    .faq-q{display:flex;justify-content:space-between;align-items:center;padding:20px 0;cursor:pointer;gap:16px;user-select:none}
+    .faq-q-txt{font-size:15px;font-weight:600}
+    .faq-chev{flex-shrink:0;color:var(--muted);transition:transform .2s}
+    .faq-chev.open{transform:rotate(180deg)}
+    .faq-a{font-size:14px;color:var(--muted);line-height:1.75;padding-bottom:20px}
+
+    /* ── DOAÇÕES ── */
+    .doa-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+    .doa-text p{font-size:15px;color:rgba(255,255,255,.75);line-height:1.85;margin-bottom:16px}
+    .doa-text strong{color:#fff}
+    .doa-stats{display:flex;flex-direction:column;gap:14px}
+    .doa-stat{display:flex;gap:16px;align-items:center;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:20px}
+    .doa-stat-ico{width:46px;height:46px;border-radius:11px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .doa-stat-val{font-size:22px;font-weight:800;letter-spacing:-.5px;color:#fff}
+    .doa-stat-lbl{font-size:12px;color:rgba(255,255,255,.6);margin-top:1px;line-height:1.5}
+
+    /* ── CONTATO ── */
+    .ctto-inner{display:grid;grid-template-columns:1fr 1fr;gap:72px}
+    .ctto-items{display:flex;flex-direction:column;gap:20px}
+    .ctto-item{display:flex;gap:14px;align-items:flex-start}
+    .ctto-ico{width:40px;height:40px;border-radius:10px;background:var(--g50);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .ctto-item h4{font-size:13px;font-weight:600;margin-bottom:2px}
+    .ctto-item p{font-size:14px;color:var(--muted)}
+    .fgroup label{display:block;font-size:12px;font-weight:600;color:var(--text);margin-bottom:5px}
+    .fgroup input,.fgroup select,.fgroup textarea{width:100%;padding:10px 13px;border:1px solid var(--border);border-radius:8px;font-family:var(--f);font-size:14px;color:var(--text);background:var(--white);outline:none;transition:border-color .15s;resize:vertical}
+    .fgroup input:focus,.fgroup select:focus,.fgroup textarea:focus{border-color:var(--g500);box-shadow:0 0 0 3px rgba(37,154,67,.08)}
+    .fgroup textarea{min-height:96px}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+    /* ── FOOTER ── */
+    .footer{background:var(--g700);padding:60px 0 32px}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+    .foot-logo-wrap{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+    .foot-logo-txt{font-size:15px;font-weight:800;color:#fff}
+    .foot-logo-txt em{color:var(--g200);font-style:normal}
+    .foot-desc{font-size:13px;color:rgba(255,255,255,.4);line-height:1.7}
+    .foot-col h4{font-size:12px;font-weight:600;color:#fff;margin-bottom:14px}
+    .foot-col ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+    .foot-col a{font-size:13px;color:rgba(255,255,255,.4);text-decoration:none;transition:color .15s}
+    .foot-col a:hover{color:#fff}
+    .foot-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:22px;display:flex;justify-content:space-between}
+    .foot-copy{font-size:12px;color:rgba(255,255,255,.25)}
+
+    /* ── MODAL ── */
+    .modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:600;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);animation:fadeInUp .2s ease}
+    .modal-box{background:var(--white);border-radius:20px;padding:36px;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,.2);animation:scaleIn .25s ease}
+    .modal-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px}
+    .modal-title{font-size:22px;font-weight:800;letter-spacing:-.5px}
+    .modal-sub{font-size:13px;color:var(--muted);margin-top:4px}
+    .modal-close{background:var(--bg);border:none;cursor:pointer;color:var(--muted);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .ptabs{display:flex;background:var(--bg);border-radius:10px;padding:3px;margin-bottom:24px;gap:2px}
+    .ptab{flex:1;padding:9px 4px;text-align:center;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;border-radius:8px;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:5px}
+    .ptab.on{background:var(--white);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.07)}
+    .valor-label{font-size:12px;font-weight:600;color:var(--text);margin-bottom:6px;display:block}
+    .valor-wrap{position:relative;margin-bottom:12px}
+    .valor-pfx{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:20px;font-weight:700;color:var(--muted);pointer-events:none}
+    .valor-inp{width:100%;padding:14px 14px 14px 52px;border:2px solid var(--border);border-radius:10px;font-family:var(--f);font-size:28px;font-weight:700;outline:none;transition:border-color .15s;color:var(--text)}
+    .valor-inp:focus{border-color:var(--g500);box-shadow:0 0 0 3px rgba(37,154,67,.08)}
+    .presets{display:flex;gap:6px;margin-bottom:22px;flex-wrap:wrap}
+    .preset{padding:7px 14px;background:var(--g50);border:1.5px solid var(--g100);color:var(--g600);font-size:13px;font-weight:700;border-radius:8px;cursor:pointer;transition:all .15s;font-family:var(--f)}
+    .preset:hover,.preset.on{background:var(--g500);color:#fff;border-color:var(--g500)}
+    .qr-box{width:140px;height:140px;border-radius:16px;background:var(--bg);border:2px dashed var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 16px;gap:8px}
+    .copy-row{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:11px 14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+    .pix-key{font-size:12px;color:var(--muted);font-family:monospace;word-break:break-all;line-height:1.4}
+    .copy-btn{font-size:12px;font-weight:700;color:var(--g500);cursor:pointer;background:none;border:none;padding:0;white-space:nowrap;margin-left:12px;flex-shrink:0;font-family:var(--f)}
+    .cc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+    .cc-full{grid-column:span 2}
+    .boleto-code{font-size:11px;color:var(--muted);font-family:monospace;letter-spacing:.5px;line-height:1.6;margin:10px 0;word-break:break-all}
+    .success-ic{width:64px;height:64px;border-radius:50%;background:var(--g50);display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+
+    /* ── TWEAKS ── */
+    .tweaks-panel{position:fixed;bottom:24px;right:24px;width:300px;background:var(--white);border:1px solid var(--border);border-radius:16px;box-shadow:0 8px 36px rgba(0,0,0,.13);z-index:500;padding:22px;font-family:var(--f)}
+    .tp-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+    .tp-title{font-size:14px;font-weight:700}
+    .tp-close{background:none;border:none;cursor:pointer;color:var(--muted);display:flex;align-items:center;padding:0}
+    .tp-label{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px}
+    .tp-option{display:flex;gap:10px;align-items:flex-start;padding:11px 13px;border-radius:10px;cursor:pointer;margin-bottom:5px;border:1.5px solid transparent;transition:all .15s}
+    .tp-option.sel{background:var(--g50);border-color:var(--g500)}
+    .tp-radio{width:16px;height:16px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+    .tp-option.sel .tp-radio{border-color:var(--g500)}
+    .tp-rdot{width:8px;height:8px;border-radius:50%;background:var(--g500)}
+    .tp-opt-lbl{font-size:12px;font-weight:700;color:var(--text);margin-bottom:2px}
+    .tp-opt-sub{font-size:11px;color:var(--muted);line-height:1.45}
+    .tp-preview{display:flex;gap:3px;margin-top:5px}
+    .tp-swatch{width:14px;height:14px;border-radius:3px}
+
+    @media(max-width:960px){
+      .hero-inner,.plat-inner,.sobre-inner,.doa-inner,.ctto-inner{grid-template-columns:1fr}
+      .esp-grid,.mvv-grid{grid-template-columns:1fr 1fr}
+      .env-grid{grid-template-columns:1fr 1fr}
+      .env-card-wide{grid-column:span 1}
+      .statsbar-grid,.footer-grid{grid-template-columns:1fr 1fr}
+      .hero-h1{font-size:34px}
+      .c-arr{display:none}
+    }
+  </style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const {useState,useEffect,useRef,useCallback} = React;
+
+/* ─── Icon System ────────────────────────────── */
+function Ic({n,s=16,c='currentColor'}){
+  const m={
+    arr:'M5 12h14M12 5l7 7-7 7',
+    chevL:'M15 18l-6-6 6-6',chevR:'M9 18l6-6-6-6',chevD:'M6 9l6 6 6-6',
+    x:'M18 6L6 18M6 6l12 12',
+    check:'M20 6L9 17l-5-5',
+    heart:'M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z',
+    bar:'M18 20V10M12 20V4M6 20v-6',
+    calendar:'M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z',
+    msg:'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z',
+    file:'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2l6 6',
+    users:'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75',
+    zap:'M13 2L3 14h9l-1 8 10-12h-9l1-8z',
+    brain:'M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-1.03-4.79A3 3 0 0 1 5 11a3 3 0 0 1 .78-2A2.5 2.5 0 0 1 9.5 2zM14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 1.03-4.79A3 3 0 0 0 19 11a3 3 0 0 0-.78-2A2.5 2.5 0 0 0 14.5 2z',
+    mic:'M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3zM19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8',
+    hand:'M18 11V6a2 2 0 0 0-4 0M14 10V4a2 2 0 0 0-4 0v2M10 10.5V6a2 2 0 0 0-4 0v8M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15',
+    user:'M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2|circle:cx=12cy=7r=4',
+    book:'M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z',
+    activity:'M22 12h-4l-3 9L9 3l-3 9H2',
+    bell:'M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0',
+    settings:'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z',
+    phone:'M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.58 3.49 2 2 0 0 1 3.55 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.81a16 16 0 0 0 6.29 6.29l1.56-1.56a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z',
+    mail:'M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zM22 6l-10 7L2 6',
+    pin:'M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z|circle:cx=12cy=10r=3',
+    clock:'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM12 6v6l4 2',
+    qr:'M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM17 14h1M17 17h4M14 17h1M14 20h1M20 17v4',
+    cc:'M1 4h22v16H1zM1 10h22M6 16h2M10 16h6',
+    receipt:'M4 2v20l4-3 4 3 4-3 4 3V2',
+  };
+  const d=m[n]||'';
+  return(
+    <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      {d.split('|').map((p,i)=>{
+        if(p.startsWith('circle:')){const a={};p.slice(7).replace(/([a-z]+)=([^,]+)/g,(_,k,v)=>{a[k]=v});return <circle key={i} {...a}/>;}
+        return <path key={i} d={p}/>;
+      })}
+    </svg>
+  );
+}
+
+/* ─── LOGO SVG ───────────────────────────────────
+   Simbolismo: folha/infinito verde + criança + espectro de cores (pontos)
+   representa diversidade, crescimento, neurodiversidade
+*/
+function LogoMark({size=36}){
+  return(
+    <svg width={size} height={size} viewBox="0 0 48 48" fill="none">
+      {/* fundo */}
+      <rect width="48" height="48" rx="13" fill="#259a43"/>
+      {/* símbolo infinito estilizado como folha dupla */}
+      <path d="M10 24 C10 18 15 13 20 13 C23 13 25 15.5 24 19 C23 22.5 21 24 24 24 C27 24 29 25.5 28 29 C27 32.5 23 35 20 35 C15 35 10 30 10 24 Z" fill="rgba(255,255,255,.25)"/>
+      <path d="M38 24 C38 18 33 13 28 13 C25 13 23 15.5 24 19 C25 22.5 27 24 24 24 C21 24 19 25.5 20 29 C21 32.5 25 35 28 35 C33 35 38 30 38 24 Z" fill="rgba(255,255,255,.18)"/>
+      {/* criança estilizada no centro */}
+      <circle cx="24" cy="19" r="3.5" fill="white" opacity=".95"/>
+      <path d="M19.5 26 Q21 23.5 24 23.5 Q27 23.5 28.5 26 L29 31 Q26.5 32.5 24 32.5 Q21.5 32.5 19 31 Z" fill="white" opacity=".9"/>
+      {/* braços abertos — acolhimento */}
+      <path d="M19.5 26 Q16 24 14 25.5" stroke="white" strokeWidth="2" strokeLinecap="round" opacity=".9"/>
+      <path d="M28.5 26 Q32 24 34 25.5" stroke="white" strokeWidth="2" strokeLinecap="round" opacity=".9"/>
+      {/* pontos coloridos — espectro do autismo */}
+      <circle cx="8" cy="12" r="2.5" fill="#fbbf24"/>
+      <circle cx="40" cy="12" r="2" fill="#f472b6"/>
+      <circle cx="8" cy="38" r="2" fill="#60a5fa"/>
+      <circle cx="40" cy="38" r="2.5" fill="#a78bfa"/>
+      <circle cx="24" cy="6" r="1.5" fill="#fde68a"/>
+    </svg>
+  );
+}
+
+function LogoFull({dark=true}){
+  return(
+    <div style={{display:'flex',alignItems:'center',gap:10}}>
+      <LogoMark size={36}/>
+      <div>
+        <div style={{fontSize:14,fontWeight:800,color:dark?'var(--text)':'white',letterSpacing:'-.3px',lineHeight:1.1}}>
+          Instituto <span style={{color:'var(--g500)'}}>Verde</span>
+        </div>
+        <div style={{fontSize:11,fontWeight:600,color:dark?'var(--muted)':'rgba(255,255,255,.65)',letterSpacing:.3,lineHeight:1.1}}>Esperança</div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── ILUSTRAÇÕES ANIMADAS ───────────────────────── */
+
+/* Criança pintando — com animações */
+function IllusPainting(){
+  return(
+    <svg viewBox="0 0 380 320" style={{width:'100%',maxWidth:380,overflow:'visible'}}>
+      <style>{`
+        .brush-arm{transform-origin:218px 192px;animation:wave 2.5s ease-in-out infinite}
+        .paint-drop{animation:bounce 1.8s ease-in-out infinite}
+        .star1{animation:pulse 2s ease-in-out infinite}
+        .star2{animation:pulse 2.5s ease-in-out infinite .5s}
+        .star3{animation:pulse 3s ease-in-out infinite 1s}
+        .canvas-shimmer{animation:pulse 3s ease-in-out infinite}
+        .kid-body{transform-origin:170px 230px;animation:floatSlow 4s ease-in-out infinite}
+        .block1{animation:bounce 2s ease-in-out infinite}
+        .block2{animation:bounce 2.2s ease-in-out infinite .3s}
+        .block3{animation:bounce 2.4s ease-in-out infinite .6s}
+      `}</style>
+      {/* canvas de pintura */}
+      <rect x="95" y="52" width="130" height="100" rx="6" fill="#fff" stroke="#d1fae5" strokeWidth="2" className="canvas-shimmer"/>
+      {/* tela do quadro */}
+      <circle cx="148" cy="88" r="20" fill="#fbbf24" opacity=".75"/>
+      <circle cx="182" cy="98" r="15" fill="#259a43" opacity=".8"/>
+      <path d="M118 125 Q148 102 178 118 Q205 132 220 112" stroke="#f472b6" strokeWidth="3" fill="none" strokeLinecap="round"/>
+      <rect x="108" y="72" width="28" height="8" rx="4" fill="#60a5fa" opacity=".6"/>
+      {/* cavalete */}
+      <line x1="95" y1="152" x2="80" y2="220" stroke="#9ca3af" strokeWidth="3" strokeLinecap="round"/>
+      <line x1="225" y1="152" x2="240" y2="220" stroke="#9ca3af" strokeWidth="3" strokeLinecap="round"/>
+      <line x1="160" y1="152" x2="160" y2="228" stroke="#9ca3af" strokeWidth="3" strokeLinecap="round"/>
+      <line x1="78" y1="192" x2="242" y2="192" stroke="#9ca3af" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="4 4"/>
+      {/* criança */}
+      <g className="kid-body">
+        {/* pernas */}
+        <rect x="148" y="268" width="18" height="34" rx="9" fill="#6ee7b7"/>
+        <rect x="170" y="268" width="18" height="34" rx="9" fill="#6ee7b7"/>
+        <rect x="143" y="294" width="26" height="10" rx="5" fill="#374151"/>
+        <rect x="166" y="294" width="26" height="10" rx="5" fill="#374151"/>
+        {/* corpo */}
+        <rect x="140" y="205" width="56" height="68" rx="14" fill="#fde68a"/>
+        {/* detalhes camisa */}
+        <path d="M140 225 h56" stroke="#fbbf24" strokeWidth="2" opacity=".4"/>
+        <path d="M140 242 h56" stroke="#fbbf24" strokeWidth="2" opacity=".4"/>
+        {/* bolso */}
+        <rect x="150" y="228" width="16" height="12" rx="4" fill="#fbbf24" opacity=".5"/>
+        {/* braço esq */}
+        <path d="M140 218 Q115 215 108 205" stroke="#fde68a" strokeWidth="14" strokeLinecap="round" fill="none"/>
+        <circle cx="107" cy="202" r="8" fill="#fcd34d"/>
+        {/* braço direito com pincel — animado */}
+        <g className="brush-arm">
+          <path d="M196 218 Q215 208 222 196" stroke="#fde68a" strokeWidth="14" strokeLinecap="round" fill="none"/>
+          <circle cx="222" cy="193" r="8" fill="#fcd34d"/>
+          {/* pincel */}
+          <line x1="226" y1="187" x2="240" y2="168" stroke="#92400e" strokeWidth="3" strokeLinecap="round"/>
+          <ellipse cx="242" cy="165" rx="5" ry="8" fill="#259a43" transform="rotate(-35 242 165)"/>
+        </g>
+        {/* cabeça */}
+        <circle cx="168" cy="193" r="26" fill="#fcd34d"/>
+        {/* cabelo */}
+        <path d="M142 188 Q150 162 168 167 Q186 162 194 188" fill="#92400e"/>
+        <path d="M142 188 Q138 178 143 168" fill="#92400e"/>
+        <path d="M194 188 Q198 178 193 168" fill="#92400e"/>
+        {/* olhos */}
+        <ellipse cx="160" cy="191" rx="3.5" ry="3.5" fill="#1f2937" style={{animation:'blink 4s ease-in-out infinite'}}/>
+        <ellipse cx="176" cy="191" rx="3.5" ry="3.5" fill="#1f2937" style={{animation:'blink 4s ease-in-out infinite .5s'}}/>
+        <circle cx="158.5" cy="189.5" r="1.2" fill="white"/>
+        <circle cx="174.5" cy="189.5" r="1.2" fill="white"/>
+        {/* sorriso */}
+        <path d="M160 200 Q168 207 176 200" stroke="#92400e" strokeWidth="2" fill="none" strokeLinecap="round"/>
+        {/* bochechas */}
+        <circle cx="154" cy="197" r="6" fill="#fca5a5" opacity=".35"/>
+        <circle cx="182" cy="197" r="6" fill="#fca5a5" opacity=".35"/>
+      </g>
+      {/* tinta caindo */}
+      <g className="paint-drop" style={{transformOrigin:'240px 158px'}}>
+        <ellipse cx="240" cy="158" rx="5" ry="7" fill="#259a43" opacity=".8"/>
+      </g>
+      {/* blocos no chão */}
+      <rect x="60" y="270" width="30" height="30" rx="5" fill="#fbbf24" className="block1"/>
+      <rect x="94" y="278" width="22" height="22" rx="4" fill="#f472b6" className="block2"/>
+      <rect x="258" y="272" width="26" height="26" rx="5" fill="#60a5fa" className="block3"/>
+      {/* estrelas decorativas */}
+      <text x="42" y="90" fontSize="18" fill="#fbbf24" opacity=".7" className="star1">✦</text>
+      <text x="298" y="78" fontSize="13" fill="#f472b6" opacity=".6" className="star2">✦</text>
+      <text x="310" y="200" fontSize="10" fill="#60a5fa" opacity=".5" className="star3">✦</text>
+      {/* pontos flutuantes — espectro */}
+      <circle cx="50" cy="160" r="6" fill="#a78bfa" opacity=".5" style={{animation:'drift 4s ease-in-out infinite'}}/>
+      <circle cx="322" cy="140" r="5" fill="#fbbf24" opacity=".45" style={{animation:'drift 5s ease-in-out infinite 1s'}}/>
+      <circle cx="40" cy="230" r="4" fill="#f472b6" opacity=".4" style={{animation:'float 3s ease-in-out infinite .5s'}}/>
+      <circle cx="330" cy="250" r="7" fill="#6ee7b7" opacity=".4" style={{animation:'float 4s ease-in-out infinite 1.5s'}}/>
+      {/* símbolo infinito — neurodiversidade (sutil) */}
+      <path d="M330 50 C330 44 337 38 344 38 C351 38 358 44 358 50 C358 56 352 62 345 62 C338 62 334 58 338 55 C342 52 348 52 344 50 C340 48 336 52 340 55 C344 58 350 62 357 62" stroke="#d1fae5" strokeWidth="2" fill="none" opacity=".8" style={{animation:'pulse 3s ease-in-out infinite'}}/>
+    </svg>
+  );
+}
+
+/* Criança lendo com terapeuta — cena de terapia */
+function IllusTherapy(){
+  return(
+    <svg viewBox="0 0 380 320" style={{width:'100%',maxWidth:380,overflow:'visible'}}>
+      <style>{`
+        .th-kid{transform-origin:120px 220px;animation:floatSlow 4.5s ease-in-out infinite}
+        .th-adult{transform-origin:255px 210px;animation:floatSlow 5s ease-in-out infinite .8s}
+        .th-book{animation:wiggle 3s ease-in-out infinite}
+        .th-star1{animation:pulse 2s ease-in-out infinite}
+        .th-star2{animation:pulse 2.8s ease-in-out infinite .7s}
+        .sparkle{animation:pulse 1.8s ease-in-out infinite}
+      `}</style>
+      {/* tapete colorido */}
+      <ellipse cx="190" cy="295" rx="155" ry="22" fill="#d1fae5" opacity=".4"/>
+      <ellipse cx="190" cy="295" rx="120" ry="16" fill="#d1fae5" opacity=".4"/>
+      {/* padrão tapete */}
+      <rect x="65" y="278" width="248" height="18" rx="9" fill="#a7f3d0" opacity=".3"/>
+      {/* livro grande */}
+      <g className="th-book" style={{transformOrigin:'175px 215px'}}>
+        <rect x="110" y="195" width="128" height="88" rx="8" fill="white" stroke="#d1fae5" strokeWidth="2"/>
+        <line x1="174" y1="195" x2="174" y2="283" stroke="#d1fae5" strokeWidth="2"/>
+        {/* páginas */}
+        <rect x="120" y="207" width="44" height="5" rx="2.5" fill="#d1fae5"/>
+        <rect x="120" y="218" width="36" height="4" rx="2" fill="#e5e7eb"/>
+        <rect x="120" y="228" width="40" height="4" rx="2" fill="#e5e7eb"/>
+        <rect x="120" y="238" width="32" height="4" rx="2" fill="#e5e7eb"/>
+        <circle cx="145" cy="258" r="12" fill="#fde68a" opacity=".7"/>
+        <rect x="184" y="207" width="42" height="5" rx="2.5" fill="#d1fae5"/>
+        <rect x="184" y="218" width="36" height="4" rx="2" fill="#e5e7eb"/>
+        <rect x="184" y="228" width="40" height="4" rx="2" fill="#e5e7eb"/>
+        <rect x="184" y="238" width="30" height="4" rx="2" fill="#e5e7eb"/>
+        <circle cx="206" cy="258" r="10" fill="#fca5a5" opacity=".6"/>
+      </g>
+
+      {/* CRIANÇA — lado esquerdo */}
+      <g className="th-kid">
+        {/* pernas */}
+        <path d="M108 260 Q98 278 90 290" stroke="#fde68a" strokeWidth="16" strokeLinecap="round" fill="none"/>
+        <path d="M132 260 Q130 278 128 290" stroke="#fde68a" strokeWidth="16" strokeLinecap="round" fill="none"/>
+        {/* corpo */}
+        <rect x="96" y="200" width="48" height="64" rx="13" fill="#c7d2fe"/>
+        {/* braço apontando para o livro */}
+        <path d="M144 215 Q162 210 174 210" stroke="#c7d2fe" strokeWidth="11" strokeLinecap="round" fill="none"/>
+        {/* braço esq */}
+        <path d="M96 215 Q80 210 76 218" stroke="#c7d2fe" strokeWidth="11" strokeLinecap="round" fill="none"/>
+        {/* cabeça */}
+        <circle cx="120" cy="190" r="24" fill="#fcd34d"/>
+        {/* rabo de cavalo */}
+        <path d="M97 178 Q85 165 88 155 Q90 145 82 148" stroke="#92400e" strokeWidth="5" fill="none" strokeLinecap="round"/>
+        <path d="M97 183 Q88 183 82 178" fill="#92400e" stroke="#92400e" strokeWidth="4"/>
+        <path d="M97 178 Q110 155 120 162 Q130 155 143 178" fill="#92400e"/>
+        {/* olhos */}
+        <ellipse cx="113" cy="190" rx="3.2" ry="3.2" fill="#1f2937" style={{animation:'blink 5s ease-in-out infinite'}}/>
+        <ellipse cx="127" cy="190" rx="3.2" ry="3.2" fill="#1f2937" style={{animation:'blink 5s ease-in-out infinite .8s'}}/>
+        <circle cx="111.5" cy="188.5" r="1.1" fill="white"/>
+        <circle cx="125.5" cy="188.5" r="1.1" fill="white"/>
+        {/* sorriso animado */}
+        <path d="M113 199 Q120 205 127 199" stroke="#92400e" strokeWidth="2" fill="none" strokeLinecap="round"/>
+        <circle cx="107" cy="196" r="5" fill="#fca5a5" opacity=".35"/>
+        <circle cx="133" cy="196" r="5" fill="#fca5a5" opacity=".35"/>
+        {/* óculos */}
+        <rect x="107" y="185" width="11" height="8" rx="4" fill="none" stroke="#6b7280" strokeWidth="1.5"/>
+        <rect x="121" y="185" width="11" height="8" rx="4" fill="none" stroke="#6b7280" strokeWidth="1.5"/>
+        <line x1="118" y1="189" x2="121" y2="189" stroke="#6b7280" strokeWidth="1.5"/>
+      </g>
+
+      {/* TERAPEUTA — lado direito */}
+      <g className="th-adult">
+        {/* pernas */}
+        <path d="M248 265 Q242 280 238 292" stroke="#6ee7b7" strokeWidth="18" strokeLinecap="round" fill="none"/>
+        <path d="M268 265 Q272 280 276 292" stroke="#6ee7b7" strokeWidth="18" strokeLinecap="round" fill="none"/>
+        {/* saia/calça */}
+        <ellipse cx="258" cy="265" rx="24" ry="10" fill="#34d399" opacity=".4"/>
+        {/* corpo */}
+        <rect x="236" y="196" width="44" height="74" rx="13" fill="#34d399"/>
+        {/* jaleco/avental */}
+        <rect x="240" y="200" width="36" height="68" rx="11" fill="white" opacity=".2"/>
+        {/* braço apontando livro */}
+        <path d="M236 210 Q220 210 210 212" stroke="#34d399" strokeWidth="12" strokeLinecap="round" fill="none"/>
+        <circle cx="207" cy="212" r="7" fill="#a7f3d0"/>
+        {/* braço direito */}
+        <path d="M280 210 Q296 208 300 216" stroke="#34d399" strokeWidth="12" strokeLinecap="round" fill="none"/>
+        {/* cabeça */}
+        <circle cx="258" cy="186" r="26" fill="#fcd34d"/>
+        {/* cabelo coque */}
+        <path d="M232 178 Q240 155 258 160 Q276 155 284 178" fill="#1f2937"/>
+        <path d="M232 178 Q229 170 234 162" fill="#1f2937"/>
+        <path d="M248 158 Q258 148 268 158" fill="#1f2937"/>
+        {/* coque */}
+        <ellipse cx="258" cy="157" rx="10" ry="8" fill="#1f2937"/>
+        <circle cx="258" cy="150" r="6" fill="#1f2937"/>
+        {/* olhos adulto */}
+        <ellipse cx="250" cy="187" rx="3" ry="3" fill="#1f2937" style={{animation:'blink 4.5s ease-in-out infinite .3s'}}/>
+        <ellipse cx="266" cy="187" rx="3" ry="3" fill="#1f2937" style={{animation:'blink 4.5s ease-in-out infinite 1s'}}/>
+        <circle cx="248.5" cy="185.5" r="1" fill="white"/>
+        <circle cx="264.5" cy="185.5" r="1" fill="white"/>
+        {/* sorriso adulto */}
+        <path d="M251 196 Q258 202 265 196" stroke="#92400e" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
+        <circle cx="244" cy="193" r="5" fill="#fca5a5" opacity=".3"/>
+        <circle cx="272" cy="193" r="5" fill="#fca5a5" opacity=".3"/>
+        {/* brinco */}
+        <circle cx="232" cy="190" r="3" fill="#fbbf24"/>
+        <circle cx="284" cy="190" r="3" fill="#fbbf24"/>
+      </g>
+
+      {/* brinquedos sensoriais */}
+      <rect x="52" y="260" width="28" height="28" rx="6" fill="#fbbf24" style={{animation:'bounce 2s ease-in-out infinite'}} opacity=".9"/>
+      <text x="58" y="278" fontSize="11" fill="white" fontWeight="bold">A</text>
+      <rect x="304" y="262" width="26" height="26" rx="6" fill="#f472b6" style={{animation:'bounce 2.3s ease-in-out infinite .4s'}} opacity=".9"/>
+      <text x="309" y="279" fontSize="11" fill="white" fontWeight="bold">B</text>
+      {/* bolinha sensorial */}
+      <circle cx="75" cy="220" r="14" fill="#a78bfa" opacity=".7" style={{animation:'float 3s ease-in-out infinite'}}/>
+      <path d="M67 214 Q75 220 83 214" stroke="rgba(255,255,255,.4)" strokeWidth="2" fill="none"/>
+      <path d="M67 226 Q75 220 83 226" stroke="rgba(255,255,255,.4)" strokeWidth="2" fill="none"/>
+      {/* sparkles de conquista */}
+      <text x="160" y="175" fontSize="16" className="sparkle">✨</text>
+      <text x="200" y="168" fontSize="12" className="sparkle" style={{animationDelay:'.5s'}}>⭐</text>
+      {/* estrelas */}
+      <text x="35" y="95" fontSize="16" fill="#fbbf24" opacity=".7" className="th-star1">✦</text>
+      <text x="328" y="110" fontSize="11" fill="#f472b6" opacity=".55" className="th-star2">✦</text>
+      {/* pontos espectro */}
+      <circle cx="38" cy="155" r="6" fill="#60a5fa" opacity=".45" style={{animation:'drift 5s ease-in-out infinite'}}/>
+      <circle cx="340" cy="170" r="5" fill="#fbbf24" opacity=".4" style={{animation:'drift 4s ease-in-out infinite 1s'}}/>
+      <circle cx="345" cy="60" r="8" fill="#a78bfa" opacity=".35" style={{animation:'float 3.5s ease-in-out infinite .5s'}}/>
+      {/* símbolo infinito neurodiversidade */}
+      <path d="M290 52 C290 46 297 40 304 40 C311 40 318 46 318 52 C318 58 312 64 305 64 C298 64 294 60 298 57 C302 54 308 54 304 52 C300 50 296 54 300 57 C304 60 310 64 317 64" stroke="#d1fae5" strokeWidth="2.5" fill="none" opacity=".9" style={{animation:'pulse 3.5s ease-in-out infinite'}}/>
+    </svg>
+  );
+}
+
+/* Criança com blocos de letras — interação sensorial */
+function IllusBlocks(){
+  return(
+    <svg viewBox="0 0 380 320" style={{width:'100%',maxWidth:380,overflow:'visible'}}>
+      <style>{`
+        .bl-kid{transform-origin:190px 230px;animation:floatSlow 4s ease-in-out infinite}
+        .bl-b1{animation:bounce 1.9s ease-in-out infinite}
+        .bl-b2{animation:bounce 2.2s ease-in-out infinite .3s}
+        .bl-b3{animation:bounce 2.5s ease-in-out infinite .6s}
+        .bl-b4{animation:bounce 2s ease-in-out infinite .9s}
+        .bl-b5{animation:bounce 2.3s ease-in-out infinite 1.2s}
+        .bl-star{animation:pulse 2s ease-in-out infinite}
+        .bl-spiral{animation:spinSlow 12s linear infinite;transform-origin:345px 75px}
+      `}</style>
+      {/* sombra chão */}
+      <ellipse cx="190" cy="300" rx="130" ry="14" fill="#d1fae5" opacity=".4"/>
+      {/* TORRE DE BLOCOS */}
+      <rect x="228" y="220" width="44" height="44" rx="8" fill="#fbbf24" className="bl-b1"/>
+      <text x="250" y="247" fontSize="18" textAnchor="middle" fill="white" fontWeight="800">A</text>
+      <rect x="234" y="178" width="38" height="38" rx="7" fill="#f472b6" className="bl-b2"/>
+      <text x="253" y="202" fontSize="16" textAnchor="middle" fill="white" fontWeight="800">B</text>
+      <rect x="238" y="140" width="32" height="34" rx="6" fill="#60a5fa" className="bl-b3"/>
+      <text x="254" y="163" fontSize="14" textAnchor="middle" fill="white" fontWeight="800">C</text>
+      {/* bloco na mão */}
+      <rect x="103" y="185" width="34" height="34" rx="6" fill="#a78bfa" className="bl-b4" style={{transformOrigin:'120px 202px'}}/>
+      <text x="120" y="207" fontSize="14" textAnchor="middle" fill="white" fontWeight="800">D</text>
+      {/* bloco no chão */}
+      <rect x="88" y="264" width="36" height="36" rx="7" fill="#6ee7b7" className="bl-b5"/>
+      <text x="106" y="287" fontSize="16" textAnchor="middle" fill="#065f46" fontWeight="800">E</text>
+      {/* CRIANÇA */}
+      <g className="bl-kid">
+        {/* pernas sentadas */}
+        <path d="M175 268 Q165 285 148 295" stroke="#fde68a" strokeWidth="18" strokeLinecap="round" fill="none"/>
+        <path d="M205 268 Q215 285 232 295" stroke="#fde68a" strokeWidth="18" strokeLinecap="round" fill="none"/>
+        {/* corpo */}
+        <rect x="162" y="200" width="56" height="72" rx="14" fill="#fbbf24"/>
+        {/* listras */}
+        <path d="M162 220 h56M162 238 h56" stroke="#f59e0b" strokeWidth="1.5" opacity=".4"/>
+        {/* braço direito — segura bloco */}
+        <path d="M218 212 Q230 204 236 196" stroke="#fde68a" strokeWidth="13" strokeLinecap="round" fill="none"/>
+        {/* braço esq */}
+        <path d="M162 212 Q148 206 142 214" stroke="#fde68a" strokeWidth="13" strokeLinecap="round" fill="none"/>
+        <circle cx="140" cy="216" r="8" fill="#fcd34d"/>
+        {/* cabeça */}
+        <circle cx="190" cy="192" r="26" fill="#fcd34d"/>
+        {/* cabelo curto */}
+        <path d="M164 185 Q172 160 190 165 Q208 160 216 185" fill="#1f2937"/>
+        <path d="M164 185 Q161 175 166 166" fill="#1f2937"/>
+        <path d="M216 185 Q219 175 214 166" fill="#1f2937"/>
+        {/* olhos */}
+        <ellipse cx="182" cy="192" rx="3.5" ry="3.5" fill="#1f2937" style={{animation:'blink 3.5s ease-in-out infinite'}}/>
+        <ellipse cx="198" cy="192" rx="3.5" ry="3.5" fill="#1f2937" style={{animation:'blink 3.5s ease-in-out infinite .6s'}}/>
+        <circle cx="180.5" cy="190.5" r="1.2" fill="white"/>
+        <circle cx="196.5" cy="190.5" r="1.2" fill="white"/>
+        {/* sorriso */}
+        <path d="M182 202 Q190 210 198 202" stroke="#92400e" strokeWidth="2.2" fill="none" strokeLinecap="round"/>
+        {/* bochechas */}
+        <circle cx="175" cy="199" r="6" fill="#fca5a5" opacity=".35"/>
+        <circle cx="205" cy="199" r="6" fill="#fca5a5" opacity=".35"/>
+      </g>
+      {/* estrelas / conquista */}
+      <text x="258" y="128" fontSize="20" className="bl-star">🌟</text>
+      <text x="272" y="106" fontSize="14" className="bl-star" style={{animationDelay:'.5s'}}>✨</text>
+      {/* espiral decorativa */}
+      <g className="bl-spiral">
+        <path d="M345 60 C345 55 350 50 356 52 C362 54 362 62 356 64 C350 66 347 62 350 60 C352 57 356 57 358 60" stroke="#d1fae5" strokeWidth="2.5" fill="none"/>
+      </g>
+      {/* pontos espectro */}
+      {[{cx:42,cy:80,r:7,c:'#fbbf24',d:'float 3s ease-in-out infinite'},{cx:338,cy:220,r:6,c:'#f472b6',d:'float 4s ease-in-out infinite .8s'},{cx:48,cy:190,r:5,c:'#a78bfa',d:'drift 5s ease-in-out infinite'},{cx:340,cy:140,r:8,c:'#60a5fa',d:'drift 4.5s ease-in-out infinite .5s'},{cx:340,cy:50,r:5,c:'#6ee7b7',d:'float 3.5s ease-in-out infinite 1s'}].map((p,i)=>(
+        <circle key={i} cx={p.cx} cy={p.cy} r={p.r} fill={p.c} opacity=".45" style={{animation:p.d}}/>
+      ))}
+      <text x="38" y="65" fontSize="14" fill="#fbbf24" opacity=".7" className="bl-star">✦</text>
+      <text x="326" y="58" fontSize="10" fill="#f472b6" opacity=".55" className="bl-star">✦</text>
+      {/* infinito */}
+      <path d="M36 250 C36 244 43 238 50 238 C57 238 64 244 64 250 C64 256 58 262 51 262 C44 262 40 258 44 255 C48 252 54 252 50 250 C46 248 42 252 46 255 C50 258 56 262 63 262" stroke="#d1fae5" strokeWidth="2" fill="none" opacity=".7" style={{animation:'pulse 4s ease-in-out infinite'}}/>
+    </svg>
+  );
+}
+
+/* ─── QUEM SOMOS ────────────────────────────────── */
+function QuemSomos(){
+  const feats=[
+    {ico:'💚',bg:'#f0faf3',ic_bg:'#259a43',title:'Abordagem Humanizada',desc:'Cada atendimento é pensado com carinho, respeitando as necessidades e o tempo de cada criança.'},
+    {ico:'👥',bg:'#eff6ff',ic_bg:'#3b82f6',title:'Equipe Multidisciplinar',desc:'Profissionais especializados trabalhando juntos para o desenvolvimento integral da criança.'},
+    {ico:'🎓',bg:'#f5f3ff',ic_bg:'#7c3aed',title:'Metodologia Científica',desc:'Baseamos nossos atendimentos em evidências científicas e melhores práticas consolidadas.'},
+    {ico:'🏠',bg:'#fff7ed',ic_bg:'#ea580c',title:'Espaço Sensorial',desc:'Ambiente especialmente preparado para proporcionar conforto e estímulos adequados a cada criança.'},
+  ];
+  return(
+    <section className="sec-white" id="quem-somos">
+      <div className="wrap">
+        <div style={{textAlign:'center',maxWidth:560,margin:'0 auto 56px'}}>
+          <div className="sec-lbl">Sobre o Instituto Verde Esperança</div>
+          <h2 className="sec-h2">Um lugar onde cada criança é acolhida com amor, respeito e dedicação</h2>
+        </div>
+        <div className="qs-inner">
+          <div>
+            <div style={{fontSize:16,fontWeight:700,marginBottom:18,color:'var(--text)'}}>Quem Somos</div>
+            <div className="qs-text">
+              <p>O Instituto Verde Esperança nasceu do sonho de criar um espaço verdadeiramente acolhedor e especializado para crianças autistas e suas famílias. Fundado em 2021, somos uma instituição que combina excelência técnica com profundo respeito pela individualidade de cada criança.</p>
+              <p>Acreditamos que cada criança tem seu próprio ritmo, seus talentos únicos e um potencial infinito. Nossa missão é proporcionar um ambiente seguro, estimulante e acolhedor, onde cada pequeno passo é celebrado e cada conquista é motivo de orgulho.</p>
+              <p>Com uma equipe multidisciplinar altamente qualificada e apaixonada pelo que faz, oferecemos atendimento integrado que contempla as necessidades físicas, emocionais, cognitivas e sociais de cada criança, sempre em parceria com as famílias.</p>
+            </div>
+          </div>
+          <div className="qs-illus">
+            <div className="qs-illus-bg"/>
+            <div className="qs-illus-card">
+              <IllusTherapy/>
+            </div>
+          </div>
+        </div>
+        <div className="qs-feats">
+          {feats.map((f,i)=>(
+            <div key={i} className="qs-feat" style={{background:f.bg}}>
+              <div className="qs-feat-ico" style={{background:f.ic_bg}}>
+                <span style={{fontSize:22}}>{f.ico}</span>
+              </div>
+              <div className="qs-feat-title">{f.title}</div>
+              <div className="qs-feat-desc">{f.desc}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── PARCEIROS (marquee) ────────────────────────── */
+function ParceiroLogo({name,color,shape='rect'}){
+  const w=130,h=52;
+  if(shape==='round') return(
+    <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`}>
+      <rect x="1" y="1" width={w-2} height={h-2} rx="10" fill="none" stroke={color} strokeWidth="1.5"/>
+      <circle cx="26" cy={h/2} r="14" fill={color} opacity=".15"/>
+      <circle cx="26" cy={h/2} r="9" fill={color} opacity=".4"/>
+      <text x="48" y={h/2+5} fontSize="13" fontWeight="700" fill={color} fontFamily="Plus Jakarta Sans,sans-serif">{name}</text>
+    </svg>
+  );
+  if(shape==='badge') return(
+    <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`}>
+      <rect x="1" y="1" width={w-2} height={h-2} rx="24" fill={color} opacity=".1"/>
+      <text x={w/2} y={h/2+5} fontSize="13" fontWeight="800" fill={color} textAnchor="middle" fontFamily="Plus Jakarta Sans,sans-serif">{name}</text>
+    </svg>
+  );
+  if(shape==='icon') return(
+    <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`}>
+      <rect x="8" y="8" width={h-16} height={h-16} rx="8" fill={color} opacity=".2"/>
+      <rect x="14" y="14" width={h-28} height={h-28} rx="5" fill={color} opacity=".5"/>
+      <text x={h+8} y={h/2+5} fontSize="13" fontWeight="700" fill={color} fontFamily="Plus Jakarta Sans,sans-serif">{name}</text>
+    </svg>
+  );
+  return(
+    <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`}>
+      <text x={w/2} y={h/2-2} fontSize="11" fontWeight="600" fill={color} textAnchor="middle" fontFamily="Plus Jakarta Sans,sans-serif" opacity=".6">PARCEIRO</text>
+      <text x={w/2} y={h/2+12} fontSize="15" fontWeight="800" fill={color} textAnchor="middle" fontFamily="Plus Jakarta Sans,sans-serif">{name}</text>
+    </svg>
+  );
+}
+
+const PARTNERS=[
+  {name:'Clínica Vida',color:'#259a43',shape:'round'},
+  {name:'SaúdePlus',color:'#3b82f6',shape:'badge'},
+  {name:'NeuroCare',color:'#7c3aed',shape:'icon'},
+  {name:'FonoBrasil',color:'#ea580c',shape:'round'},
+  {name:'E.M. Prof. Pinheiro',color:'#0891b2',shape:'badge'},
+  {name:'Instituto Avançar',color:'#059669',shape:'icon'},
+  {name:'Unimed SP',color:'#16a34a',shape:'round'},
+  {name:'ABAutismo',color:'#dc2626',shape:'badge'},
+  {name:'Hapvida',color:'#2563eb',shape:'icon'},
+  {name:'Prefeitura SP',color:'#374151',shape:'round'},
+];
+
+function Parceiros(){
+  const items=[...PARTNERS,...PARTNERS];
+  return(
+    <section className="sec-white" id="parceiros">
+      <div className="wrap">
+        <div style={{textAlign:'center',maxWidth:480,margin:'0 auto'}}>
+          <div className="sec-lbl">Parceiros</div>
+          <h2 className="sec-h2">Quem caminha com a gente</h2>
+          <p className="sec-p">Clínicas, escolas, planos de saúde e organizações que compartilham o compromisso com o desenvolvimento de crianças autistas.</p>
+        </div>
+      </div>
+      <div className="parceiros-track-wrap" style={{marginTop:52}}>
+        <div className="parceiros-track">
+          {items.map((p,i)=>(
+            <div key={i} className="parceiro-item">
+              <div className="parceiro-logo"><ParceiroLogo {...p}/></div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="wrap">
+        <div style={{textAlign:'center',marginTop:40,padding:'28px 32px',background:'var(--g50)',border:'1px solid var(--g100)',borderRadius:14}}>
+          <div style={{fontSize:14,fontWeight:600,color:'var(--g700)',marginBottom:4}}>Quer ser parceiro do Instituto?</div>
+          <div style={{fontSize:13,color:'var(--muted)',marginBottom:16}}>Trabalhamos com clínicas, escolas e organizações que compartilham nossos valores.</div>
+          <button className="btn btn-outline" style={{borderColor:'var(--g500)',color:'var(--g500)'}}>Entrar em contato</button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── CENAS DE TERAPIA (mantidas para uso nos slides) */
+function SceneSensory(){
+  return(
+    <svg viewBox="0 0 480 320" className="env-scene">
+      <rect width="480" height="320" fill="#f0fdf4"/>
+      <rect width="480" height="120" y="200" fill="#dcfce7"/>
+      {/* janela */}
+      <rect x="340" y="30" width="100" height="110" rx="8" fill="#bae6fd"/>
+      <line x1="390" y1="30" x2="390" y2="140" stroke="#93c5fd" strokeWidth="1.5"/>
+      <line x1="340" y1="85" x2="440" y2="85" stroke="#93c5fd" strokeWidth="1.5"/>
+      <circle cx="370" cy="55" r="14" fill="#fde68a" opacity=".8"/>
+      <path d="M354 90 Q370 78 386 90 Q402 102 418 90" fill="#a7f3d0" opacity=".5"/>
+      {/* estante */}
+      <rect x="20" y="40" width="90" height="180" rx="6" fill="#e5e7eb"/>
+      <rect x="28" y="60" width="74" height="8" rx="3" fill="#fbbf24" opacity=".7"/>
+      <rect x="28" y="100" width="74" height="8" rx="3" fill="#f472b6" opacity=".6"/>
+      <rect x="28" y="140" width="74" height="8" rx="3" fill="#60a5fa" opacity=".6"/>
+      <rect x="28" y="180" width="74" height="8" rx="3" fill="#a78bfa" opacity=".6"/>
+      <rect x="34" y="68" width="12" height="28" rx="3" fill="#fbbf24"/>
+      <rect x="50" y="68" width="9" height="28" rx="3" fill="#f472b6"/>
+      <rect x="63" y="68" width="12" height="28" rx="3" fill="#60a5fa"/>
+      <rect x="34" y="108" width="10" height="28" rx="3" fill="#a78bfa"/>
+      <rect x="48" y="108" width="13" height="28" rx="3" fill="#6ee7b7"/>
+      {/* tapete */}
+      <ellipse cx="230" cy="288" rx="160" ry="24" fill="#bbf7d0" opacity=".5"/>
+      {/* círculos do tapete */}
+      <circle cx="230" cy="288" r="50" fill="none" stroke="#86efac" strokeWidth="3"/>
+      <circle cx="230" cy="288" r="90" fill="none" stroke="#86efac" strokeWidth="2" strokeDasharray="8 6"/>
+      {/* criança sentada no tapete */}
+      <circle cx="200" cy="248" r="22" fill="#fcd34d"/>
+      <path d="M178 242 Q186 222 200 226 Q214 222 222 242" fill="#92400e"/>
+      <ellipse cx="194" cy="249" rx="2.8" ry="2.8" fill="#1f2937"/>
+      <ellipse cx="206" cy="249" rx="2.8" ry="2.8" fill="#1f2937"/>
+      <path d="M194 257 Q200 263 206 257" stroke="#92400e" strokeWidth="1.8" fill="none"/>
+      <rect x="178" y="267" width="44" height="50" rx="12" fill="#c7d2fe"/>
+      <path d="M178 278 Q160 280 155 292" stroke="#c7d2fe" strokeWidth="11" strokeLinecap="round" fill="none"/>
+      <path d="M222 278 Q240 275 248 285" stroke="#c7d2fe" strokeWidth="11" strokeLinecap="round" fill="none"/>
+      {/* bolas sensoriais */}
+      <circle cx="270" cy="275" r="18" fill="#fbbf24" opacity=".8"/>
+      <circle cx="310" cy="282" r="14" fill="#f472b6" opacity=".75"/>
+      <circle cx="346" cy="272" r="16" fill="#60a5fa" opacity=".75"/>
+      <path d="M257 268 Q270 278 283 268" stroke="rgba(255,255,255,.5)" strokeWidth="2" fill="none"/>
+      {/* terapeuta */}
+      <circle cx="155" cy="238" r="20" fill="#fcd34d"/>
+      <path d="M135 232 Q143 215 155 219 Q167 215 175 232" fill="#1f2937"/>
+      <rect x="134" y="256" width="42" height="56" rx="12" fill="#34d399"/>
+      <path d="M134 267 Q118 264 112 275" stroke="#34d399" strokeWidth="11" strokeLinecap="round" fill="none"/>
+      <path d="M176 267 Q192 264 198 272" stroke="#34d399" strokeWidth="11" strokeLinecap="round" fill="none"/>
+      {/* bloco na mão */}
+      <rect x="194" y="264" width="20" height="20" rx="4" fill="#a78bfa"/>
+      <text x="204" y="278" fontSize="9" textAnchor="middle" fill="white" fontWeight="bold">A</text>
+      {/* decoração */}
+      <circle cx="420" cy="200" r="10" fill="#fbbf24" opacity=".4" style={{animation:'float 3s ease-in-out infinite'}}/>
+      <circle cx="460" cy="170" r="7" fill="#f472b6" opacity=".35" style={{animation:'float 4s ease-in-out infinite .5s'}}/>
+    </svg>
+  );
+}
+
+function SceneOccupational(){
+  return(
+    <svg viewBox="0 0 320 240" className="env-scene">
+      <rect width="320" height="240" fill="#fff7ed"/>
+      <rect width="320" height="80" y="160" fill="#fef3e2"/>
+      {/* parede com decoração */}
+      <circle cx="260" cy="60" r="35" fill="#fde68a" opacity=".3"/>
+      <circle cx="280" cy="40" r="20" fill="#fca5a5" opacity=".2"/>
+      {/* estrela na parede */}
+      <text x="235" y="58" fontSize="28" opacity=".3">⭐</text>
+      {/* mesa */}
+      <rect x="40" y="140" width="240" height="20" rx="8" fill="#d1fae5"/>
+      <rect x="60" y="160" width="12" height="40" rx="4" fill="#a7f3d0"/>
+      <rect x="248" y="160" width="12" height="40" rx="4" fill="#a7f3d0"/>
+      {/* blocos na mesa */}
+      <rect x="72" y="110" width="32" height="32" rx="6" fill="#fbbf24"/>
+      <text x="88" y="131" fontSize="13" textAnchor="middle" fill="white" fontWeight="800">A</text>
+      <rect x="112" y="118" width="28" height="24" rx="5" fill="#f472b6"/>
+      <text x="126" y="134" fontSize="11" textAnchor="middle" fill="white" fontWeight="800">B</text>
+      <rect x="148" y="105" width="36" height="36" rx="7" fill="#60a5fa"/>
+      <text x="166" y="128" fontSize="14" textAnchor="middle" fill="white" fontWeight="800">C</text>
+      <rect x="192" y="115" width="30" height="28" rx="6" fill="#a78bfa"/>
+      <text x="207" y="133" fontSize="12" textAnchor="middle" fill="white" fontWeight="800">D</text>
+      {/* criança 1 */}
+      <circle cx="100" cy="72" r="20" fill="#fcd34d"/>
+      <path d="M80 66 Q88 48 100 52 Q112 48 120 66" fill="#92400e"/>
+      <ellipse cx="94" cy="73" rx="2.5" ry="2.5" fill="#1f2937"/>
+      <ellipse cx="106" cy="73" rx="2.5" ry="2.5" fill="#1f2937"/>
+      <path d="M94 81 Q100 86 106 81" stroke="#92400e" strokeWidth="1.8" fill="none"/>
+      <rect x="82" y="90" width="36" height="52" rx="11" fill="#fde68a"/>
+      {/* criança 2 */}
+      <circle cx="220" cy="68" r="20" fill="#fcd34d"/>
+      <path d="M200 62 Q208 44 220 48 Q232 44 240 62" fill="#1f2937"/>
+      <ellipse cx="214" cy="69" rx="2.5" ry="2.5" fill="#1f2937"/>
+      <ellipse cx="226" cy="69" rx="2.5" ry="2.5" fill="#1f2937"/>
+      <path d="M214 77 Q220 82 226 77" stroke="#92400e" strokeWidth="1.8" fill="none"/>
+      <rect x="202" y="86" width="36" height="55" rx="11" fill="#c7d2fe"/>
+      {/* bolinha */}
+      <circle cx="275" cy="145" r="16" fill="#6ee7b7" opacity=".8" style={{animation:'float 3s ease-in-out infinite'}}/>
+      <circle cx="275" cy="145" r="9" fill="rgba(255,255,255,.3)"/>
+    </svg>
+  );
+}
+
+function SceneFono(){
+  return(
+    <svg viewBox="0 0 320 240" className="env-scene">
+      <rect width="320" height="240" fill="#f0f9ff"/>
+      <rect width="320" height="70" y="170" fill="#e0f2fe"/>
+      {/* espelho grande */}
+      <rect x="38" y="20" width="115" height="135" rx="10" fill="#e0f2fe" stroke="#bae6fd" strokeWidth="2"/>
+      <rect x="46" y="28" width="99" height="119" rx="7" fill="#bfdbfe" opacity=".4"/>
+      <text x="95" y="100" fontSize="32" textAnchor="middle" opacity=".25">👤</text>
+      {/* plaquinhas de imagens */}
+      <rect x="175" y="25" width="40" height="40" rx="7" fill="white" stroke="#bae6fd" strokeWidth="1.5"/>
+      <text x="195" y="51" fontSize="20" textAnchor="middle">🐱</text>
+      <rect x="225" y="25" width="40" height="40" rx="7" fill="white" stroke="#bae6fd" strokeWidth="1.5"/>
+      <text x="245" y="51" fontSize="20" textAnchor="middle">🌟</text>
+      <rect x="275" y="25" width="40" height="40" rx="7" fill="white" stroke="#bae6fd" strokeWidth="1.5"/>
+      <text x="295" y="51" fontSize="20" textAnchor="middle">🍎</text>
+      <rect x="175" y="75" width="40" height="40" rx="7" fill="white" stroke="#bae6fd" strokeWidth="1.5"/>
+      <text x="195" y="101" fontSize="20" textAnchor="middle">🏠</text>
+      <rect x="225" y="75" width="40" height="40" rx="7" fill="white" stroke="#bae6fd" strokeWidth="1.5"/>
+      <text x="245" y="101" fontSize="20" textAnchor="middle">🚗</text>
+      {/* criança */}
+      <circle cx="110" cy="155" r="22" fill="#fcd34d"/>
+      <path d="M88 149 Q96 128 110 132 Q124 128 132 149" fill="#f59e0b"/>
+      <ellipse cx="104" cy="156" rx="3" ry="3" fill="#1f2937"/>
+      <ellipse cx="116" cy="156" rx="3" ry="3" fill="#1f2937"/>
+      <path d="M104 165 Q110 172 116 165" stroke="#92400e" strokeWidth="2" fill="none"/>
+      <rect x="90" y="175" width="40" height="50" rx="11" fill="#fde68a"/>
+      {/* bolha de fala */}
+      <ellipse cx="145" cy="140" rx="28" ry="18" fill="white" stroke="#bae6fd" strokeWidth="1.5"/>
+      <path d="M130 154 L122 162 L138 158 Z" fill="white" stroke="#bae6fd" strokeWidth="1"/>
+      <text x="145" y="146" fontSize="14" textAnchor="middle">🐱</text>
+      {/* terapeuta */}
+      <circle cx="230" cy="150" r="22" fill="#fcd34d"/>
+      <path d="M208 144 Q216 123 230 127 Q244 123 252 144" fill="#1f2937"/>
+      <rect x="212" y="170" width="36" height="50" rx="11" fill="#34d399"/>
+      <ellipse cx="224" cy="151" rx="2.8" ry="2.8" fill="#1f2937"/>
+      <ellipse cx="236" cy="151" rx="2.8" ry="2.8" fill="#1f2937"/>
+      <path d="M224 160 Q230 165 236 160" stroke="#92400e" strokeWidth="1.8" fill="none"/>
+    </svg>
+  );
+}
+
+function ScenePsych(){
+  return(
+    <svg viewBox="0 0 320 240" className="env-scene">
+      <rect width="320" height="240" fill="#fdf4ff"/>
+      <rect width="320" height="65" y="175" fill="#f3e8ff"/>
+      {/* almofadas no chão */}
+      <ellipse cx="90" cy="210" rx="55" ry="22" fill="#e9d5ff" opacity=".8"/>
+      <ellipse cx="90" cy="207" rx="45" ry="18" fill="#ddd6fe"/>
+      <ellipse cx="220" cy="208" rx="50" ry="20" fill="#fce7f3" opacity=".8"/>
+      <ellipse cx="220" cy="205" rx="40" ry="16" fill="#fbcfe8"/>
+      {/* mesa baixinha */}
+      <rect x="120" y="178" width="80" height="10" rx="5" fill="#d1fae5"/>
+      <rect x="132" y="188" width="8" height="20" rx="3" fill="#a7f3d0"/>
+      <rect x="180" y="188" width="8" height="20" rx="3" fill="#a7f3d0"/>
+      {/* objetos na mesa */}
+      <circle cx="155" cy="174" r="9" fill="#fbbf24"/>
+      <circle cx="175" cy="174" r="7" fill="#f472b6"/>
+      <rect x="145" y="165" width="30" height="14" rx="4" fill="#c7d2fe"/>
+      {/* criança deitada na almofada */}
+      <circle cx="90" cy="182" r="20" fill="#fcd34d"/>
+      <path d="M70 176 Q78 157 90 161 Q102 157 110 176" fill="#92400e"/>
+      <ellipse cx="84" cy="183" rx="2.8" ry="2.8" fill="#1f2937"/>
+      <ellipse cx="96" cy="183" rx="2.8" ry="2.8" fill="#1f2937"/>
+      <path d="M84 191 Q90 197 96 191" stroke="#92400e" strokeWidth="1.8" fill="none"/>
+      {/* terapeuta sentada ao lado */}
+      <circle cx="225" cy="178" r="20" fill="#fcd34d"/>
+      <path d="M205 172 Q213 153 225 157 Q237 153 245 172" fill="#1f2937"/>
+      <rect x="206" y="196" width="38" height="40" rx="11" fill="#6ee7b7"/>
+      <ellipse cx="219" cy="179" rx="2.5" ry="2.5" fill="#1f2937"/>
+      <ellipse cx="231" cy="179" rx="2.5" ry="2.5" fill="#1f2937"/>
+      <path d="M219 187 Q225 192 231 187" stroke="#92400e" strokeWidth="1.8" fill="none"/>
+      {/* prancha de comunicação */}
+      <rect x="248" y="160" width="55" height="45" rx="6" fill="white" stroke="#e9d5ff" strokeWidth="1.5"/>
+      <rect x="254" y="167" width="14" height="12" rx="3" fill="#fde68a"/>
+      <rect x="272" y="167" width="14" height="12" rx="3" fill="#fca5a5"/>
+      <rect x="290" y="167" width="8" height="12" rx="3" fill="#a7f3d0"/>
+      <rect x="254" y="184" width="10" height="10" rx="3" fill="#c7d2fe"/>
+      <rect x="269" y="184" width="14" height="10" rx="3" fill="#fbbf24"/>
+      {/* decoração */}
+      <text x="26" y="55" fontSize="20" opacity=".25">🌈</text>
+      <text x="278" y="50" fontSize="16" opacity=".2">⭐</text>
+    </svg>
+  );
+}
+
+function SceneFamily(){
+  return(
+    <svg viewBox="0 0 480 320" className="env-scene">
+      <rect width="480" height="320" fill="#f0faf3"/>
+      <rect width="480" height="90" y="230" fill="#dcfce7"/>
+      {/* grama / tapete verde */}
+      <ellipse cx="240" cy="308" rx="200" ry="20" fill="#bbf7d0" opacity=".5"/>
+      {/* árvore */}
+      <rect x="390" y="190" width="14" height="90" rx="5" fill="#92400e"/>
+      <circle cx="397" cy="165" r="48" fill="#4ade80" opacity=".7"/>
+      <circle cx="375" cy="175" r="34" fill="#22c55e" opacity=".8"/>
+      <circle cx="418" cy="175" r="32" fill="#16a34a" opacity=".75"/>
+      {/* sol */}
+      <circle cx="68" cy="55" r="28" fill="#fde68a" opacity=".7"/>
+      {[0,45,90,135,180,225,270,315].map((a,i)=>{
+        const r=a*Math.PI/180;
+        return <line key={i} x1={68+34*Math.cos(r)} y1={55+34*Math.sin(r)} x2={68+42*Math.cos(r)} y2={55+42*Math.sin(r)} stroke="#fde68a" strokeWidth="3" strokeLinecap="round" opacity=".6"/>;
+      })}
+      {/* família — mãe, criança, terapeuta */}
+      {/* terapeuta (jaleco branco) */}
+      <circle cx="130" cy="170" r="26" fill="#fcd34d"/>
+      <path d="M104 163 Q113 138 130 143 Q147 138 156 163" fill="#1f2937"/>
+      <rect x="108" y="194" width="44" height="72" rx="14" fill="white"/>
+      <rect x="112" y="198" width="36" height="66" rx="12" fill="#34d399" opacity=".3"/>
+      <path d="M108 210 Q88 208 82 220" stroke="white" strokeWidth="12" strokeLinecap="round" fill="none"/>
+      <path d="M152 210 Q172 208 178 220" stroke="white" strokeWidth="12" strokeLinecap="round" fill="none"/>
+      <ellipse cx="122" cy="172" rx="3.5" ry="3.5" fill="#1f2937"/>
+      <ellipse cx="138" cy="172" rx="3.5" ry="3.5" fill="#1f2937"/>
+      <path d="M122 181 Q130 188 138 181" stroke="#92400e" strokeWidth="2" fill="none"/>
+      <circle cx="117" cy="178" r="6" fill="#fca5a5" opacity=".3"/>
+      <circle cx="143" cy="178" r="6" fill="#fca5a5" opacity=".3"/>
+      {/* criança */}
+      <circle cx="228" cy="188" r="22" fill="#fcd34d"/>
+      <path d="M206 182 Q214 162 228 166 Q242 162 250 182" fill="#f59e0b"/>
+      <rect x="208" y="208" width="40" height="60" rx="12" fill="#c7d2fe"/>
+      <path d="M208 218 Q192 215 186 226" stroke="#c7d2fe" strokeWidth="12" strokeLinecap="round" fill="none"/>
+      <path d="M248 218 Q264 215 270 224" stroke="#c7d2fe" strokeWidth="12" strokeLinecap="round" fill="none"/>
+      <ellipse cx="222" cy="189" rx="3" ry="3" fill="#1f2937"/>
+      <ellipse cx="234" cy="189" rx="3" ry="3" fill="#1f2937"/>
+      <path d="M222 198 Q228 205 234 198" stroke="#92400e" strokeWidth="2" fill="none"/>
+      <circle cx="216" cy="195" r="5.5" fill="#fca5a5" opacity=".35"/>
+      <circle cx="240" cy="195" r="5.5" fill="#fca5a5" opacity=".35"/>
+      {/* mãe */}
+      <circle cx="326" cy="173" r="26" fill="#fcd34d"/>
+      <path d="M300 166 Q309 141 326 146 Q343 141 352 166" fill="#92400e"/>
+      <path d="M300 166 Q296 155 302 144" fill="#92400e"/>
+      <path d="M304 161 Q308 168 300 172" fill="#92400e"/>
+      <rect x="304" y="197" width="44" height="70" rx="14" fill="#fde68a"/>
+      <path d="M304 210 Q284 208 278 220" stroke="#fde68a" strokeWidth="12" strokeLinecap="round" fill="none"/>
+      <path d="M348 210 Q368 207 374 218" stroke="#fde68a" strokeWidth="12" strokeLinecap="round" fill="none"/>
+      <ellipse cx="319" cy="174" rx="3.5" ry="3.5" fill="#1f2937"/>
+      <ellipse cx="333" cy="174" rx="3.5" ry="3.5" fill="#1f2937"/>
+      <path d="M319 183 Q326 190 333 183" stroke="#92400e" strokeWidth="2" fill="none"/>
+      <circle cx="313" cy="180" r="6" fill="#fca5a5" opacity=".3"/>
+      <circle cx="339" cy="180" r="6" fill="#fca5a5" opacity=".3"/>
+      {/* coração entre mãe e criança */}
+      <text x="274" y="202" fontSize="20" style={{animation:'pulse 2s ease-in-out infinite'}}>💚</text>
+      {/* estrelas */}
+      <text x="196" y="162" fontSize="16" style={{animation:'pulse 2s ease-in-out infinite'}}>✨</text>
+      {/* balão conquista */}
+      <circle cx="68" cy="120" r="20" fill="#f472b6" opacity=".5" style={{animation:'float 3s ease-in-out infinite'}}/>
+      <circle cx="52" cy="98" r="14" fill="#fbbf24" opacity=".4" style={{animation:'float 4s ease-in-out infinite .5s'}}/>
+      <circle cx="88" cy="88" r="12" fill="#a78bfa" opacity=".4" style={{animation:'float 3.5s ease-in-out infinite 1s'}}/>
+      {/* símbolo infinito neurodiversidade */}
+      <path d="M195 290 C195 284 202 278 209 278 C216 278 223 284 223 290 C223 296 217 302 210 302 C203 302 199 298 203 295 C207 292 213 292 209 290 C205 288 201 292 205 295 C209 298 215 302 222 302" stroke="#a7f3d0" strokeWidth="2.5" fill="none" style={{animation:'pulse 3s ease-in-out infinite'}}/>
+    </svg>
+  );
+}
+
+/* ─── MOCKUP DASHBOARD ───────────────────────────── */
+function HeroMockup(){
+  return(
+    <div style={{background:'white',borderRadius:16,border:'1px solid var(--border)',boxShadow:'0 16px 56px rgba(0,0,0,.09)',overflow:'hidden'}}>
+      <div style={{background:'var(--g500)',padding:'14px 18px',display:'flex',alignItems:'center',gap:6}}>
+        {[0,1,2].map(i=><div key={i} style={{width:9,height:9,borderRadius:'50%',background:'rgba(255,255,255,.35)'}}/>)}
+        <span style={{color:'#fff',fontSize:12,fontWeight:600,marginLeft:6}}>Área da família · Instituto Verde Esperança</span>
+      </div>
+      <div style={{padding:20}}>
+        <div style={{fontSize:14,fontWeight:700,marginBottom:3}}>Olá, família Costa 👋</div>
+        <div style={{fontSize:12,color:'var(--muted)',marginBottom:16}}>Lucas · 6 anos · Atendimento ativo desde jan/2025</div>
+        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:16}}>
+          {[{l:'Próxima sessão',v:'Ter, 29 abr',s:'14h · Fonoaudiologia'},{l:'Última avaliação',v:'18 abr 2026',s:'Relatório disponível'},{l:'Sessões este mês',v:'8 sessões',s:'+2 vs. mês anterior'},{l:'Mensagens',v:'2 não lidas',s:'Dra. Ana Lima'}].map((c,i)=>(
+            <div key={i} style={{background:'var(--g50)',border:'1px solid var(--g100)',borderRadius:10,padding:13}}>
+              <div style={{fontSize:10,color:'var(--muted)',fontWeight:500,marginBottom:3,letterSpacing:.3,textTransform:'uppercase'}}>{c.l}</div>
+              <div style={{fontSize:13,fontWeight:700}}>{c.v}</div>
+              <div style={{fontSize:10,color:'var(--g500)',marginTop:2,fontWeight:500}}>{c.s}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{fontSize:10,fontWeight:600,color:'var(--muted)',letterSpacing:.8,textTransform:'uppercase',marginBottom:8}}>Equipe do Lucas</div>
+        {[{i:'AL',n:'Dra. Ana Lima',r:'Fonoaudióloga',b:true},{i:'RC',n:'Dr. Rafael Cunha',r:'Neuropsicólogo',b:false},{i:'CO',n:'Profa. Cíntia',r:'Terapeuta Ocup.',b:true}].map((p,j)=>(
+          <div key={j} style={{display:'flex',alignItems:'center',gap:10,padding:'9px 0',borderBottom:j<2?'1px solid var(--border)':'none'}}>
+            <div style={{width:30,height:30,borderRadius:'50%',background:'var(--g100)',color:'var(--g700)',fontSize:10,fontWeight:700,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>{p.i}</div>
+            <div><div style={{fontSize:12,fontWeight:600}}>{p.n}</div><div style={{fontSize:10,color:'var(--muted)'}}>{p.r}</div></div>
+            {p.b&&<div style={{background:'var(--g50)',border:'1px solid var(--g100)',color:'var(--g500)',fontSize:9,fontWeight:600,padding:'2px 8px',borderRadius:999,marginLeft:'auto'}}>1 msg</div>}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ─── HERO CAROUSEL ──────────────────────────────── */
+const SLIDES=[
+  {cls:'s1',chip:{txt:'Atendimento multidisciplinar',cls:'chip-green',dot:'var(--g500)'},h1:'Especialistas em autismo, processo integrado.',sub:'Psicologia, fonoaudiologia, terapia ocupacional e neuropsicologia em um só lugar — com plataforma digital para acompanhar cada etapa do tratamento.',cta:'Agendar avaliação inicial',right:'mockup'},
+  {cls:'s2',chip:{txt:'Cada conquista merece ser celebrada',cls:'chip-white',dot:'rgba(255,255,255,.7)'},h1:'Seu filho se desenvolve. Você acompanha tudo.',sub:'O Instituto Verde Esperança conecta atendimento clínico especializado com uma plataforma para que pais acompanhem evolução, agenda e equipe em tempo real.',cta:'Conhecer a plataforma',right:'therapy'},
+  {cls:'s3',chip:{txt:'Cuidado que vai além da clínica',cls:'chip-green',dot:'var(--g500)'},h1:'Cuidado especializado. Resultados acompanháveis.',sub:'Um instituto com foco em crianças autistas — equipe especializada, metodologia baseada em evidências e sistema digital que conecta família e profissionais.',cta:'Iniciar cadastro',right:'blocks'},
+];
+
+function HeroCarousel(){
+  const [slide,setSlide]=useState(0);
+  const [paused,setPaused]=useState(false);
+  const stageRef=useRef(null);
+  const [w,setW]=useState(0);
+  useEffect(()=>{
+    const upd=()=>setW(stageRef.current?.offsetWidth||0);
+    upd();
+    const ro=new ResizeObserver(upd);
+    if(stageRef.current)ro.observe(stageRef.current);
+    return()=>ro.disconnect();
+  },[]);
+  useEffect(()=>{
+    if(paused)return;
+    const t=setInterval(()=>setSlide(s=>(s+1)%SLIDES.length),5800);
+    return()=>clearInterval(t);
+  },[paused]);
+  const go=n=>setSlide((n+SLIDES.length)%SLIDES.length);
+  const s=SLIDES[slide];
+  const rightEl=r=>{
+    if(r==='mockup') return <HeroMockup/>;
+    if(r==='therapy') return <div style={{display:'flex',justifyContent:'center',alignItems:'flex-end'}}><IllusTherapy/></div>;
+    return <div style={{display:'flex',justifyContent:'center',alignItems:'flex-end'}}><IllusBlocks/></div>;
+  };
+  return(
+    <div ref={stageRef} className="hero-stage" onMouseEnter={()=>setPaused(true)} onMouseLeave={()=>setPaused(false)}>
+      <div className="hero-track" style={{transform:`translateX(-${slide*w}px)`}}>
+        {SLIDES.map((sl,i)=>(
+          <div key={i} className={`hero-slide ${sl.cls}`} style={{width:w||'100%'}}>
+            <div className="wrap" style={{width:'100%'}}>
+              <div className="hero-inner">
+                <div>
+                  <div className={`hero-chip ${sl.chip.cls}`}><div className="hero-chip-dot" style={{width:6,height:6,borderRadius:'50%',background:sl.chip.dot,flexShrink:0}}/>{sl.chip.txt}</div>
+                  <h1 className="hero-h1">{sl.h1}</h1>
+                  <p className="hero-sub">{sl.sub}</p>
+                  <div className="hero-ctas">
+                    <button className="btn btn-primary btn-xl">{sl.cta} <Ic n="arr" s={16}/></button>
+                    <button className="btn btn-outline btn-xl" style={sl.cls==='s2'?{background:'transparent',color:'#fff',borderColor:'rgba(255,255,255,.4)'}:{}}>Ver como funciona</button>
+                  </div>
+                  <div className="hero-stats">
+                    {[{v:'312+',l:'crianças atendidas'},{v:'8',l:'especialidades'},{v:'94%',l:'melhora em 6 meses'}].map((st,j)=>(
+                      <div key={j}><div className="hstat-val">{st.v}</div><div className="hstat-lbl">{st.l}</div></div>
+                    ))}
+                  </div>
+                </div>
+                {rightEl(sl.right)}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className={`c-dots ${s.cls}`}>
+        {SLIDES.map((_,i)=><div key={i} className={`c-dot${slide===i?' on':''}`} onClick={()=>go(i)}/>)}
+      </div>
+      <button className={`c-arr c-arr-l ${s.cls}`} onClick={()=>go(slide-1)}><Ic n="chevL" s={20}/></button>
+      <button className={`c-arr c-arr-r ${s.cls}`} onClick={()=>go(slide+1)}><Ic n="chevR" s={20}/></button>
+    </div>
+  );
+}
+
+/* ─── NAVBAR ─────────────────────────────────────── */
+function Navbar({onEnter}){
+  const [solid,setSolid]=useState(false);
+  useEffect(()=>{
+    const h=()=>setSolid(window.scrollY>48);
+    window.addEventListener('scroll',h);return()=>window.removeEventListener('scroll',h);
+  },[]);
+  return(
+    <nav className={`nav${solid?' solid':''}`}>
+      <div className="wrap">
+        <div className="nav-inner">
+          <LogoFull dark={true}/>
+          <ul className="nav-links">
+            {['Sobre','Especialidades','Como Funciona','Doações','Contato'].map(l=>(
+              <li key={l}><a href={`#${l.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s/g,'-')}`}>{l}</a></li>
+            ))}
+          </ul>
+          <div className="nav-btns">
+            <button className="btn btn-ghost" onClick={onEnter}>Entrar</button>
+            <button className="btn btn-outline">Criar conta</button>
+            <button className="btn btn-primary">Agendar consulta</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+/* ─── STATS BAR ──────────────────────────────────── */
+function StatsBar(){
+  return(
+    <div className="statsbar">
+      <div className="wrap">
+        <div className="statsbar-grid">
+          {[{n:'312',u:'+',d:'crianças atendidas desde 2021'},{n:'94',u:'%',d:'famílias relatam evolução em 6 meses'},{n:'47',u:'',d:'crianças no programa social em 2024'},{n:'8',u:'',d:'especialidades integradas'}].map((s,i)=>(
+            <div key={i} className="sitem">
+              <div className="snum">{s.n}<span>{s.u}</span></div>
+              <div className="sdesc">{s.d}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── AMBIENTE TERAPIA ───────────────────────────── */
+function AmbienteSection(){
+  const scenes=[
+    {Scene:SceneSensory,label:'Sala sensorial',wide:true},
+    {Scene:SceneOccupational,label:'Terapia ocupacional',wide:false},
+    {Scene:SceneFono,label:'Fonoaudiologia',wide:false},
+    {Scene:ScenePsych,label:'Psicologia',wide:false},
+    {Scene:SceneFamily,label:'Reunião com família',wide:true},
+  ];
+  return(
+    <section className="sec-white" id="ambiente">
+      <div className="wrap">
+        <div style={{textAlign:'center',maxWidth:560,margin:'0 auto'}}>
+          <div className="sec-lbl">Nosso espaço</div>
+          <h2 className="sec-h2">Um ambiente feito para a criança se sentir segura</h2>
+          <p className="sec-p">Salas especializadas por área, brinquedos sensoriais, espaço para família e equipe multidisciplinar integrada.</p>
+        </div>
+        <div className="env-grid">
+          {scenes.map(({Scene,label,wide},i)=>(
+            <div key={i} className={`env-card${wide?' env-card-wide':''}`}>
+              <Scene/>
+              <div className="env-overlay">
+                <span className="env-tag">{label}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── COMO FUNCIONA ──────────────────────────────── */
+function ComoFunciona(){
+  return(
+    <section className="sec-dark-green" id="como-funciona">
+      <div className="wrap">
+        <div style={{maxWidth:560}}>
+          <div className="sec-lbl-w">Como funciona</div>
+          <h2 className="sec-h2-w">Do primeiro contato ao acompanhamento contínuo</h2>
+          <p className="sec-p-w">Um processo estruturado, sem etapas perdidas.</p>
+        </div>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(5,1fr)',gap:28,marginTop:64}}>
+          {[{n:'01',t:'Cadastro',d:'Crie conta e preencha o questionário inicial — histórico, diagnósticos e rotina.'},{n:'02',t:'Avaliação',d:'Avaliação multidisciplinar presencial para mapear as necessidades da criança.'},{n:'03',t:'Plano',d:'Plano individual com especialidades, frequência e metas por período.'},{n:'04',t:'Atendimento',d:'Sessões começam. Cada profissional registra evolução no prontuário compartilhado.'},{n:'05',t:'Acompanhamento',d:'Acesso à plataforma com relatórios, agenda e progresso em tempo real.'}].map((s,i)=>(
+            <div key={i}>
+              <div style={{fontSize:11,fontWeight:700,color:'rgba(255,255,255,.5)',letterSpacing:1,marginBottom:10}}>PASSO {s.n}</div>
+              <div style={{width:40,height:40,borderRadius:'50%',background:'rgba(255,255,255,.15)',color:'#fff',fontSize:14,fontWeight:800,display:'flex',alignItems:'center',justifyContent:'center',marginBottom:14,border:'2px solid rgba(255,255,255,.25)'}}>{s.n}</div>
+              <div style={{fontSize:15,fontWeight:700,color:'#fff',marginBottom:7}}>{s.t}</div>
+              <div style={{fontSize:13,color:'rgba(255,255,255,.65)',lineHeight:1.65}}>{s.d}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── ESPECIALIDADES ─────────────────────────────── */
+function Especialidades(){
+  const areas=[
+    {ic:'brain',n:'Neuropsicologia',d:'Avaliação cognitiva, atenção, memória e diagnóstico individualizado.',bg:'#f0faf3',ic_c:'#259a43'},
+    {ic:'mic',n:'Fonoaudiologia',d:'Comunicação verbal e não-verbal, linguagem, alimentação e processamento auditivo.',bg:'#eef2ff',ic_c:'#6366f1'},
+    {ic:'hand',n:'Terapia Ocupacional',d:'Integração sensorial, coordenação motora e habilidades de vida diária.',bg:'#fff7ed',ic_c:'#f59e0b'},
+    {ic:'user',n:'Psicologia',d:'Desenvolvimento emocional e comportamental. Intervenção baseada em ABA.',bg:'#fdf2f8',ic_c:'#ec4899'},
+    {ic:'book',n:'Psicopedagogia',d:'Dificuldades de aprendizagem, letramento e suporte ao desenvolvimento escolar.',bg:'#eff6ff',ic_c:'#3b82f6'},
+    {ic:'activity',n:'Psicomotricidade',d:'Integração cognitivo-motora, trabalho corporal e proprioceptivo.',bg:'#f0fdfa',ic_c:'#10b981'},
+  ];
+  return(
+    <section className="sec-green" id="especialidades">
+      <div className="wrap">
+        <div style={{maxWidth:520}}>
+          <div className="sec-lbl">Especialidades</div>
+          <h2 className="sec-h2">Equipe multidisciplinar, foco definido</h2>
+          <p className="sec-p">Todas as áreas compartilham prontuário e participam de reuniões mensais de equipe por paciente.</p>
+        </div>
+        <div className="esp-grid">
+          {areas.map((a,i)=>(
+            <div key={i} className="esp-card">
+              <div className="esp-icon" style={{background:a.bg}}><Ic n={a.ic} s={22} c={a.ic_c}/></div>
+              <div className="esp-name">{a.n}</div>
+              <div className="esp-desc">{a.d}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── PLATFORM ───────────────────────────────────── */
+function PlatSection({onEnter}){
+  const [activeNav,setActiveNav]=useState(0);
+  const navGrps=[['Principal','Início','Agenda','Evolução'],['Paciente','Prontuário','Mensagens']];
+  const bars=[30,42,35,55,48,65,58,72,62,80,70,88];
+  const W=280,H=56,P=4;
+  const pts=bars.map((b,i)=>({x:P+i*(W-2*P)/11,y:H-P-(b/100*(H-2*P))}));
+  const line='M '+pts.map(p=>`${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' L ');
+  const area=line+` L ${pts[pts.length-1].x.toFixed(1)},${H} L ${pts[0].x.toFixed(1)},${H} Z`;
+  return(
+    <section className="plat-sec" id="plataforma">
+      <div className="wrap">
+        <div className="plat-inner">
+          <div>
+            <div className="plat-lbl">A plataforma</div>
+            <h2 className="plat-h2">Tudo sobre o tratamento do seu filho, acessível e organizado.</h2>
+            <p className="plat-sub">Uma área exclusiva para pais e responsáveis — onde o processo é visível, não apenas relatado uma vez por mês.</p>
+            <div className="plat-features">
+              {[{ic:'bar',t:'Evolução por área',d:'Relatórios mensais com metas e progressos por especialidade.'},{ic:'calendar',t:'Agenda integrada',d:'Sessões, confirmações e histórico centralizados.'},{ic:'msg',t:'Canal com a equipe',d:'Fale diretamente com os profissionais, sem intermediários.'},{ic:'file',t:'Prontuário acessível',d:'Diagnósticos, plano terapêutico e observações de sessão.'}].map((f,i)=>(
+                <div key={i} className="pfeat">
+                  <div className="pfeat-ico"><Ic n={f.ic} s={15} c="var(--g500)"/></div>
+                  <div><h4>{f.t}</h4><p>{f.d}</p></div>
+                </div>
+              ))}
+            </div>
+            <button className="btn btn-primary btn-lg" onClick={onEnter} style={{marginTop:32}}>Acessar a plataforma <Ic n="arr" s={15}/></button>
+          </div>
+          <div className="dash-prev">
+            <div className="dp-head">
+              <span className="dp-breadcrumb">Área da família › <b>Visão geral</b></span>
+              <div className="dp-acts"><div className="dp-act"><Ic n="bell" s={11} c="rgba(255,255,255,.35)"/></div><div className="dp-act"><Ic n="settings" s={11} c="rgba(255,255,255,.35)"/></div></div>
+            </div>
+            <div className="dp-layout">
+              <div className="dp-sidebar">
+                {navGrps.map((g,gi)=>(
+                  <div key={gi}><div className="dp-grp-lbl">{g[0]}</div>
+                  {g.slice(1).map((item,ii)=>{const idx=gi*3+ii;return(
+                    <div key={item} className={`dp-nav-item${activeNav===idx?' on':''}`} onClick={()=>setActiveNav(idx)}>
+                      <div className="dp-nav-dot"/><span className="dp-nav-txt">{item}</span>
+                    </div>
+                  );})}
+                  </div>
+                ))}
+              </div>
+              <div className="dp-content">
+                <div style={{fontSize:12,fontWeight:700,color:'rgba(255,255,255,.8)',marginBottom:12}}>Lucas Costa · 6 anos</div>
+                <div className="dp-metrics">
+                  {[{l:'Próxima sessão',v:'Ter 29/04',d:'Confirmada'},{l:'Sessões/mês',v:'8',d:'+2 vs. anterior'},{l:'Áreas ativas',v:'3',d:'Atualizado'}].map((m,i)=>(
+                    <div key={i} className="dp-metric"><div className="dp-metric-lbl">{m.l}</div><div className="dp-metric-val">{m.v}</div><div className="dp-metric-delta">{m.d}</div></div>
+                  ))}
+                </div>
+                <div className="dp-chart-card">
+                  <div className="dp-chart-lbl">Frequência · 12 meses</div>
+                  <svg viewBox={`0 0 ${W} ${H}`} style={{width:'100%',height:H,display:'block'}}>
+                    <defs><linearGradient id="cg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#259a43" stopOpacity=".25"/><stop offset="100%" stopColor="#259a43" stopOpacity="0"/></linearGradient></defs>
+                    <path d={area} fill="url(#cg2)"/>
+                    <path d={line} fill="none" stroke="#259a43" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx={pts[11].x} cy={pts[11].y} r="3" fill="#259a43"/>
+                  </svg>
+                </div>
+                <div className="dp-list-card">
+                  <div style={{fontSize:9,color:'rgba(255,255,255,.3)',textTransform:'uppercase',letterSpacing:1,marginBottom:8}}>Próximas sessões</div>
+                  {[{n:'Fonoaudiologia',t:'Ter 29/04 · 14h00',b:'Confirmada'},{n:'Terapia Ocup.',t:'Qui 01/05 · 10h30',b:'Pendente'}].map((r,i)=>(
+                    <div key={i} className="dp-list-row"><div><div className="dp-lr-name">{r.n}</div><div className="dp-lr-time">{r.t}</div></div><div className="dp-lr-badge">{r.b}</div></div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── SOBRE ──────────────────────────────────────── */
+function Sobre(){
+  return(
+    <section className="sec-white" id="sobre">
+      <div className="wrap">
+        <div className="sobre-inner">
+          <div>
+            <div className="sec-lbl">Sobre o Instituto</div>
+            <h2 className="sec-h2">Por que existimos e o que nos diferencia</h2>
+            <div className="sobre-text">
+              <p>Fundado em 2021, o Instituto Verde Esperança surgiu de uma constatação prática: famílias com crianças autistas enfrentavam processos longos de diagnóstico, atendimento fragmentado entre clínicas e dificuldade para entender o que estava acontecendo no tratamento do filho.</p>
+              <p>Nossa resposta foi centralizar especialidades complementares em um único espaço — e desenvolver uma plataforma para que pais acompanhem o processo com clareza, não apenas recebam relatórios mensais.</p>
+              <p>Não somos uma clínica genérica. Somos um instituto com foco definido, protocolo próprio e um sistema que conecta equipe clínica e família de forma contínua.</p>
+            </div>
+          </div>
+          <div className="sobre-highlights">
+            {[{t:'Por que o foco em autismo?',d:'O atendimento eficaz exige integração real entre especialidades — algo que clínicas generalistas raramente oferecem de forma estruturada. Nosso foco permite especialização profunda e protocolos específicos.'},{t:'Metodologia baseada em evidências',d:'Utilizamos abordagens com suporte científico: ABA, PECS, integração sensorial e intervenção precoce. Sem modismos ou promessas sem respaldo.'},{t:'A família como parte do processo',d:'Pais participam ativamente — com acesso ao plano terapêutico, às metas por especialidade e à comunicação direta com a equipe. O tratamento não termina na porta da clínica.'}].map((h,i)=>(
+              <div key={i} className="shigh"><h4>{h.t}</h4><p>{h.d}</p></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── AVATAR ILUSTRADO (pessoa real estilizada) ──── */
+function PersonAvatar({seed=0,size=64}){
+  const skins=['#fcd34d','#f9a825','#e8a87c','#d4826a','#c68642'];
+  const hairs=['#1f2937','#92400e','#374151','#7c3aed','#b45309'];
+  const shirts=['#34d399','#60a5fa','#f472b6','#a78bfa','#fbbf24'];
+  const sk=skins[seed%skins.length];
+  const hr=hairs[seed%hairs.length];
+  const sh=shirts[seed%shirts.length];
+  const isLong=seed%2===0;
+  const hasGlasses=seed%3===0;
+  return(
+    <svg width={size} height={size} viewBox="0 0 64 64">
+      {/* corpo */}
+      <ellipse cx="32" cy="55" rx="18" ry="12" fill={sh}/>
+      {/* cabeça */}
+      <circle cx="32" cy="28" r="18" fill={sk}/>
+      {/* cabelo */}
+      {isLong?(
+        <>
+          <path d={`M14 24 Q20 6 32 10 Q44 6 50 24`} fill={hr}/>
+          <path d={`M14 24 Q11 32 13 40`} fill={hr}/>
+          <path d={`M50 24 Q53 32 51 40`} fill={hr}/>
+          <path d={`M14 24 Q12 36 16 42 Q20 48 18 52`} fill={hr}/>
+          <path d={`M50 24 Q52 36 48 42 Q44 48 46 52`} fill={hr}/>
+        </>
+      ):(
+        <path d={`M14 24 Q20 6 32 10 Q44 6 50 24`} fill={hr}/>
+      )}
+      {/* olhos */}
+      <ellipse cx="27" cy="28" rx="2.8" ry="2.8" fill="#1f2937"/>
+      <ellipse cx="37" cy="28" rx="2.8" ry="2.8" fill="#1f2937"/>
+      <circle cx="25.5" cy="26.8" r="1" fill="white"/>
+      <circle cx="35.5" cy="26.8" r="1" fill="white"/>
+      {/* óculos */}
+      {hasGlasses&&(
+        <>
+          <rect x="22" y="24" width="10" height="7" rx="3.5" fill="none" stroke="#374151" strokeWidth="1.5"/>
+          <rect x="34" y="24" width="10" height="7" rx="3.5" fill="none" stroke="#374151" strokeWidth="1.5"/>
+          <line x1="32" y1="27.5" x2="34" y2="27.5" stroke="#374151" strokeWidth="1.5"/>
+        </>
+      )}
+      {/* sorriso */}
+      <path d="M26 36 Q32 42 38 36" stroke="#92400e" strokeWidth="2" fill="none" strokeLinecap="round"/>
+      {/* bochechas */}
+      <circle cx="21" cy="34" r="5" fill="#fca5a5" opacity=".3"/>
+      <circle cx="43" cy="34" r="5" fill="#fca5a5" opacity=".3"/>
+    </svg>
+  );
+}
+
+/* ─── DEPOIMENTOS CAROUSEL ───────────────────────── */
+const DEPOS=[
+  {seed:0,n:'Ana Paula Oliveira',r:'Mãe do Miguel, 7 anos',q:'Depois de passar por vários lugares, finalmente encontramos um espaço onde o Miguel é verdadeiramente acolhido. Os profissionais respeitam o tempo dele, celebram cada conquista e nos orientam com paciência e carinho.'},
+  {seed:1,n:'Renata Mendes',r:'Mãe da Sofia, 6 anos',q:'Antes de chegar aqui, a gente ia de clínica em clínica. O diferencial foi ter tudo no mesmo lugar e conseguir falar com os profissionais pelo sistema. A Sofia evoluiu muito em 8 meses.'},
+  {seed:2,n:'Carlos e Amanda Costa',r:'Pais do Thiago, 4 anos',q:'O processo de avaliação foi sério, o plano foi explicado direitinho. A plataforma ajuda demais a gente a não perder o fio do tratamento. Sinto que somos parceiros da equipe.'},
+  {seed:3,n:'Fernanda Lima',r:'Mãe do Enzo, 7 anos',q:'O canal de mensagens com a fonoaudióloga mudou tudo. Não precisei esperar a consulta do mês seguinte pra tirar dúvidas sobre o que fazer em casa com meu filho.'},
+  {seed:4,n:'Paulo Rodrigues',r:'Pai da Isabela, 5 anos',q:'A Isabela chegou aqui muito fechada, sem contato visual. Hoje ela brinca, se comunica e nos surpreende todo dia. A equipe do Instituto fez um trabalho que a gente não acreditava ser possível.'},
+];
+
+function Depoimentos(){
+  const [idx,setIdx]=useState(0);
+  const [dir,setDir]=useState(1);
+  const [key,setKey]=useState(0);
+  const go=(n)=>{
+    const next=(n+DEPOS.length)%DEPOS.length;
+    setDir(n>idx||n===0&&idx===DEPOS.length-1?1:-1);
+    setIdx(next);
+    setKey(k=>k+1);
+  };
+  useEffect(()=>{
+    const t=setInterval(()=>go((idx+1)%DEPOS.length),6000);
+    return()=>clearInterval(t);
+  },[idx]);
+  const d=DEPOS[idx];
+  return(
+    <section className="sec-green" id="depoimentos">
+      <div className="wrap">
+        <div style={{textAlign:'center',maxWidth:540,margin:'0 auto'}}>
+          <div className="sec-lbl">O Que Dizem as Famílias</div>
+          <h2 className="sec-h2">Depoimentos reais de pais e responsáveis</h2>
+        </div>
+        <div className="depo-wrap">
+          <div className="depo-card-single" key={key}>
+            <div className="depo-quote-mark">"</div>
+            <div className="depo-avatar-row">
+              <div style={{position:'relative',flexShrink:0}}>
+                <div className="depo-av-ring">
+                  <PersonAvatar seed={d.seed} size={60}/>
+                </div>
+                <div className="depo-verified">
+                  <Ic n="check" s={10} c="white"/>
+                </div>
+              </div>
+              <div>
+                <div className="depo-name">{d.n}</div>
+                <div className="depo-role">{d.r}</div>
+              </div>
+            </div>
+            <p className="depo-text">"{d.q}"</p>
+          </div>
+          <div className="depo-nav">
+            {DEPOS.map((_,i)=><div key={i} className={`depo-dot${idx===i?' on':''}`} onClick={()=>go(i)}/>)}
+          </div>
+          <div className="depo-count">
+            Mais de <strong>200 famílias</strong> já confiaram no nosso trabalho
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── MVV ────────────────────────────────────────── */
+function MVV(){
+  return(
+    <section className="sec-dark-green">
+      <div className="wrap">
+        <div style={{textAlign:'center',maxWidth:440,margin:'0 auto'}}>
+          <div className="sec-lbl-w">Missão, visão e valores</div>
+          <h2 className="sec-h2-w">O que nos orienta</h2>
+        </div>
+        <div className="mvv-grid">
+          <div className="mvv-card">
+            <div className="mvv-title"><span style={{fontSize:20}}>🎯</span>Missão</div>
+            <div className="mvv-txt">Oferecer atendimento especializado em autismo com processo clínico integrado — onde a família faz parte do tratamento, não apenas assiste.</div>
+          </div>
+          <div className="mvv-card">
+            <div className="mvv-title"><span style={{fontSize:20}}>🔭</span>Visão</div>
+            <div className="mvv-txt">Ser referência em atendimento multidisciplinar para crianças autistas no Brasil, com modelo replicável que combina qualidade clínica e tecnologia acessível.</div>
+          </div>
+          <div className="mvv-card">
+            <div className="mvv-title"><span style={{fontSize:20}}>⚖️</span>Valores</div>
+            <ul className="mvv-list">
+              {['Evidência acima de achismo','Clareza no processo para família e equipe','Respeito ao tempo de cada família','Integração real entre especialidades','Transparência nos resultados e nos limites'].map((v,i)=>(
+                <li key={i}><Ic n="check" s={12} c="var(--g200)"/>{v}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── FAQ ────────────────────────────────────────── */
+function FAQ(){
+  const [open,setOpen]=useState(null);
+  return(
+    <section className="sec-white" id="faq">
+      <div className="wrap">
+        <div style={{textAlign:'center',maxWidth:480,margin:'0 auto'}}>
+          <div className="sec-lbl">FAQ</div>
+          <h2 className="sec-h2">Perguntas frequentes</h2>
+        </div>
+        <div className="faq-wrap">
+          {[{q:'Atendem pelo plano de saúde?',a:'Alguns convênios são aceitos. O atendimento particular também está disponível. Entre em contato informando seu plano para verificarmos a cobertura.'},{q:'Qual é a faixa etária atendida?',a:'Crianças de 2 a 16 anos. Para adolescentes acima de 12 anos, o plano terapêutico é adaptado para a faixa etária e contexto escolar.'},{q:'Precisa ter diagnóstico fechado para começar?',a:'Não. Realizamos a avaliação diagnóstica quando necessário. Muitas famílias chegam com suspeita e finalizamos o processo diagnóstico internamente.'},{q:'Como funciona a plataforma para os pais?',a:'Após o cadastro, você recebe acesso a uma área exclusiva com agenda de sessões, relatórios por especialidade, histórico de evolução e canal direto com os profissionais.'},{q:'Os profissionais trabalham juntos ou são independentes?',a:'Todos fazem parte da equipe fixa do Instituto. Há reuniões mensais de equipe sobre cada paciente ativo, onde os profissionais alinham metas de forma integrada.'},{q:'Qual o prazo até a primeira consulta?',a:'Atualmente entre 2 e 4 semanas após o primeiro contato, dependendo da disponibilidade de agenda e da especialidade prioritária identificada.'}].map((item,i)=>(
+            <div key={i} className="faq-item">
+              <div className="faq-q" onClick={()=>setOpen(open===i?null:i)}>
+                <span className="faq-q-txt">{item.q}</span>
+                <span className={`faq-chev${open===i?' open':''}`}><Ic n="chevD" s={18}/></span>
+              </div>
+              {open===i&&<div className="faq-a">{item.a}</div>}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── DOAÇÕES ────────────────────────────────────── */
+function DoacaoModal({onClose}){
+  const [tab,setTab]=useState('pix');
+  const [valor,setValor]=useState('');
+  const [preset,setPreset]=useState(null);
+  const [copied,setCopied]=useState(false);
+  const [done,setDone]=useState(false);
+  const [ccData,setCcData]=useState({num:'',nome:'',exp:'',cvv:''});
+  const pix='pix@institutovertdeesperanca.org.br';
+  const handlePreset=v=>{setPreset(v);setValor(v.toString());};
+  const handleCopy=()=>{setCopied(true);setTimeout(()=>setCopied(false),2000);};
+  if(done)return(
+    <div className="modal-ov" onClick={e=>{if(e.target===e.currentTarget)onClose()}}>
+      <div className="modal-box">
+        <div style={{textAlign:'center',padding:'20px 0'}}>
+          <div className="success-ic"><Ic n="heart" s={28} c="var(--g500)"/></div>
+          <div style={{fontSize:24,fontWeight:800,marginBottom:8}}>Obrigado!</div>
+          <div style={{fontSize:15,color:'var(--muted)',lineHeight:1.7,marginBottom:24}}>Sua doação foi registrada. Você receberá uma confirmação por e-mail em breve. Cada contribuição ajuda uma criança a ter acesso ao tratamento que precisa.</div>
+          <button className="btn btn-primary btn-lg" style={{width:'100%',justifyContent:'center'}} onClick={onClose}>Fechar</button>
+        </div>
+      </div>
+    </div>
+  );
+  return(
+    <div className="modal-ov" onClick={e=>{if(e.target===e.currentTarget)onClose()}}>
+      <div className="modal-box">
+        <div className="modal-head">
+          <div><div className="modal-title">Fazer uma doação</div><div className="modal-sub">100% destinado ao Programa de Acesso Social</div></div>
+          <button className="modal-close" onClick={onClose}><Ic n="x" s={16}/></button>
+        </div>
+        <span className="valor-label">Valor da doação</span>
+        <div className="valor-wrap">
+          <span className="valor-pfx">R$</span>
+          <input className="valor-inp" type="number" min="1" placeholder="0" value={valor} onChange={e=>{setValor(e.target.value);setPreset(null);}}/>
+        </div>
+        <div className="presets">
+          {[30,50,100,200].map(v=><button key={v} className={`preset${preset===v?' on':''}`} onClick={()=>handlePreset(v)}>R$ {v}</button>)}
+        </div>
+        <div className="ptabs">
+          <div className={`ptab${tab==='pix'?' on':''}`} onClick={()=>setTab('pix')}><Ic n="qr" s={14}/> PIX</div>
+          <div className={`ptab${tab==='cc'?' on':''}`} onClick={()=>setTab('cc')}><Ic n="cc" s={14}/> Cartão</div>
+          <div className={`ptab${tab==='boleto'?' on':''}`} onClick={()=>setTab('boleto')}><Ic n="receipt" s={14}/> Boleto</div>
+        </div>
+        {tab==='pix'&&(
+          <div style={{textAlign:'center'}}>
+            <div className="qr-box"><Ic n="qr" s={48} c="var(--g500)"/><span style={{fontSize:10,color:'var(--muted)',fontWeight:600}}>QR Code PIX</span></div>
+            <p style={{fontSize:12,color:'var(--muted)',marginBottom:8}}>Ou copie a chave PIX:</p>
+            <div className="copy-row"><span className="pix-key">{pix}</span><button className="copy-btn" onClick={handleCopy}>{copied?'Copiado!':'Copiar'}</button></div>
+            <p style={{fontSize:11,color:'var(--muted)',lineHeight:1.6,marginBottom:16}}>Após o pagamento, envie o comprovante para <strong>doacoes@iverde.org.br</strong>.</p>
+            <button className="btn btn-primary btn-lg" style={{width:'100%',justifyContent:'center'}} onClick={()=>setDone(true)}>Confirmar doação</button>
+          </div>
+        )}
+        {tab==='cc'&&(
+          <form onSubmit={e=>{e.preventDefault();setDone(true);}}>
+            <div className="cc-grid">
+              <div className="fgroup cc-full"><label>Número do cartão</label><input placeholder="0000 0000 0000 0000" maxLength={19} value={ccData.num} onChange={e=>setCcData(d=>({...d,num:e.target.value}))}/></div>
+              <div className="fgroup cc-full"><label>Nome no cartão</label><input placeholder="NOME SOBRENOME" value={ccData.nome} onChange={e=>setCcData(d=>({...d,nome:e.target.value}))}/></div>
+              <div className="fgroup"><label>Validade</label><input placeholder="MM/AA" maxLength={5} value={ccData.exp} onChange={e=>setCcData(d=>({...d,exp:e.target.value}))}/></div>
+              <div className="fgroup"><label>CVV</label><input placeholder="000" maxLength={4} value={ccData.cvv} onChange={e=>setCcData(d=>({...d,cvv:e.target.value}))}/></div>
+            </div>
+            <button type="submit" className="btn btn-primary btn-lg" style={{width:'100%',justifyContent:'center'}}>Doar R$ {valor||'—'} <Ic n="heart" s={15}/></button>
+          </form>
+        )}
+        {tab==='boleto'&&(
+          <div>
+            <div style={{background:'var(--bg)',border:'1px solid var(--border)',borderRadius:10,padding:20,marginBottom:16}}>
+              <div style={{fontSize:13,fontWeight:600,marginBottom:4}}>Boleto bancário</div>
+              <div style={{fontSize:12,color:'var(--muted)'}}>Vencimento: {new Date(Date.now()+3*86400000).toLocaleDateString('pt-BR')}</div>
+              <div className="boleto-code">00190.00009 02600.360320 00001.100006 2 10260000000{(parseFloat(valor)||0).toFixed(2).replace('.','')}</div>
+            </div>
+            <button className="btn btn-primary btn-lg" style={{width:'100%',justifyContent:'center'}} onClick={()=>setDone(true)}>Gerar boleto <Ic n="receipt" s={15}/></button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function Doacoes({onDoar}){
+  return(
+    <section className="sec-deepgreen" id="doações">
+      <div className="wrap">
+        <div className="doa-inner">
+          <div>
+            <div className="sec-lbl-w">Doações</div>
+            <h2 className="sec-h2-w">Seu apoio financia atendimento gratuito</h2>
+            <div className="doa-text">
+              <p>Os recursos de doação são destinados integralmente ao <strong>Programa de Acesso Social</strong> — que oferece atendimento gratuito ou subsidiado para famílias em vulnerabilidade socioeconômica.</p>
+              <p>Toda doação é registrada e auditável. Publicamos um <strong>relatório de impacto semestral</strong> com valores recebidos, crianças atendidas e resultados observados.</p>
+              <p>Em 2024, o programa atendeu <strong>47 crianças</strong> que não teriam acesso ao tratamento de outra forma.</p>
+            </div>
+            <button className="btn btn-xl" style={{background:'white',color:'var(--g600)',marginTop:24,fontWeight:700}} onClick={onDoar}>
+              Fazer uma doação <Ic n="heart" s={16} c="var(--g500)"/>
+            </button>
+          </div>
+          <div className="doa-stats">
+            {[{ic:'users',v:'47',l:'crianças atendidas via programa social em 2024'},{ic:'zap',v:'R$ 84k',l:'investidos em atendimentos gratuitos no último ano'},{ic:'activity',v:'3',l:'parcerias com escolas da rede pública municipal'}].map((s,i)=>(
+              <div key={i} className="doa-stat">
+                <div className="doa-stat-ico"><Ic n={s.ic} s={22} c="var(--g200)"/></div>
+                <div><div className="doa-stat-val">{s.v}</div><div className="doa-stat-lbl">{s.l}</div></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── CONTATO ────────────────────────────────────── */
+function Contato(){
+  const [sent,setSent]=useState(false);
+  return(
+    <section className="sec-white" id="contato">
+      <div className="wrap">
+        <div className="ctto-inner">
+          <div>
+            <div className="sec-lbl">Contato</div>
+            <h2 className="sec-h2">Fale com a gente</h2>
+            <p style={{color:'var(--muted)',fontSize:15,lineHeight:1.75,marginBottom:32}}>Para agendamentos, dúvidas sobre o processo ou informações sobre doações. Respondemos em até 1 dia útil.</p>
+            <div className="ctto-items">
+              {[{ic:'phone',h:'WhatsApp / Telefone',p:'(11) 99xxx-xxxx'},{ic:'mail',h:'E-mail',p:'contato@iverde.com.br'},{ic:'pin',h:'Endereço',p:'R. das Esperanças, 120 · São Paulo, SP'},{ic:'clock',h:'Horário',p:'Seg–Sex 8h–18h · Sáb 8h–12h'}].map((c,i)=>(
+                <div key={i} className="ctto-item">
+                  <div className="ctto-ico"><Ic n={c.ic} s={18} c="var(--g500)"/></div>
+                  <div><h4>{c.h}</h4><p>{c.p}</p></div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div>
+            {sent?(
+              <div style={{background:'var(--g50)',border:'1px solid var(--g100)',borderRadius:14,padding:40,textAlign:'center'}}>
+                <div style={{width:52,height:52,borderRadius:'50%',background:'var(--g500)',display:'flex',alignItems:'center',justifyContent:'center',margin:'0 auto 14px'}}><Ic n="check" s={24} c="white"/></div>
+                <div style={{fontWeight:700,fontSize:17,marginBottom:6}}>Mensagem enviada</div>
+                <div style={{color:'var(--muted)',fontSize:14}}>Retornaremos em até 1 dia útil.</div>
+              </div>
+            ):(
+              <div style={{background:'var(--white)',border:'1px solid var(--border)',borderRadius:14,padding:28}}>
+                <form style={{display:'flex',flexDirection:'column',gap:14}} onSubmit={e=>{e.preventDefault();setSent(true);}}>
+                  <div className="form-row">
+                    <div className="fgroup"><label>Nome</label><input type="text" placeholder="Seu nome" required/></div>
+                    <div className="fgroup"><label>Telefone</label><input type="tel" placeholder="(11) 9xxxx-xxxx"/></div>
+                  </div>
+                  <div className="fgroup"><label>E-mail</label><input type="email" placeholder="seu@email.com" required/></div>
+                  <div className="fgroup"><label>Assunto</label>
+                    <select><option>Agendamento de consulta</option><option>Dúvidas sobre o processo</option><option>Planos e convênios</option><option>Programa de doações</option><option>Outro</option></select>
+                  </div>
+                  <div className="fgroup"><label>Mensagem</label><textarea placeholder="Descreva brevemente o que precisa..."/></div>
+                  <button type="submit" className="btn btn-primary btn-lg" style={{width:'100%',justifyContent:'center'}}>Enviar mensagem</button>
+                </form>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── FOOTER ─────────────────────────────────────── */
+function Footer(){
+  return(
+    <footer className="footer">
+      <div className="wrap">
+        <div className="footer-grid">
+          <div>
+            <div className="foot-logo-wrap"><LogoMark size={32}/><div className="foot-logo-txt">Instituto <em>Verde</em> Esperança</div></div>
+            <div className="foot-desc">Atendimento multidisciplinar especializado em crianças autistas, com plataforma integrada para famílias e profissionais.</div>
+          </div>
+          {[{h:'Instituto',ls:['Sobre','Especialidades','Como Funciona','Nossa equipe']},{h:'Plataforma',ls:['Área da família','Área do profissional','Fazer login','Criar conta']},{h:'Social',ls:['Programa de doações','Relatório de impacto','Parcerias','Contato']}].map((col,i)=>(
+            <div key={i} className="foot-col"><h4>{col.h}</h4><ul>{col.ls.map(l=><li key={l}><a href="#">{l}</a></li>)}</ul></div>
+          ))}
+        </div>
+        <div className="foot-bottom">
+          <div className="foot-copy">© 2026 Instituto Verde Esperança. Todos os direitos reservados.</div>
+          <div className="foot-copy">CFM · CRP · CRFa · CREFITO</div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+/* ─── TWEAKS ─────────────────────────────────────── */
+const THEMES=[
+  {lbl:'Clássico',sub:'Branco limpo, hero com mockup da plataforma',sw:['#ffffff','#f6f8f6','#259a43']},
+  {lbl:'Ilustrativo',sub:'Crianças animadas, cores vibrantes, carousel',sw:['#f0faf3','#259a43','#fbbf24']},
+  {lbl:'Verde imersivo',sub:'Hero verde dominante com ilustração',sw:['#259a43','#175f2a','#d9f0e1']},
+];
+function TweaksPanel({theme,setTheme,onClose}){
+  return(
+    <div className="tweaks-panel">
+      <div className="tp-head"><span className="tp-title">Tweaks</span><button className="tp-close" onClick={onClose}><Ic n="x" s={15}/></button></div>
+      <div className="tp-label">Versão visual</div>
+      {THEMES.map((t,i)=>(
+        <div key={i} className={`tp-option${theme===i+1?' sel':''}`} onClick={()=>setTheme(i+1)}>
+          <div className="tp-radio">{theme===i+1&&<div className="tp-rdot"/>}</div>
+          <div>
+            <div className="tp-opt-lbl">Versão {i+1} — {t.lbl}</div>
+            <div className="tp-opt-sub">{t.sub}</div>
+            <div className="tp-preview">{t.sw.map((c,j)=><div key={j} className="tp-swatch" style={{background:c,border:'1px solid rgba(0,0,0,.08)'}}/>)}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ─── APP ────────────────────────────────────────── */
+const TWEAK_DEFAULS = /*EDITMODE-BEGIN*/{
+  "theme": 2
+}/*EDITMODE-END*/;
+
+function App(){
+  const [theme,setThemeRaw]=useState(TWEAK_DEFAULS.theme);
+  const [tweaks,setTweaks]=useState(false);
+  const [doarModal,setDoarModal]=useState(false);
+  const setTheme=v=>{setThemeRaw(v);window.parent.postMessage({type:'__edit_mode_set_keys',edits:{theme:v}},'*');};
+  useEffect(()=>{
+    window.addEventListener('message',e=>{
+      if(e.data?.type==='__activate_edit_mode')setTweaks(true);
+      if(e.data?.type==='__deactivate_edit_mode')setTweaks(false);
+    });
+    window.parent.postMessage({type:'__edit_mode_available'},'*');
+  },[]);
+  const goDash=()=>{window.location.href='Plataforma - Dashboard.html';};
+
+  const heroSection = theme===1?(
+    <div style={{marginTop:68,background:'white',minHeight:'calc(100vh - 68px)',display:'flex',alignItems:'center',padding:'64px 0 44px'}}>
+      <div className="wrap" style={{width:'100%'}}>
+        <div className="hero-inner">
+          <div>
+            <div className="hero-chip chip-green"><div className="hero-chip-dot" style={{width:6,height:6,borderRadius:'50%',background:'var(--g500)',flexShrink:0}}/>Atendimento multidisciplinar</div>
+            <h1 className="hero-h1" style={{color:'var(--text)'}}>Especialistas em autismo, processo integrado.</h1>
+            <p className="hero-sub" style={{color:'var(--muted)'}}>Psicologia, fonoaudiologia, terapia ocupacional e neuropsicologia em um só lugar — com plataforma digital para acompanhar cada etapa.</p>
+            <div className="hero-ctas">
+              <button className="btn btn-primary btn-xl">Agendar avaliação <Ic n="arr" s={16}/></button>
+              <button className="btn btn-outline btn-xl">Ver como funciona</button>
+            </div>
+            <div className="hero-stats" style={{borderTop:'1px solid var(--border)'}}>
+              {[{v:'312+',l:'crianças atendidas'},{v:'8',l:'especialidades'},{v:'94%',l:'melhora em 6 meses'}].map((s,i)=>(
+                <div key={i}><div className="hstat-val" style={{color:'var(--text)'}}>{s.v}</div><div className="hstat-lbl" style={{color:'var(--muted)'}}>{s.l}</div></div>
+              ))}
+            </div>
+          </div>
+          <HeroMockup/>
+        </div>
+      </div>
+    </div>
+  ):theme===3?(
+    <div style={{marginTop:68,background:'var(--g500)',minHeight:'calc(100vh - 68px)',display:'flex',flexDirection:'column',justifyContent:'center',padding:'64px 0 32px',position:'relative',overflow:'hidden'}}>
+      <div style={{position:'absolute',top:-120,right:-80,width:500,height:500,borderRadius:'50%',background:'rgba(255,255,255,.07)',pointerEvents:'none'}}/>
+      <div style={{position:'absolute',bottom:-80,left:-60,width:360,height:360,borderRadius:'50%',background:'rgba(0,0,0,.08)',pointerEvents:'none'}}/>
+      {/* pontos espectro decorativos */}
+      {[{t:'8%',l:'5%',s:12,c:'#fbbf24'},{t:'15%',l:'80%',s:9,c:'#f472b6'},{t:'70%',r:'5%',s:10,c:'#60a5fa'},{t:'55%',l:'3%',s:8,c:'#a78bfa'}].map((d,i)=>(
+        <div key={i} style={{position:'absolute',top:d.t,left:d.l,right:d.r,width:d.s,height:d.s,borderRadius:'50%',background:d.c,opacity:.5,animation:`float ${3+i*.5}s ease-in-out infinite ${i*.3}s`}}/>
+      ))}
+      <div className="wrap" style={{width:'100%',position:'relative',zIndex:1}}>
+        <div className="hero-inner">
+          <div>
+            <div className="hero-chip chip-white"><div className="hero-chip-dot" style={{width:6,height:6,borderRadius:'50%',background:'rgba(255,255,255,.7)',flexShrink:0}}/>Atendimento multidisciplinar em autismo</div>
+            <h1 className="hero-h1" style={{color:'white'}}>Especialistas em autismo, processo integrado.</h1>
+            <p className="hero-sub" style={{color:'rgba(255,255,255,.82)'}}>Psicologia, fonoaudiologia, terapia ocupacional e neuropsicologia em um só lugar — com plataforma digital para acompanhar cada etapa do tratamento.</p>
+            <div className="hero-ctas">
+              <button className="btn btn-xl" style={{background:'white',color:'var(--g600)',fontWeight:700}}>Agendar avaliação <Ic n="arr" s={16} c="var(--g600)"/></button>
+              <button className="btn btn-outline btn-xl" style={{background:'transparent',color:'white',borderColor:'rgba(255,255,255,.4)'}}>Ver como funciona</button>
+            </div>
+            <div className="hero-stats" style={{borderTop:'1px solid rgba(255,255,255,.2)'}}>
+              {[{v:'312+',l:'crianças atendidas'},{v:'8',l:'especialidades'},{v:'94%',l:'melhora em 6 meses'}].map((s,i)=>(
+                <div key={i}><div className="hstat-val" style={{color:'white'}}>{s.v}</div><div className="hstat-lbl" style={{color:'rgba(255,255,255,.65)'}}>{s.l}</div></div>
+              ))}
+            </div>
+          </div>
+          <div style={{display:'flex',justifyContent:'center',alignItems:'flex-end'}}><IllusPainting/></div>
+        </div>
+      </div>
+      <div style={{display:'flex',gap:8,justifyContent:'center',padding:'20px 0 0',position:'relative',zIndex:2}}>
+        {[1,0,0].map((on,i)=><div key={i} style={{width:on?28:8,height:8,borderRadius:999,background:on?'white':'rgba(255,255,255,.35)',transition:'all .25s'}}/>)}
+      </div>
+    </div>
+  ):(
+    <HeroCarousel/>
+  );
+
+  return(
+    <>
+      <Navbar onEnter={goDash}/>
+      {heroSection}
+      <StatsBar/>
+      <QuemSomos/>
+      <ComoFunciona/>
+      <Especialidades/>
+      <PlatSection onEnter={goDash}/>
+      <Parceiros/>
+      <Depoimentos/>
+      <MVV/>
+      <FAQ/>
+      <Doacoes onDoar={()=>setDoarModal(true)}/>
+      <Contato/>
+      <Footer/>
+      {doarModal&&<DoacaoModal onClose={()=>setDoarModal(false)}/>}
+      {tweaks&&<TweaksPanel theme={theme} setTheme={setTheme} onClose={()=>{setTweaks(false);window.parent.postMessage({type:'__edit_mode_dismissed'},'*');}}/>}
+    </>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

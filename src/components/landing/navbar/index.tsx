@@ -23,12 +23,12 @@ export function Navbar({ solid: forceSolid = false }: { solid?: boolean }) {
     const solid = forceSolid || scrolled;
     return (
         <nav
-            className={`fixed top-0 left-0 right-0 z-[300] transition-[background,box-shadow] ${
+            className={`fixed top-0 left-0 right-0 z-300 transition-[background,box-shadow] ${
                 solid ? "bg-white shadow-[0_1px_0_var(--color-border-soft)]" : ""
             }`}
         >
             <div className="wrap">
-                <div className="flex items-center h-[68px] gap-9">
+                <div className="flex items-center h-68px gap-9">
                     <LogoFull dark />
                     <ul className="hidden md:flex gap-7 list-none flex-1">
                         {LINKS.map((l) => (
@@ -45,9 +45,6 @@ export function Navbar({ solid: forceSolid = false }: { solid?: boolean }) {
                     <div className="flex gap-2 items-center ml-auto">
                         <Link href="/login">
                             <Button variant="ghost">Entrar</Button>
-                        </Link>
-                        <Link href="/login" className="hidden sm:block">
-                            <Button variant="outline">Criar conta</Button>
                         </Link>
                         <Button>Agendar consulta</Button>
                     </div>
