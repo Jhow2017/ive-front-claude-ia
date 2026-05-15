@@ -10,3 +10,6 @@ next-env.d.ts
 
 # TypeScript incremental build info
 *.tsbuildinfo
+
+# Design prototype bundle (reference only, not shipped)
+instituto-verde-esperança/
