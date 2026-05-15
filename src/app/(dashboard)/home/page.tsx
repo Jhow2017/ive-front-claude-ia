@@ -104,14 +104,16 @@ const FREQ = [
 export default function HomeView() {
     const role = useAuth((s) => s.role);
     const isAdmin = role === "admin";
-    const isFam = role === "familia";
-    const metrics = isFam ? FAM_METRICS : isAdmin ? ADMIN_METRICS : PROF_METRICS;
-    const title = isFam
+    const isUsuario = role === "usuario";
+    const metrics = isUsuario ? FAM_METRICS : isAdmin ? ADMIN_METRICS : PROF_METRICS;
+    const title = isUsuario
         ? "Bem-vinda, família Costa"
         : isAdmin
           ? "Painel administrativo"
           : "Bem-vinda, Dra. Renata";
-    const sub = isFam ? "Lucas Costa · 6 anos · Atendimento ativo" : "Sábado, 26 de abril de 2026";
+    const sub = isUsuario
+        ? "Lucas Costa · 6 anos · Atendimento ativo"
+        : "Sábado, 26 de abril de 2026";
 
     return (
         <>
@@ -180,7 +182,7 @@ export default function HomeView() {
                     <CardContent>
                         <CardHeader>
                             <CardTitle>
-                                {isFam
+                                {isUsuario
                                     ? "Frequência de sessões"
                                     : "Consultas realizadas · últimos 12 meses"}
                             </CardTitle>
@@ -318,7 +320,7 @@ export default function HomeView() {
                     <CardContent>
                         <CardHeader>
                             <CardTitle>
-                                {isFam
+                                {isUsuario
                                     ? "Equipe do Lucas"
                                     : isAdmin
                                       ? "Atividade recente"

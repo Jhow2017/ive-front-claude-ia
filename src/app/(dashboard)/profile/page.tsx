@@ -26,8 +26,8 @@ const PROFILE: Record<
         since: "Mar/2022",
         init: "RL",
     },
-    familia: {
-        name: "Família Costa",
+    usuario: {
+        name: "Usuário Costa",
         email: "costa@email.com",
         phone: "(11) 99966-3344",
         role: "Responsável · Lucas Costa",

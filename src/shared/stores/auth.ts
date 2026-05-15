@@ -2,7 +2,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export type Role = "admin" | "profissional" | "familia";
+export type Role = "admin" | "profissional" | "usuario";
 
 export interface AuthState {
     role: Role;
@@ -30,9 +30,9 @@ export const profileForRole: Record<
         role: "Fonoaudióloga",
         sub: "renata@iverde.com.br",
     },
-    familia: {
+    usuario: {
         init: "FC",
-        name: "Família Costa",
+        name: "Usuário Costa",
         role: "Responsável",
         sub: "costa@email.com",
     },
@@ -51,7 +51,7 @@ export const useAuth = create<AuthState>()(
             cycleRole: () => {
                 const r = get().role;
                 const next: Role =
-                    r === "admin" ? "profissional" : r === "profissional" ? "familia" : "admin";
+                    r === "admin" ? "profissional" : r === "profissional" ? "usuario" : "admin";
                 set({ role: next });
             },
         }),

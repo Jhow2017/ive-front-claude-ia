@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 const DADOS: [string, string][] = [
     ["Nome completo", "Lucas Costa"],
     ["Data de nascimento", "12/03/2020 · 6 anos"],
-    ["Responsável", "Família Costa"],
+    ["Responsável", "Usuário Costa"],
     ["Escola", "E.M. Prof. João Pinheiro"],
     ["Plano de saúde", "Não (particular)"],
     ["Início do atendimento", "Janeiro de 2025"],

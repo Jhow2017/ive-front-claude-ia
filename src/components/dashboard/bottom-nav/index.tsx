@@ -5,7 +5,7 @@ import { Home, Users, Calendar, MessageSquare, Settings } from "lucide-react";
 
 const ITEMS = [
     { href: "/home", Ic: Home, label: "Início" },
-    { href: "/patients", Ic: Users, label: "Pacientes" },
+    { href: "/patients", Ic: Users, label: "Usuários" },
     { href: "/agenda", Ic: Calendar, label: "Agenda" },
     { href: "/messages", Ic: MessageSquare, label: "Mensagens" },
     { href: "/settings", Ic: Settings, label: "Config" },

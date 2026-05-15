@@ -18,7 +18,7 @@ const TABS: { k: Role; l: string; placeholder: string }[] = [
         l: "Profissional",
         placeholder: "profissional@iverde.com.br",
     },
-    { k: "familia", l: "Família", placeholder: "responsavel@email.com" },
+    { k: "usuario", l: "Usuário", placeholder: "responsavel@email.com" },
 ];
 
 const schema = z.object({

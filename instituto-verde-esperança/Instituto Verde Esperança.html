@@ -238,7 +238,7 @@
 
     /* ── FOOTER ── */
     .footer{background:var(--g700);padding:60px 0 32px}
-    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+    .footer-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr 1.1fr 1fr;gap:38px;margin-bottom:48px}
     .foot-logo-wrap{display:flex;align-items:center;gap:10px;margin-bottom:10px}
     .foot-logo-txt{font-size:15px;font-weight:800;color:#fff}
     .foot-logo-txt em{color:var(--g200);font-style:normal}
@@ -1083,10 +1083,10 @@ function HeroMockup(){
     <div style={{background:'white',borderRadius:16,border:'1px solid var(--border)',boxShadow:'0 16px 56px rgba(0,0,0,.09)',overflow:'hidden'}}>
       <div style={{background:'var(--g500)',padding:'14px 18px',display:'flex',alignItems:'center',gap:6}}>
         {[0,1,2].map(i=><div key={i} style={{width:9,height:9,borderRadius:'50%',background:'rgba(255,255,255,.35)'}}/>)}
-        <span style={{color:'#fff',fontSize:12,fontWeight:600,marginLeft:6}}>Área da família · Instituto Verde Esperança</span>
+        <span style={{color:'#fff',fontSize:12,fontWeight:600,marginLeft:6}}>Área do usuário · Instituto Verde Esperança</span>
       </div>
       <div style={{padding:20}}>
-        <div style={{fontSize:14,fontWeight:700,marginBottom:3}}>Olá, família Costa 👋</div>
+        <div style={{fontSize:14,fontWeight:700,marginBottom:3}}>Olá, Usuário Costa 👋</div>
         <div style={{fontSize:12,color:'var(--muted)',marginBottom:16}}>Lucas · 6 anos · Atendimento ativo desde jan/2025</div>
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:16}}>
           {[{l:'Próxima sessão',v:'Ter, 29 abr',s:'14h · Fonoaudiologia'},{l:'Última avaliação',v:'18 abr 2026',s:'Relatório disponível'},{l:'Sessões este mês',v:'8 sessões',s:'+2 vs. mês anterior'},{l:'Mensagens',v:'2 não lidas',s:'Dra. Ana Lima'}].map((c,i)=>(
@@ -1190,8 +1190,15 @@ function Navbar({onEnter}){
         <div className="nav-inner">
           <LogoFull dark={true}/>
           <ul className="nav-links">
-            {['Sobre','Especialidades','Como Funciona','Doações','Contato'].map(l=>(
-              <li key={l}><a href={`#${l.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s/g,'-')}`}>{l}</a></li>
+            {[
+              {l:'Sobre',h:'#sobre'},
+              {l:'Especialidades',h:'#especialidades'},
+              {l:'Como Funciona',h:'#como-funciona'},
+              {l:'Doações',h:'#doações'},
+              {l:'Transparência',h:'Transparencia.html'},
+              {l:'Contato',h:'#contato'}
+            ].map(({l,h})=>(
+              <li key={l}><a href={h}>{l}</a></li>
             ))}
           </ul>
           <div className="nav-btns">
@@ -1296,7 +1303,7 @@ function Especialidades(){
         <div style={{maxWidth:520}}>
           <div className="sec-lbl">Especialidades</div>
           <h2 className="sec-h2">Equipe multidisciplinar, foco definido</h2>
-          <p className="sec-p">Todas as áreas compartilham prontuário e participam de reuniões mensais de equipe por paciente.</p>
+          <p className="sec-p">Todas as áreas compartilham prontuário e participam de reuniões mensais de equipe por usuário.</p>
         </div>
         <div className="esp-grid">
           {areas.map((a,i)=>(
@@ -1315,7 +1322,7 @@ function Especialidades(){
 /* ─── PLATFORM ───────────────────────────────────── */
 function PlatSection({onEnter}){
   const [activeNav,setActiveNav]=useState(0);
-  const navGrps=[['Principal','Início','Agenda','Evolução'],['Paciente','Prontuário','Mensagens']];
+  const navGrps=[['Principal','Início','Agenda','Evolução'],['Usuário','Prontuário','Mensagens']];
   const bars=[30,42,35,55,48,65,58,72,62,80,70,88];
   const W=280,H=56,P=4;
   const pts=bars.map((b,i)=>({x:P+i*(W-2*P)/11,y:H-P-(b/100*(H-2*P))}));
@@ -1341,7 +1348,7 @@ function PlatSection({onEnter}){
           </div>
           <div className="dash-prev">
             <div className="dp-head">
-              <span className="dp-breadcrumb">Área da família › <b>Visão geral</b></span>
+              <span className="dp-breadcrumb">Área do usuário › <b>Visão geral</b></span>
               <div className="dp-acts"><div className="dp-act"><Ic n="bell" s={11} c="rgba(255,255,255,.35)"/></div><div className="dp-act"><Ic n="settings" s={11} c="rgba(255,255,255,.35)"/></div></div>
             </div>
             <div className="dp-layout">
@@ -1752,8 +1759,8 @@ function Footer(){
             <div className="foot-logo-wrap"><LogoMark size={32}/><div className="foot-logo-txt">Instituto <em>Verde</em> Esperança</div></div>
             <div className="foot-desc">Atendimento multidisciplinar especializado em crianças autistas, com plataforma integrada para famílias e profissionais.</div>
           </div>
-          {[{h:'Instituto',ls:['Sobre','Especialidades','Como Funciona','Nossa equipe']},{h:'Plataforma',ls:['Área da família','Área do profissional','Fazer login','Criar conta']},{h:'Social',ls:['Programa de doações','Relatório de impacto','Parcerias','Contato']}].map((col,i)=>(
-            <div key={i} className="foot-col"><h4>{col.h}</h4><ul>{col.ls.map(l=><li key={l}><a href="#">{l}</a></li>)}</ul></div>
+          {[{h:'Instituto',ls:['Sobre','Especialidades','Como Funciona','Nossa equipe']},{h:'Plataforma',ls:['Área do usuário','Área do profissional','Fazer login','Criar conta']},{h:'Transparência',ls:[['Página de transparência','Transparencia.html'],['Demonstrações financeiras','Transparencia.html#financeiro'],['Convênios públicos','Transparencia.html#convenios'],['Ouvidoria & LAI','Transparencia.html#ouvidoria']]},{h:'Social',ls:['Programa de doações','Relatório de impacto','Parcerias','Contato']}].map((col,i)=>(
+            <div key={i} className="foot-col"><h4>{col.h}</h4><ul>{col.ls.map(l=>{const isArr=Array.isArray(l);const label=isArr?l[0]:l;const href=isArr?l[1]:'#';return <li key={label}><a href={href}>{label}</a></li>;})}</ul></div>
           ))}
         </div>
         <div className="foot-bottom">

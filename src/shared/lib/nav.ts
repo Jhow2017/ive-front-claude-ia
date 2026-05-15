@@ -25,11 +25,11 @@ const NAV_ADMIN: NavGroup[] = [
             { id: "home", label: "Início", icon: "home", href: "/home" },
             {
                 id: "pacientes",
-                label: "Pacientes",
+                label: "Usuários",
                 icon: "users",
                 children: [
-                    { id: "pacientes-lista", label: "Lista de Pacientes", href: "/patients" },
-                    { id: "pacientes-novo", label: "Novo Paciente", href: "/patients/new" },
+                    { id: "pacientes-lista", label: "Lista de Usuários", href: "/patients" },
+                    { id: "pacientes-novo", label: "Novo Usuário", href: "/patients/new" },
                 ],
             },
             {
@@ -88,10 +88,10 @@ const NAV_PROF: NavGroup[] = [
             { id: "home", label: "Início", icon: "home", href: "/home" },
             {
                 id: "pacientes",
-                label: "Meus Pacientes",
+                label: "Meus Usuários",
                 icon: "users",
                 children: [
-                    { id: "pacientes-lista", label: "Lista de Pacientes", href: "/patients" },
+                    { id: "pacientes-lista", label: "Lista de Usuários", href: "/patients" },
                 ],
             },
         ],
@@ -133,7 +133,7 @@ const NAV_PROF: NavGroup[] = [
     },
 ];
 
-const NAV_FAMILIA: NavGroup[] = [
+const NAV_USUARIO: NavGroup[] = [
     {
         grp: "Principal",
         items: [
@@ -165,13 +165,13 @@ const NAV_FAMILIA: NavGroup[] = [
 export function getNav(role: Role): NavGroup[] {
     if (role === "admin") return NAV_ADMIN;
     if (role === "profissional") return NAV_PROF;
-    return NAV_FAMILIA;
+    return NAV_USUARIO;
 }
 
 export const PAGE_TITLES: Record<string, string> = {
     "/home": "Início",
-    "/patients": "Lista de Pacientes",
-    "/patients/new": "Novo Paciente",
+    "/patients": "Lista de Usuários",
+    "/patients/new": "Novo Usuário",
     "/professionals": "Profissionais",
     "/schedules": "Escalas de Atendimento",
     "/agenda": "Agenda",

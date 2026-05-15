@@ -154,7 +154,7 @@ function PessoaBlock({ includeParentesco = false }: { includeParentesco?: boolea
                 <FormField label="Cartão SUS">
                     <Input placeholder="000 0000 0000 0000" />
                 </FormField>
-                <FormField label="NIS (Bolsa Família)">
+                <FormField label="NIS (Bolsa Usuário)">
                     <Input placeholder="000.00000.00-0" />
                 </FormField>
             </div>
@@ -304,7 +304,7 @@ export default function RegisterPatientView() {
         <>
             <div className="flex justify-between items-start flex-wrap gap-3">
                 <div>
-                    <div className="text-[22px] font-extrabold tracking-tight">Novo Paciente</div>
+                    <div className="text-[22px] font-extrabold tracking-tight">Novo Usuário</div>
                     <div className="text-[13px] text-(--color-muted) mt-1">
                         Preencha os dados para cadastrar um{" "}
                         <span className="text-(--color-g500) font-semibold">novo paciente</span>

@@ -28,7 +28,7 @@ export function UserMenu() {
         return () => document.removeEventListener("mousedown", onClick);
     }, []);
 
-    const tag = role === "admin" ? "Admin" : role === "profissional" ? "Profissional" : "Família";
+    const tag = role === "admin" ? "Admin" : role === "profissional" ? "Profissional" : "Usuário";
 
     const onLogout = () => {
         setOpen(false);

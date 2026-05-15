@@ -7,7 +7,7 @@ import { useAuth, type Role } from "@/shared/stores/auth";
 const ROLES: { k: Role; label: string; icon: LucideIcon }[] = [
     { k: "admin", label: "Admin", icon: Settings },
     { k: "profissional", label: "Profissional", icon: User },
-    { k: "familia", label: "Família", icon: Users },
+    { k: "usuario", label: "Usuário", icon: Users },
 ];
 
 const POS_KEY = "ive_role_fab_pos";

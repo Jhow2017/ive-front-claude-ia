@@ -26,7 +26,7 @@ const NOTIFS = [
     {
         ic: MessageSquare,
         title: "Nova mensagem",
-        msg: "Família Oliveira enviou uma mensagem sobre o relatório de progresso.",
+        msg: "Usuário Oliveira enviou uma mensagem sobre o relatório de progresso.",
         time: "há 1h",
         unread: true,
     },

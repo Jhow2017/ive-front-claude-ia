@@ -18,7 +18,7 @@ const FAQS = [
     },
     {
         q: "Como cadastrar um novo paciente?",
-        a: 'Em Pacientes > Lista de Pacientes, clique em "Novo paciente". Preencha as informações em cada seção (Pessoais, Endereço, Contato, Plano).',
+        a: 'Em Pacientes > Lista de Usuários, clique em "Novo paciente". Preencha as informações em cada seção (Pessoais, Endereço, Contato, Plano).',
     },
     {
         q: "Como funciona o Painel da TV?",

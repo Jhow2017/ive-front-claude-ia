@@ -36,7 +36,7 @@ interface Ev {
     prof: { seed: number; name: string; id: string };
     status: "Confirmada" | "Pendente";
     sala: string;
-    familia: string;
+    usuario: string;
 }
 
 const ALL: Ev[] = [
@@ -50,7 +50,7 @@ const ALL: Ev[] = [
         prof: { seed: 1, name: "Dra. Renata Lima", id: "renata" },
         status: "Confirmada",
         sala: "Sala 3",
-        familia: "costa",
+        usuario: "costa",
     },
     {
         col: 1,
@@ -62,7 +62,7 @@ const ALL: Ev[] = [
         prof: { seed: 2, name: "Profa. Cíntia Rocha", id: "cintia" },
         status: "Confirmada",
         sala: "Sala 1",
-        familia: "oliveira",
+        usuario: "oliveira",
     },
     {
         col: 2,
@@ -74,7 +74,7 @@ const ALL: Ev[] = [
         prof: { seed: 3, name: "Dra. Mariana Souza", id: "mariana" },
         status: "Confirmada",
         sala: "Sala 2",
-        familia: "santos",
+        usuario: "santos",
     },
     {
         col: 3,
@@ -86,7 +86,7 @@ const ALL: Ev[] = [
         prof: { seed: 1, name: "Dr. Rafael Cunha", id: "rafael" },
         status: "Pendente",
         sala: "Sala 4",
-        familia: "lima",
+        usuario: "lima",
     },
     {
         col: 4,
@@ -98,7 +98,7 @@ const ALL: Ev[] = [
         prof: { seed: 0, name: "Dra. Renata Lima", id: "renata" },
         status: "Confirmada",
         sala: "Sala 3",
-        familia: "rocha",
+        usuario: "rocha",
     },
     {
         col: 0,
@@ -110,7 +110,7 @@ const ALL: Ev[] = [
         prof: { seed: 0, name: "Dra. Renata Lima", id: "renata" },
         status: "Confirmada",
         sala: "Sala 3",
-        familia: "alves",
+        usuario: "alves",
     },
     {
         col: 2,
@@ -122,7 +122,7 @@ const ALL: Ev[] = [
         prof: { seed: 3, name: "Dra. Mariana Souza", id: "mariana" },
         status: "Confirmada",
         sala: "Sala 2",
-        familia: "oliveira",
+        usuario: "oliveira",
     },
     {
         col: 3,
@@ -134,14 +134,14 @@ const ALL: Ev[] = [
         prof: { seed: 0, name: "Dra. Renata Lima", id: "renata" },
         status: "Confirmada",
         sala: "Sala 3",
-        familia: "costa",
+        usuario: "costa",
     },
 ];
 
 export default function AgendaView() {
     const role = useAuth((s) => s.role);
     const isProf = role === "profissional";
-    const isFam = role === "familia";
+    const isUsuario = role === "usuario";
     const [view, setView] = useState<"hoje" | "semana" | "mes">("semana");
     const [modalOpen, setModalOpen] = useState(false);
     const [sel, setSel] = useState<(Ev & { day: any; time: string }) | null>(null);
@@ -149,8 +149,8 @@ export default function AgendaView() {
 
     const events = isProf
         ? ALL.filter((e) => e.prof.id === "renata")
-        : isFam
-          ? ALL.filter((e) => e.familia === "costa")
+        : isUsuario
+          ? ALL.filter((e) => e.usuario === "costa")
           : filterProf === "todos"
             ? ALL
             : ALL.filter((e) => e.prof.id === filterProf);
@@ -180,11 +180,11 @@ export default function AgendaView() {
                             </button>
                         ))}
                     </div>
-                    {!isProf && !isFam && (
+                    {!isProf && !isUsuario && (
                         <Select
                             value={filterProf}
                             onChange={(e) => setFilterProf(e.target.value)}
-                            className="!w-auto !py-2"
+                            className="w-auto! py-2!"
                         >
                             <option value="todos">Todos os profissionais</option>
                             <option value="renata">Dra. Renata Lima</option>
@@ -469,7 +469,7 @@ function MonthView({ events, setSel }: { events: Ev[]; setSel: (e: any) => void 
             {mDays.map((d, i) => (
                 <div
                     key={i}
-                    className={`bg-white min-h-[96px] p-1.5 flex flex-col gap-1 cursor-pointer hover:bg-(--color-g50) ${
+                    className={`bg-white min-h-24 p-1.5 flex flex-col gap-1 cursor-pointer hover:bg-(--color-g50) ${
                         !d.inMonth ? "bg-neutral-50 text-(--color-muted2)" : ""
                     }`}
                 >

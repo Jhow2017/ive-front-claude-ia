@@ -25,7 +25,7 @@ export default function AppointmentsView() {
                 <div>
                     <div className="text-[22px] font-extrabold tracking-tight">Meu Atendimento</div>
                     <div className="text-[13px] text-(--color-muted) mt-1">
-                        Controle da fila de pacientes que chegaram para sessão
+                        Controle da fila de usuários que chegaram para sessão
                     </div>
                 </div>
                 <label className="flex items-center gap-2 bg-white border border-(--color-border-soft) px-3 py-2 rounded-lg cursor-pointer text-[13px] font-semibold">
@@ -118,7 +118,7 @@ export default function AppointmentsView() {
             <Card>
                 <CardContent>
                     <CardHeader>
-                        <CardTitle>Fila de pacientes (ordem de chegada)</CardTitle>
+                        <CardTitle>Fila de usuários (ordem de chegada)</CardTitle>
                     </CardHeader>
                     <div className="grid gap-2">
                         {aguardando.map((p, i) => (
@@ -160,7 +160,7 @@ export default function AppointmentsView() {
                         ))}
                         {aguardando.length === 0 && (
                             <div className="text-center text-(--color-muted) py-6 text-[13px]">
-                                Sem pacientes aguardando.
+                                Sem usuários aguardando.
                             </div>
                         )}
                     </div>

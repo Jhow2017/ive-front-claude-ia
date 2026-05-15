@@ -298,7 +298,7 @@
     .diag-sintomas-lbl{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;display:flex;align-items:center;gap:5px}
     .diag-card-foot{border-top:1px solid var(--border);padding:12px 20px;display:flex;justify-content:flex-end;gap:8px}
 
-    /* ── CADASTRO PACIENTE ── */
+    /* ── CADASTRO USUÁRIO ── */
     .cad-section{background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:12px}
     .cad-sec-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;user-select:none;gap:12px}
     .cad-sec-head:hover{background:var(--g50)}
@@ -372,6 +372,108 @@
     .modal-close{background:var(--bg);border:none;cursor:pointer;color:var(--muted);width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .15s;flex-shrink:0}
     .modal-close:hover{background:var(--border)}
     .modal-foot{display:flex;gap:8px;justify-content:flex-end;margin-top:20px;padding-top:16px;border-top:1px solid var(--border)}
+
+    /* ── SCAN CADASTRO MODAL ── */
+    .scan-box{background:var(--white);border-radius:16px;width:100%;max-width:880px;max-height:92vh;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.18);display:flex;flex-direction:column}
+    .scan-head{display:flex;justify-content:space-between;align-items:flex-start;padding:22px 26px 14px;gap:12px}
+    .scan-head-l{display:flex;gap:14px;align-items:center}
+    .scan-head-icon{width:44px;height:44px;border-radius:11px;background:linear-gradient(135deg,var(--g500),var(--g600));color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 12px rgba(37,154,67,.25)}
+    .scan-title{font-size:18px;font-weight:800;letter-spacing:-.4px;display:flex;align-items:center;gap:8px}
+    .scan-sub{font-size:13px;color:var(--muted);margin-top:2px}
+    .scan-beta{background:#f5f3ff;color:var(--purple);font-size:10px;font-weight:700;padding:2px 7px;border-radius:999px;letter-spacing:.3px;text-transform:uppercase}
+    .scan-stepper{display:flex;align-items:center;gap:6px;padding:0 26px 14px;border-bottom:1px solid var(--border)}
+    .scan-stp{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--muted2)}
+    .scan-stp-n{width:18px;height:18px;border-radius:50%;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+    .scan-stp.on{color:var(--text)}
+    .scan-stp.on .scan-stp-n{background:var(--g500);color:#fff;border-color:var(--g500)}
+    .scan-stp.done{color:var(--g600)}
+    .scan-stp.done .scan-stp-n{background:var(--g50);color:var(--g600);border-color:var(--g100)}
+    .scan-stp-sep{width:24px;height:1px;background:var(--border)}
+    .scan-body{flex:1;overflow-y:auto;padding:24px 26px}
+    .scan-body::-webkit-scrollbar{width:4px}
+    .scan-body::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+    .scan-foot{display:flex;gap:8px;justify-content:space-between;align-items:center;padding:14px 26px;border-top:1px solid var(--border);background:#fafbfa}
+    .scan-foot-hint{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px}
+
+    /* Step 1: source tiles */
+    .scan-tiles{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+    .scan-tile{position:relative;border:2px solid var(--border);border-radius:14px;padding:24px 20px;cursor:pointer;transition:all .15s;background:var(--white);text-align:left;display:flex;flex-direction:column;gap:10px;font-family:var(--f)}
+    .scan-tile:hover{border-color:var(--g500);background:var(--g50);transform:translateY(-2px);box-shadow:0 8px 24px rgba(37,154,67,.08)}
+    .scan-tile-ico{width:46px;height:46px;border-radius:11px;background:var(--g50);color:var(--g600);display:flex;align-items:center;justify-content:center}
+    .scan-tile-title{font-size:15px;font-weight:700;color:var(--text)}
+    .scan-tile-sub{font-size:12px;color:var(--muted);line-height:1.45}
+    .scan-tile-mobile{position:absolute;top:12px;right:12px;font-size:9px;font-weight:700;color:var(--g600);background:var(--g50);border:1px solid var(--g100);padding:2px 7px;border-radius:999px;letter-spacing:.3px;text-transform:uppercase}
+    .scan-tips{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start}
+    .scan-tips-ico{width:24px;height:24px;border-radius:50%;background:#fde68a;color:#92400e;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .scan-tips-list{font-size:12px;color:#78350f;line-height:1.6}
+    .scan-tips-list strong{color:#92400e;font-weight:700}
+
+    /* Step 2/3: image + processing */
+    .scan-preview{position:relative;border-radius:12px;overflow:hidden;background:#1a1f1c;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+    .scan-preview img{width:100%;height:100%;object-fit:contain;display:block}
+    .scan-preview-placeholder{display:flex;flex-direction:column;align-items:center;gap:10px;color:#94a399}
+    .scan-shimmer{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+    .scan-shimmer::before{content:'';position:absolute;left:-60%;top:0;bottom:0;width:60%;background:linear-gradient(90deg,transparent,rgba(37,154,67,.45),transparent);animation:scanline 2.2s ease-in-out infinite}
+    @keyframes scanline{0%{left:-60%}100%{left:120%}}
+    .scan-bracket{position:absolute;width:32px;height:32px;border:3px solid #fff;opacity:.85}
+    .scan-bracket.tl{top:12px;left:12px;border-right:none;border-bottom:none;border-top-left-radius:6px}
+    .scan-bracket.tr{top:12px;right:12px;border-left:none;border-bottom:none;border-top-right-radius:6px}
+    .scan-bracket.bl{bottom:12px;left:12px;border-right:none;border-top:none;border-bottom-left-radius:6px}
+    .scan-bracket.br{bottom:12px;right:12px;border-left:none;border-top:none;border-bottom-right-radius:6px}
+    .scan-progress{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:18px 20px}
+    .scan-progress-title{font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:14px}
+    .scan-progress-list{display:flex;flex-direction:column;gap:11px}
+    .scan-progress-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted);transition:color .2s}
+    .scan-progress-item.done{color:var(--g600)}
+    .scan-progress-item.active{color:var(--text);font-weight:600}
+    .scan-progress-icon{width:22px;height:22px;border-radius:50%;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .25s}
+    .scan-progress-item.done .scan-progress-icon{background:var(--g50);border-color:var(--g100);color:var(--g600)}
+    .scan-progress-item.active .scan-progress-icon{background:var(--g500);border-color:var(--g500);color:#fff;animation:pulseRing 1.2s ease-out infinite}
+    @keyframes pulseRing{0%{box-shadow:0 0 0 0 rgba(37,154,67,.45)}70%{box-shadow:0 0 0 7px rgba(37,154,67,0)}100%{box-shadow:0 0 0 0 rgba(37,154,67,0)}}
+    .scan-progress-bar{height:4px;background:var(--bg);border-radius:2px;margin-top:14px;overflow:hidden}
+    .scan-progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--g500),var(--g600));border-radius:2px;transition:width .4s ease}
+
+    /* Step 3: review */
+    .scan-review{display:grid;grid-template-columns:1fr 1.6fr;gap:20px;align-items:start}
+    @media (max-width: 800px){.scan-review{grid-template-columns:1fr}}
+    .scan-review-img{position:sticky;top:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#1a1f1c;aspect-ratio:3/4}
+    .scan-review-img img{width:100%;height:100%;object-fit:cover;display:block}
+    .scan-review-img-foot{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.7));padding:18px 12px 10px;color:#fff;font-size:11px;display:flex;justify-content:space-between;align-items:center}
+    .scan-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+    .scan-summary-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:10px 12px}
+    .scan-summary-val{font-size:18px;font-weight:800;letter-spacing:-.4px;line-height:1}
+    .scan-summary-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:4px;font-weight:600}
+    .scan-section-lbl{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin:14px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+    .scan-section-lbl:first-child{margin-top:0}
+    .scan-fields-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .scan-fields-grid .scan-span-2{grid-column:span 2}
+    .scan-field{position:relative}
+    .scan-field-lbl{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:600;color:var(--text);margin-bottom:4px}
+    .scan-field-input{width:100%;padding:8px 11px;border:1px solid var(--border);border-radius:8px;font-family:var(--f);font-size:13px;color:var(--text);background:var(--white);outline:none;transition:all .12s}
+    .scan-field-input:focus{border-color:var(--g500);box-shadow:0 0 0 3px rgba(37,154,67,.1)}
+    .scan-field.high .scan-field-input{border-color:var(--g100);background:var(--g50)}
+    .scan-field.mid .scan-field-input{border-color:#fde68a;background:#fffbeb}
+    .scan-field.low .scan-field-input{border-color:#fecaca;background:#fef2f2}
+    .scan-field.empty .scan-field-input{background:var(--white);border-style:dashed}
+    .scan-conf{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:700;padding:1px 6px;border-radius:999px}
+    .scan-conf.high{background:var(--g50);color:var(--g600)}
+    .scan-conf.mid{background:#fffbeb;color:#a16207}
+    .scan-conf.low{background:#fef2f2;color:var(--red)}
+    .scan-conf.empty{background:var(--bg);color:var(--muted)}
+    .scan-conf-dot{width:5px;height:5px;border-radius:50%;background:currentColor}
+
+    /* Step 4: success */
+    .scan-success{text-align:center;padding:32px 20px}
+    .scan-success-ico{width:72px;height:72px;border-radius:50%;background:var(--g50);color:var(--g600);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;animation:popIn .4s cubic-bezier(.2,.9,.4,1.2) both}
+    @keyframes popIn{0%{transform:scale(.4);opacity:0}100%{transform:scale(1);opacity:1}}
+    .scan-success-title{font-size:20px;font-weight:800;letter-spacing:-.5px}
+    .scan-success-sub{font-size:13px;color:var(--muted);margin-top:6px;max-width:380px;margin-left:auto;margin-right:auto}
+    .scan-success-card{margin:18px auto 0;max-width:360px;background:var(--white);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;gap:12px;align-items:center;text-align:left}
+
+    /* Admin scan button shimmer */
+    .btn-scan{background:#fff;color:var(--text);border:1px solid var(--border);position:relative;overflow:hidden}
+    .btn-scan:hover{border-color:var(--g500);color:var(--g600);background:var(--g50)}
+    .btn-scan .scan-dot{width:6px;height:6px;border-radius:50%;background:var(--g500);box-shadow:0 0 0 0 rgba(37,154,67,.5);animation:pulseRing 1.4s ease-out infinite}
 
     /* ── VIEWS TABS ── */
     .view-tabs{display:flex;gap:2px;background:var(--bg);border-radius:9px;padding:3px}
@@ -500,7 +602,11 @@ function Ic({ n, s = 16, c = 'currentColor', sw = 1.8 }) {
     play: 'M5 3l14 9-14 9V3z',
     pause: 'M6 4h4v16H6zM14 4h4v16h-4z',
     volume: 'M11 5L6 9H2v6h4l5 4V5zM15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14',
-    wpp: 'M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z'
+    wpp: 'M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z',
+    camera: 'M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z|circle:cx=12cy=13r=4',
+    sparkle: 'M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M5.6 18.4l2.8-2.8M15.6 8.4l2.8-2.8',
+    refresh: 'M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15',
+    image: 'M3 3h18a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z|circle:cx=8.5cy=8.5r=1.5|M21 15l-5-5L5 21'
   };
   const d = m[n] || '';
   return (
@@ -553,21 +659,15 @@ function AvatarIlus({ seed = 0, size = 32, bg = 'var(--g100)', txt = '' }) {
 
 /* ─── LOGIN ──────────────────────────────────────── */
 function Login({ onLogin }) {
-  const [tab, setTab] = useState('admin');
   return (
     <div className="login-wrap">
       <div className="login-card">
         <div className="login-logo"><LogoMark size={36} /><div className="login-logo-txt">Instituto <em>Verde</em> Esperança</div></div>
         <h1 className="login-title">Acessar plataforma</h1>
         <p className="login-sub">Entre com sua conta para continuar.</p>
-        <div className="ltabs" data-comment-anchor="024c2ac6b2-div-112-9">
-          {[['admin', 'Admin'], ['profissional', 'Profissional'], ['familia', 'Família']].map(([k, l]) =>
-          <div key={k} className={`ltab${tab === k ? ' on' : ''}`} onClick={() => setTab(k)}>{l}</div>
-          )}
-        </div>
-        <div className="fgroup"><label>E-mail</label><input type="email" placeholder={tab === 'familia' ? 'responsavel@email.com' : tab === 'admin' ? 'admin@iverde.com.br' : 'profissional@iverde.com.br'} /></div>
+        <div className="fgroup"><label>E-mail</label><input type="email" placeholder="seu@email.com" /></div>
         <div className="fgroup"><label>Senha</label><input type="password" placeholder="••••••••" /></div>
-        <button className="btn btn-primary btn-full" style={{ marginTop: 6, padding: '11px 16px', fontSize: 14 }} onClick={() => onLogin(tab)}>
+        <button className="btn btn-primary btn-full" style={{ marginTop: 6, padding: '11px 16px', fontSize: 14 }} onClick={() => onLogin('profissional')}>
           Entrar <Ic n="arr" s={15} />
         </button>
         <div style={{ marginTop: 14, fontSize: 13, color: 'var(--muted)', textAlign: "center" }}>
@@ -584,9 +684,9 @@ function Login({ onLogin }) {
 const NAV_ADMIN = [
 { grp: 'Principal', items: [
   { id: 'home', label: 'Início', icon: 'home' },
-  { id: 'pacientes', label: 'Pacientes', icon: 'users', children: [
-    { id: 'pacientes-lista', label: 'Lista de Pacientes' },
-    { id: 'pacientes-novo', label: 'Novo Paciente' }]
+  { id: 'pacientes', label: 'Usuários', icon: 'users', children: [
+    { id: 'pacientes-lista', label: 'Lista de Usuários' },
+    { id: 'pacientes-novo', label: 'Novo Usuário' }]
   },
   { id: 'profissionais', label: 'Profissionais', icon: 'stethoscope', children: [
     { id: 'profissionais-lista', label: 'Lista' },
@@ -614,8 +714,8 @@ const NAV_ADMIN = [
 const NAV_PROF = [
 { grp: 'Principal', items: [
   { id: 'home', label: 'Início', icon: 'home' },
-  { id: 'pacientes', label: 'Meus Pacientes', icon: 'users', children: [
-    { id: 'pacientes-lista', label: 'Lista de Pacientes' }]
+  { id: 'pacientes', label: 'Meus Usuários', icon: 'users', children: [
+    { id: 'pacientes-lista', label: 'Lista de Usuários' }]
   }]
 },
 { grp: 'Clínico', items: [
@@ -633,7 +733,7 @@ const NAV_PROF = [
 },
 { grp: 'Conta', items: [{ id: 'configuracoes', label: 'Configurações', icon: 'settings' }] }];
 
-const NAV_FAMILIA = [
+const NAV_USUARIO = [
 { grp: 'Principal', items: [
   { id: 'home', label: 'Início', icon: 'home' },
   { id: 'consultas-agenda', label: 'Agenda', icon: 'calendar' },
@@ -647,7 +747,7 @@ const NAV_FAMILIA = [
 
 
 const PAGE_TITLES = {
-  home: 'Início', 'pacientes-lista': 'Lista de Pacientes', 'pacientes-novo': 'Novo Paciente',
+  home: 'Início', 'pacientes-lista': 'Lista de Usuários', 'pacientes-novo': 'Novo Usuário',
   'profissionais-lista': 'Profissionais', 'profissionais-escalas': 'Escalas de Atendimento',
   'consultas-agenda': 'Agenda', 'consultas-historico': 'Histórico de Consultas',
   diagnosticos: 'Diagnósticos', prontuarios: 'Prontuários', relatorios: 'Relatórios',
@@ -659,8 +759,8 @@ const PAGE_TITLES = {
 /* ─── SIDEBAR ────────────────────────────────────── */
 function Sidebar({ role, active, setActive, collapsed, setCollapsed, mobileOpen, setMobileOpen, onLogout }) {
   const [openMenus, setOpenMenus] = useState({ 'pacientes': true, 'consultas': true });
-  const nav = role === 'admin' ? NAV_ADMIN : role === 'profissional' ? NAV_PROF : NAV_FAMILIA;
-  const profile = { admin: { init: 'AD', name: 'Administrador', role: 'Admin' }, profissional: { init: 'RL', name: 'Dra. Renata Lima', role: 'Fonoaudióloga' }, familia: { init: 'FC', name: 'Família Costa', role: 'Responsável' } }[role];
+  const nav = role === 'admin' ? NAV_ADMIN : role === 'profissional' ? NAV_PROF : NAV_USUARIO;
+  const profile = { admin: { init: 'AD', name: 'Administrador', role: 'Admin' }, profissional: { init: 'RL', name: 'Dra. Renata Lima', role: 'Fonoaudióloga' }, usuario: { init: 'FC', name: 'Usuário Costa', role: 'Responsável' } }[role];
   const toggleMenu = (id) => setOpenMenus((o) => ({ ...o, [id]: !o[id] }));
   const isActive = (id) => active === id || id === 'home' && active === 'home';
   const isParentActive = (item) => item.children?.some((c) => c.id === active);
@@ -739,9 +839,9 @@ function Topbar({ active, role, setRole, setMobileOpen }) {
   const [notifOpen, setNotifOpen] = useState(false);
   const notifs = [
   { ico: 'calendar', title: 'Consulta confirmada', msg: 'Lucas Costa confirmou a sessão de Fonoaudiologia para amanhã às 14h.', time: 'há 12 min', unread: true },
-  { ico: 'msg', title: 'Nova mensagem', msg: 'Família Oliveira enviou uma mensagem sobre o relatório de progresso.', time: 'há 1h', unread: true },
+  { ico: 'msg', title: 'Nova mensagem', msg: 'Usuário Oliveira enviou uma mensagem sobre o relatório de progresso.', time: 'há 1h', unread: true },
   { ico: 'file', title: 'Relatório aprovado', msg: 'Plano terapêutico do Pedro Santos foi aprovado pela coordenação.', time: 'há 3h', unread: true },
-  { ico: 'alert', title: 'Sessão cancelada', msg: 'A sessão das 09h com Maria Oliveira foi cancelada pela família.', time: 'ontem', unread: false },
+  { ico: 'alert', title: 'Sessão cancelada', msg: 'A sessão das 09h com Maria Oliveira foi cancelada pelo usuário.', time: 'ontem', unread: false },
   { ico: 'check', title: 'Avaliação concluída', msg: 'Avaliação neuropsicológica de Ana Lima finalizada.', time: 'ontem', unread: false }];
 
   const unreadCount = notifs.filter((n) => n.unread).length;
@@ -788,12 +888,12 @@ function Topbar({ active, role, setRole, setMobileOpen }) {
         <UserAvatarMenu role={role} />
       </div>
       <FloatingRoleSwitcher role={role} setRole={setRole} />
-    </div>);
+      </div>);
 }
 
 /* ─── User avatar in topbar ─── */
 function UserAvatarMenu({ role }) {
-  const profile = { admin: { init: 'AD', name: 'Administrador', sub: 'admin@iverde.com.br', tag: 'Admin' }, profissional: { init: 'RL', name: 'Dra. Renata Lima', sub: 'Fonoaudióloga', tag: 'Profissional' }, familia: { init: 'FC', name: 'Família Costa', sub: 'Responsável', tag: 'Família' } }[role];
+  const profile = { admin: { init: 'AD', name: 'Administrador', sub: 'admin@iverde.com.br', tag: 'Admin' }, profissional: { init: 'RL', name: 'Dra. Renata Lima', sub: 'Fonoaudióloga', tag: 'Profissional' }, usuario: { init: 'FC', name: 'Usuário Costa', sub: 'Responsável', tag: 'Usuário' } }[role];
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
   useEffect(() => {
@@ -872,7 +972,7 @@ function FloatingRoleSwitcher({ role, setRole }) {
   const roles = [
   { k: 'admin', label: 'Admin', ic: 'settings' },
   { k: 'profissional', label: 'Profissional', ic: 'user' },
-  { k: 'familia', label: 'Família', ic: 'users' }];
+  { k: 'usuario', label: 'Usuário', ic: 'users' }];
 
   const cur = roles.find((r) => r.k === role) || roles[0];
   const openLeft = pos.x > window.innerWidth / 2;
@@ -1032,26 +1132,26 @@ function FreqLineChart({ data }) {
 function ViewHome({ role }) {
   const isAdmin = role === 'admin';
   const isProf = role === 'profissional';
-  const isFam = role === 'familia';
+  const isUsuario = role === 'usuario';
   return (
     <>
       <div>
-        <div className="page-title">{isFam ? 'Bem-vinda, família Costa' : isAdmin ? 'Painel administrativo' : 'Bem-vinda, Dra. Renata'}</div>
-        <div className="page-sub">{isFam ? 'Lucas Costa · 6 anos · Atendimento ativo' : 'Sábado, 26 de abril de 2026'}</div>
+        <div className="page-title">{isUsuario ? 'Bem-vindo(a), Usuário Costa' : isAdmin ? 'Painel administrativo' : 'Bem-vinda, Dra. Renata'}</div>
+        <div className="page-sub">{isUsuario ? 'Lucas Costa · 6 anos · Atendimento ativo' : 'Sábado, 26 de abril de 2026'}</div>
       </div>
       <div className="metric-grid">
-        {(isFam ? [
+        {(isUsuario ? [
         { l: 'Próxima sessão', v: '29 abr', d: 'Ter · 14h00', cls: 'up', delta: 'Confirmada' },
         { l: 'Sessões este mês', v: '8', d: 'vs. 6 no mês ant.', cls: 'up', delta: '+2' },
         { l: 'Áreas em atendimento', v: '3', d: 'Fono, TO, Psicologia', cls: 'neutral', delta: 'Ativo' },
         { l: 'Mensagens', v: '2', d: 'não lidas', cls: 'up', delta: 'Novas' }] :
         isAdmin ? [
-        { l: 'Pacientes ativos', v: '84', d: 'vs. 76 mês ant.', cls: 'up', delta: '+8' },
+        { l: 'Usuários ativos', v: '84', d: 'vs. 76 mês ant.', cls: 'up', delta: '+8' },
         { l: 'Consultas hoje', v: '18', d: 'de 22 agendadas', cls: 'neutral', delta: 'Hoje' },
         { l: 'Profissionais ativos', v: '12', d: '8 especialidades', cls: 'neutral', delta: 'Equipe' },
         { l: 'Diagnósticos pendentes', v: '7', d: 'prazo em aberto', cls: 'down', delta: 'Atenção' }] :
         [
-        { l: 'Meus pacientes', v: '24', d: 'vs. 21 mês ant.', cls: 'up', delta: '+3' },
+        { l: 'Meus usuários', v: '24', d: 'vs. 21 mês ant.', cls: 'up', delta: '+3' },
         { l: 'Sessões esta semana', v: '12', d: 'de 14 agendadas', cls: 'neutral', delta: 'Semana' },
         { l: 'Relatórios pendentes', v: '4', d: 'prazo: 30 abr', cls: 'down', delta: 'Atenção' },
         { l: 'Mensagens', v: '2', d: 'não respondidas', cls: 'up', delta: 'Novas' }]).
@@ -1084,7 +1184,7 @@ function ViewHome({ role }) {
 
       <div className="card card-pad">
           <div className="card-header">
-            <div><div className="card-title">{isFam ? 'Frequência de sessões' : 'Consultas realizadas · últimos 12 meses'}</div></div>
+            <div><div className="card-title">{isUsuario ? 'Frequência de sessões' : 'Consultas realizadas · últimos 12 meses'}</div></div>
           </div>
           <FreqLineChart data={[{ m: 'Mai', v: 32 }, { m: 'Jun', v: 38 }, { m: 'Jul', v: 42 }, { m: 'Ago', v: 39 }, { m: 'Set', v: 48 }, { m: 'Out', v: 51 }, { m: 'Nov', v: 55 }, { m: 'Dez', v: 58 }, { m: 'Jan', v: 54 }, { m: 'Fev', v: 62 }, { m: 'Mar', v: 67 }, { m: 'Abr', v: 72 }]} />
         </div>
@@ -1112,7 +1212,7 @@ function ViewHome({ role }) {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 4 }}>
                       <div>
                         <span style={{ fontSize: 13, fontWeight: 600 }}>{s.n}</span>
-                        <span style={{ fontSize: 11, color: 'var(--muted)', marginLeft: 8 }}>{s.p} pacientes</span>
+                        <span style={{ fontSize: 11, color: 'var(--muted)', marginLeft: 8 }}>{s.p} usuários</span>
                       </div>
                       <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--g600)' }}>{s.pct}%</span>
                     </div>
@@ -1157,7 +1257,7 @@ function ViewHome({ role }) {
             <div><div className="card-title">Próximas consultas</div><div className="card-sub">Esta semana</div></div>
           </div>
           <table className="tbl">
-            <thead><tr><th>Paciente</th><th>Especialidade</th><th>Hora</th><th>Status</th></tr></thead>
+            <thead><tr><th>Usuário</th><th>Especialidade</th><th>Hora</th><th>Status</th></tr></thead>
             <tbody>
               {[{ p: 'Lucas Costa', e: 'Fonoaudiologia', h: '14h00', s: 'Confirmada', c: 'badge-green' }, { p: 'Maria Oliveira', e: 'Terapia Ocup.', h: '15h30', s: 'Confirmada', c: 'badge-green' }, { p: 'Pedro Santos', e: 'Psicologia', h: '17h00', s: 'Pendente', c: 'badge-yellow' }].map((r, i) =>
               <tr key={i}><td className="tbl-name">{r.p}</td><td className="tbl-muted">{r.e}</td><td className="tbl-muted">{r.h}</td><td><span className={`badge ${r.c}`}>{r.s}</span></td></tr>
@@ -1167,7 +1267,7 @@ function ViewHome({ role }) {
         </div>
         <div className="card card-pad">
           <div className="card-header">
-            <div><div className="card-title">{isFam ? 'Equipe do Lucas' : isAdmin ? 'Atividade recente' : 'Últimas observações'}</div></div>
+            <div><div className="card-title">{isUsuario ? 'Equipe do Lucas' : isAdmin ? 'Atividade recente' : 'Últimas observações'}</div></div>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
             {[{ av: 0, n: 'Dra. Ana Lima', r: 'Fonoaudióloga', m: 'Sessão de 24/04: boa resposta ao protocolo de nomeação.', t: 'há 2 dias' }, { av: 1, n: 'Profa. Cíntia', r: 'Terapeuta Ocup.', m: 'Integração sensorial — boa tolerância ao toque hoje.', t: 'há 4 dias' }, { av: 2, n: 'Dr. Rafael Cunha', r: 'Neuropsicólogo', m: 'Reavaliação cognitiva marcada para 15/05.', t: 'há 1 sem' }].map((u, i) =>
@@ -1190,12 +1290,313 @@ function ViewHome({ role }) {
 
 }
 
-/* ─── LISTA DE PACIENTES ─────────────────────────── */
-function ViewListaPacientes({ setActive }) {
+/* ─── LISTA DE USUÁRIOS ─────────────────────────── */
+function ScanCadastroModal({ onClose, onSaved }) {
+  const [step, setStep] = useState('source'); // source, preview, processing, review, success
+  const [img, setImg] = useState(null); // dataURL of captured/uploaded
+  const [imgName, setImgName] = useState('');
+  const [progress, setProgress] = useState(0); // 0..4
+  const [fields, setFields] = useState(null);
+  const fileRef = useRef(null);
+  const camRef = useRef(null);
+
+  const handleFile = (f) => {
+    if (!f) return;
+    const r = new FileReader();
+    r.onload = (e) => {setImg(e.target.result);setImgName(f.name);setStep('preview');};
+    r.readAsDataURL(f);
+  };
+
+  const startProcessing = () => {
+    setStep('processing');
+    setProgress(0);
+    const steps = [600, 900, 1400, 900, 500];
+    let i = 0;
+    const tick = () => {
+      if (i >= steps.length) {
+        // Simulated extraction result
+        setFields({
+          nome: { v: 'Maria Eduarda Silva Rocha', c: 98 },
+          nasc: { v: '2019-03-12', c: 97 },
+          sexo: { v: 'Feminino', c: 99 },
+          cpf: { v: '045.123.789-22', c: 94 },
+          rg: { v: '44.123.456-7', c: 86 },
+          sus: { v: '898 0034 5678 1122', c: 76 },
+          nis: { v: '', c: 0 },
+          tel: { v: '(11) 98712-4523', c: 96 },
+          email: { v: 'joao.silva@gmail.com', c: 81 },
+          emergNome: { v: 'João Carlos Silva', c: 94 },
+          emergTel: { v: '(11) 97455-1240', c: 88 },
+          cep: { v: '04567-040', c: 95 },
+          logradouro: { v: 'Rua das Acácias', c: 91 },
+          numero: { v: '421', c: 99 },
+          comp: { v: 'Casa fundos', c: 64 },
+          bairro: { v: 'Vila Mariana', c: 92 },
+          cidade: { v: 'São Paulo', c: 99 },
+          uf: { v: 'SP', c: 99 },
+          parentesco: { v: 'Pai', c: 99 },
+          responsavel: { v: 'João Carlos Silva', c: 95 }
+        });
+        setStep('review');
+        return;
+      }
+      setProgress(i + 1);
+      setTimeout(() => {i++;tick();}, steps[i]);
+    };
+    tick();
+  };
+
+  // Auto-advance from preview to processing after a short pause
+  useEffect(() => {if (step === 'preview') {const t = setTimeout(startProcessing, 1100);return () => clearTimeout(t);}}, [step]);
+
+  const updateField = (k, v) => setFields((f) => ({ ...f, [k]: { ...f[k], v } }));
+
+  const tierOf = (c) => c >= 90 ? 'high' : c >= 75 ? 'mid' : c > 0 ? 'low' : 'empty';
+  const confLabel = (c) => c >= 90 ? `${c}%` : c >= 75 ? `${c}%` : c > 0 ? `${c}%` : 'vazio';
+
+  const STEPS = [
+  ['source', 'Origem'],
+  ['preview', 'Captura'],
+  ['processing', 'Extração'],
+  ['review', 'Revisão'],
+  ['success', 'Pronto']];
+
+  const stepIdx = STEPS.findIndex((s) => s[0] === step);
+
+  const procSteps = [
+  { t: 'Enviando imagem', ic: 'upload' },
+  { t: 'Detectando bordas do formulário', ic: 'image' },
+  { t: 'Extraindo texto (OCR)', ic: 'sparkle' },
+  { t: 'Estruturando dados em JSON', ic: 'file' },
+  { t: 'Validando campos obrigatórios', ic: 'check' }];
+
+  const totalFields = fields ? Object.keys(fields).length : 0;
+  const detectedFields = fields ? Object.values(fields).filter((f) => f.v).length : 0;
+  const lowConf = fields ? Object.values(fields).filter((f) => f.c > 0 && f.c < 90).length : 0;
+
+  return (
+    <div className="modal-ov" onClick={(e) => {if (e.target === e.currentTarget) onClose();}}>
+      <div className="scan-box">
+        <div className="scan-head">
+          <div className="scan-head-l">
+            <div className="scan-head-icon"><Ic n="camera" s={22} /></div>
+            <div>
+              <div className="scan-title">Cadastro por Foto <span className="scan-beta">Beta · IA</span></div>
+              <div className="scan-sub">Converte o formulário em papel num cadastro digital automaticamente</div>
+            </div>
+          </div>
+          <button className="modal-close" onClick={onClose}><Ic n="x" s={15} /></button>
+        </div>
+
+        <div className="scan-stepper">
+          {STEPS.map(([k, l], i) =>
+          <React.Fragment key={k}>
+              <div className={`scan-stp${i === stepIdx ? ' on' : i < stepIdx ? ' done' : ''}`}>
+                <div className="scan-stp-n">{i < stepIdx ? <Ic n="check" s={10} /> : i + 1}</div>
+                <span>{l}</span>
+              </div>
+              {i < STEPS.length - 1 && <div className="scan-stp-sep"></div>}
+            </React.Fragment>
+          )}
+        </div>
+
+        <div className="scan-body">
+          {step === 'source' &&
+          <>
+              <div className="scan-tiles">
+                <button className="scan-tile" onClick={() => camRef.current?.click()}>
+                  <span className="scan-tile-mobile">Mobile</span>
+                  <div className="scan-tile-ico"><Ic n="camera" s={24} /></div>
+                  <div>
+                    <div className="scan-tile-title">Tirar foto agora</div>
+                    <div className="scan-tile-sub">Abre a câmera traseira do celular. Posicione o formulário preenchido dentro do quadro.</div>
+                  </div>
+                  <input ref={camRef} type="file" accept="image/*" capture="environment" style={{ display: 'none' }} onChange={(e) => handleFile(e.target.files?.[0])} />
+                </button>
+                <button className="scan-tile" onClick={() => fileRef.current?.click()}>
+                  <div className="scan-tile-ico"><Ic n="upload" s={24} /></div>
+                  <div>
+                    <div className="scan-tile-title">Enviar arquivo</div>
+                    <div className="scan-tile-sub">Selecione uma foto ou PDF do formulário do seu computador. JPG, PNG ou PDF até 15&nbsp;MB.</div>
+                  </div>
+                  <input ref={fileRef} type="file" accept="image/*,application/pdf" style={{ display: 'none' }} onChange={(e) => handleFile(e.target.files?.[0])} />
+                </button>
+              </div>
+              <div className="scan-tips">
+                <div className="scan-tips-ico"><Ic n="alert" s={13} /></div>
+                <div className="scan-tips-list">
+                  <strong>Para melhor extração:</strong> tire a foto com <strong>boa iluminação</strong>, papel apoiado em superfície plana, evite sombras sobre o formulário e enquadre todos os campos preenchidos.
+                </div>
+              </div>
+            </>
+          }
+
+          {step === 'preview' &&
+          <>
+              <div className="scan-preview">
+                {img ? <img src={img} alt="Formulário capturado" /> : <div className="scan-preview-placeholder"><Ic n="image" s={36} />Sem imagem</div>}
+                <div className="scan-bracket tl"></div><div className="scan-bracket tr"></div>
+                <div className="scan-bracket bl"></div><div className="scan-bracket br"></div>
+              </div>
+              <div style={{ textAlign: 'center', fontSize: 13, color: 'var(--muted)' }}>
+                <Ic n="check" s={13} c="var(--g500)" /> Imagem recebida — iniciando análise…
+              </div>
+            </>
+          }
+
+          {step === 'processing' &&
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+              <div className="scan-preview" style={{ marginBottom: 0 }}>
+                {img && <img src={img} alt="Processando" style={{ opacity: .55 }} />}
+                <div className="scan-shimmer"></div>
+                <div className="scan-bracket tl"></div><div className="scan-bracket tr"></div>
+                <div className="scan-bracket bl"></div><div className="scan-bracket br"></div>
+              </div>
+              <div className="scan-progress">
+                <div className="scan-progress-title"><Ic n="sparkle" s={14} c="var(--g500)" />Analisando formulário…</div>
+                <div className="scan-progress-list">
+                  {procSteps.map((p, i) => {
+                  const state = i < progress ? 'done' : i === progress ? 'active' : '';
+                  return (
+                    <div key={i} className={`scan-progress-item ${state}`}>
+                        <div className="scan-progress-icon">
+                          {state === 'done' ? <Ic n="check" s={11} /> : state === 'active' ? <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#fff' }}></div> : <Ic n={p.ic} s={10} c="var(--muted2)" />}
+                        </div>
+                        <span>{p.t}</span>
+                      </div>);
+
+                })}
+                </div>
+                <div className="scan-progress-bar"><div className="scan-progress-bar-fill" style={{ width: `${progress / procSteps.length * 100}%` }}></div></div>
+              </div>
+            </div>
+          }
+
+          {step === 'review' && fields &&
+          <div className="scan-review">
+              <div>
+                <div className="scan-review-img">
+                  {img && <img src={img} alt="Original" />}
+                  <div className="scan-review-img-foot">
+                    <span><Ic n="image" s={11} /> {imgName || 'captura.jpg'}</span>
+                    <button className="btn btn-xs" style={{ background: 'rgba(255,255,255,.15)', color: '#fff', border: '1px solid rgba(255,255,255,.3)' }} onClick={() => setStep('source')}><Ic n="refresh" s={10} />Refazer</button>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div className="scan-summary">
+                  <div className="scan-summary-card"><div className="scan-summary-val" style={{ color: 'var(--g600)' }}>{detectedFields}/{totalFields}</div><div className="scan-summary-lbl">Campos detectados</div></div>
+                  <div className="scan-summary-card"><div className="scan-summary-val" style={{ color: lowConf > 0 ? '#a16207' : 'var(--text)' }}>{lowConf}</div><div className="scan-summary-lbl">Baixa confiança</div></div>
+                  <div className="scan-summary-card"><div className="scan-summary-val">~92%</div><div className="scan-summary-lbl">Confiança média</div></div>
+                </div>
+
+                <div className="scan-section-lbl"><Ic n="user" s={11} c="var(--g500)" />Dados Pessoais</div>
+                <div className="scan-fields-grid">
+                  <ScanField className="scan-span-2" label="Nome completo" f={fields.nome} onChange={(v) => updateField('nome', v)} tierOf={tierOf} confLabel={confLabel} />
+                  <ScanField label="Data de nascimento" type="date" f={fields.nasc} onChange={(v) => updateField('nasc', v)} tierOf={tierOf} confLabel={confLabel} />
+                  <ScanField label="Sexo" f={fields.sexo} onChange={(v) => updateField('sexo', v)} tierOf={tierOf} confLabel={confLabel} />
+                  <ScanField label="CPF" f={fields.cpf} onChange={(v) => updateField('cpf', v)} tierOf={tierOf} confLabel={confLabel} />
+                  <ScanField label="RG" f={fields.rg} onChange={(v) => updateField('rg', v)} tierOf={tierOf} confLabel={confLabel} />
+                  <ScanField label="Cartão SUS" f={fields.sus} onChange={(v) => updateField('sus', v)} tierOf={tierOf} confLabel={confLabel} />
+                  <ScanField label="NIS (Bolsa Família)" f={fields.nis} onChange={(v) => updateField('nis', v)} tierOf={tierOf} confLabel={confLabel} />
+                </div>
+
+                <div className="scan-section-lbl"><Ic n="phone" s={11} c="var(--g500)" />Contato</div>
+                <div className="scan-fields-grid">
+                  <ScanField label="Telefone" f={fields.tel} onChange={(v) => updateField('tel', v)} tierOf={tierOf} confLabel={confLabel} />
+                  <ScanField label="Email" f={fields.email} onChange={(v) => updateField('email', v)} tierOf={tierOf} confLabel={confLabel} />
+                  <ScanField label="Contato de emergência" f={fields.emergNome} onChange={(v) => updateField('emergNome', v)} tierOf={tierOf} confLabel={confLabel} />
+                  <ScanField label="Telefone de emergência" f={fields.emergTel} onChange={(v) => updateField('emergTel', v)} tierOf={tierOf} confLabel={confLabel} />
+                </div>
+
+                <div className="scan-section-lbl"><Ic n="file" s={11} c="var(--g500)" />Endereço</div>
+                <div className="scan-fields-grid">
+                  <ScanField label="CEP" f={fields.cep} onChange={(v) => updateField('cep', v)} tierOf={tierOf} confLabel={confLabel} />
+                  <ScanField label="Número" f={fields.numero} onChange={(v) => updateField('numero', v)} tierOf={tierOf} confLabel={confLabel} />
+                  <ScanField className="scan-span-2" label="Logradouro" f={fields.logradouro} onChange={(v) => updateField('logradouro', v)} tierOf={tierOf} confLabel={confLabel} />
+                  <ScanField label="Complemento" f={fields.comp} onChange={(v) => updateField('comp', v)} tierOf={tierOf} confLabel={confLabel} />
+                  <ScanField label="Bairro" f={fields.bairro} onChange={(v) => updateField('bairro', v)} tierOf={tierOf} confLabel={confLabel} />
+                  <ScanField label="Cidade" f={fields.cidade} onChange={(v) => updateField('cidade', v)} tierOf={tierOf} confLabel={confLabel} />
+                  <ScanField label="UF" f={fields.uf} onChange={(v) => updateField('uf', v)} tierOf={tierOf} confLabel={confLabel} />
+                </div>
+
+                <div className="scan-section-lbl"><Ic n="users" s={11} c="var(--g500)" />Responsável</div>
+                <div className="scan-fields-grid">
+                  <ScanField label="Nome do responsável" f={fields.responsavel} onChange={(v) => updateField('responsavel', v)} tierOf={tierOf} confLabel={confLabel} />
+                  <ScanField label="Parentesco" f={fields.parentesco} onChange={(v) => updateField('parentesco', v)} tierOf={tierOf} confLabel={confLabel} />
+                </div>
+              </div>
+            </div>
+          }
+
+          {step === 'success' && fields &&
+          <div className="scan-success">
+              <div className="scan-success-ico"><Ic n="check" s={36} /></div>
+              <div className="scan-success-title">Usuário cadastrado!</div>
+              <div className="scan-success-sub">Os dados foram extraídos da imagem e salvos no sistema. Você pode editar o cadastro a qualquer momento na lista de usuários.</div>
+              <div className="scan-success-card">
+                <AvatarIlus seed={5} size={42} />
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 700 }}>{fields.nome.v}</div>
+                  <div style={{ fontSize: 11, color: 'var(--muted)', marginTop: 1 }}>CPF {fields.cpf.v} · {fields.cidade.v}/{fields.uf.v}</div>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+
+        <div className="scan-foot">
+          <div className="scan-foot-hint">
+            {step === 'source' && <><Ic n="sparkle" s={12} c="var(--g500)" /> Os dados são processados com IA. Sempre revise antes de salvar.</>}
+            {step === 'preview' && <><Ic n="clock" s={12} c="var(--muted)" /> Iniciando análise…</>}
+            {step === 'processing' && <><Ic n="sparkle" s={12} c="var(--g500)" /> Pode levar de 5 a 15 segundos…</>}
+            {step === 'review' && <><Ic n="alert" s={12} c="#a16207" /> Campos em amarelo/vermelho têm baixa confiança — confira.</>}
+            {step === 'success' && <><Ic n="check" s={12} c="var(--g500)" /> Cadastro concluído.</>}
+          </div>
+          <div style={{ display: 'flex', gap: 8 }}>
+            {step === 'source' && <button className="btn btn-outline" onClick={onClose}>Cancelar</button>}
+            {(step === 'preview' || step === 'processing') &&
+            <button className="btn btn-outline" onClick={() => {setImg(null);setStep('source');}}><Ic n="x" s={13} />Cancelar</button>
+            }
+            {step === 'review' &&
+            <>
+                <button className="btn btn-outline" onClick={() => setStep('source')}><Ic n="refresh" s={13} />Refazer scan</button>
+                <button className="btn btn-primary" onClick={() => setStep('success')}><Ic n="check" s={13} />Confirmar e salvar usuário</button>
+              </>
+            }
+            {step === 'success' &&
+            <>
+                <button className="btn btn-outline" onClick={() => {setImg(null);setFields(null);setStep('source');}}><Ic n="plus" s={13} />Escanear outro</button>
+                <button className="btn btn-primary" onClick={() => onSaved && onSaved()}><Ic n="check" s={13} />Concluir</button>
+              </>
+            }
+          </div>
+        </div>
+      </div>
+    </div>);
+
+}
+
+function ScanField({ label, f, onChange, type, className = '', tierOf, confLabel }) {
+  const tier = tierOf(f.c);
+  return (
+    <div className={`scan-field ${tier} ${className}`}>
+      <div className="scan-field-lbl">
+        <span>{label}</span>
+        <span className={`scan-conf ${tier}`}><span className="scan-conf-dot"></span>{confLabel(f.c)}</span>
+      </div>
+      <input className="scan-field-input" type={type || 'text'} value={f.v} onChange={(e) => onChange(e.target.value)} placeholder={f.c === 0 ? 'Não detectado — preencher' : ''} />
+    </div>);
+
+}
+
+function ViewListaPacientes({ setActive, role }) {
   const [actionMenu, setActionMenu] = useState(null);
   const [viewPac, setViewPac] = useState(null);
   const [editPac, setEditPac] = useState(null);
   const [delPac, setDelPac] = useState(null);
+  const [scanOpen, setScanOpen] = useState(false);
+  const isAdmin = role === 'admin';
   useEffect(() => {
     const close = () => setActionMenu(null);
     if (actionMenu !== null) {document.addEventListener('click', close);return () => document.removeEventListener('click', close);}
@@ -1217,8 +1618,17 @@ function ViewListaPacientes({ setActive }) {
   return (
     <>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12 }}>
-        <div><div className="page-title">Pacientes</div><div className="page-sub">Gerenciar cadastros e atendimentos</div></div>
-        <button className="btn btn-primary" onClick={() => setActive('pacientes-novo')}><Ic n="plus" s={15} />Novo Paciente</button>
+        <div><div className="page-title">Usuários</div><div className="page-sub">Gerenciar cadastros e atendimentos</div></div>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          {isAdmin &&
+          <button className="btn btn-scan" onClick={() => setScanOpen(true)} title="Cadastrar usuário a partir de uma foto do formulário em papel">
+              <span className="scan-dot"></span>
+              <Ic n="camera" s={15} c="var(--g600)" />
+              Escanear cadastro
+            </button>
+          }
+          <button className="btn btn-primary" onClick={() => setActive('pacientes-novo')}><Ic n="plus" s={15} />Novo Usuário</button>
+        </div>
       </div>
       <div className="card card-pad">
         <div style={{ display: 'flex', gap: 10, marginBottom: 16, flexWrap: 'wrap' }}>
@@ -1234,7 +1644,7 @@ function ViewListaPacientes({ setActive }) {
           )}
         </div>
         <table className="tbl">
-          <thead><tr><th>Paciente</th><th>CPF</th><th>Contato</th><th>Última Visita</th><th>Status</th><th style={{ textAlign: 'right' }}>Ações</th></tr></thead>
+          <thead><tr><th>Usuário</th><th>CPF</th><th>Contato</th><th>Última Visita</th><th>Status</th><th style={{ textAlign: 'right' }}>Ações</th></tr></thead>
           <tbody>
             {filtered.map((p, i) =>
             <tr key={i}>
@@ -1276,7 +1686,7 @@ function ViewListaPacientes({ setActive }) {
           </tbody>
         </table>
         <div className="pagination">
-          <span>Mostrando {filtered.length} de {pacientes.length} pacientes</span>
+          <span>Mostrando {filtered.length} de {pacientes.length} usuários</span>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <button className="btn btn-outline btn-sm">Anterior</button>
             <div className="pag-pages">{[1, 2].map((n) => <div key={n} className={`pag-btn${n === 1 ? ' on' : ''}`}>{n}</div>)}</div>
@@ -1312,7 +1722,7 @@ function ViewListaPacientes({ setActive }) {
       <div className="modal-ov" onClick={(e) => {if (e.target === e.currentTarget) setEditPac(null);}}>
           <div className="modal-box">
             <div className="modal-head">
-              <div><div className="modal-title">Editar paciente</div><div className="modal-sub">{editPac.name}</div></div>
+              <div><div className="modal-title">Editar usuário</div><div className="modal-sub">{editPac.name}</div></div>
               <button className="modal-close" onClick={() => setEditPac(null)}><Ic n="x" s={15} /></button>
             </div>
             <div className="form-grid-2">
@@ -1332,7 +1742,7 @@ function ViewListaPacientes({ setActive }) {
       <div className="modal-ov" onClick={(e) => {if (e.target === e.currentTarget) setDelPac(null);}}>
           <div className="modal-box" style={{ maxWidth: 420 }}>
             <div className="modal-head">
-              <div><div className="modal-title">Excluir paciente</div><div className="modal-sub">Esta ação não pode ser desfeita</div></div>
+              <div><div className="modal-title">Excluir usuário</div><div className="modal-sub">Esta ação não pode ser desfeita</div></div>
               <button className="modal-close" onClick={() => setDelPac(null)}><Ic n="x" s={15} /></button>
             </div>
             <div style={{ fontSize: 14, color: 'var(--text)', padding: '4px 0 8px' }}>Tem certeza que deseja excluir <b>{delPac.name}</b>? Os dados clínicos serão arquivados conforme a LGPD.</div>
@@ -1343,6 +1753,7 @@ function ViewListaPacientes({ setActive }) {
           </div>
         </div>
       }
+      {scanOpen && <ScanCadastroModal onClose={() => setScanOpen(false)} onSaved={() => setScanOpen(false)} />}
     </>);
 
 }
@@ -1385,7 +1796,7 @@ function DocUpload({ label }) {
 
 }
 
-/* ─── CADASTRAR PACIENTE ─────────────────────────── */
+/* ─── CADASTRAR USUÁRIO ─────────────────────────── */
 function CadastroPessoaBlock({ titlePrefix = '', includeParentesco = false }) {
   return (
     <>
@@ -1462,12 +1873,12 @@ function ViewCadastrarPaciente({ setActive }) {
     <>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12 }}>
         <div>
-          <div className="page-title">Novo Paciente</div>
-          <div className="page-sub">Preencha os dados para cadastrar um <span style={{ color: 'var(--g500)', fontWeight: 600 }}>novo paciente</span></div>
+          <div className="page-title">Novo Usuário</div>
+          <div className="page-sub">Preencha os dados para cadastrar um <span style={{ color: 'var(--g500)', fontWeight: 600 }}>novo usuário</span></div>
         </div>
       </div>
 
-      <Section id="principal" ico="user" title="Paciente Principal" sub="Dados pessoais, contato, endereço e documentos">
+      <Section id="principal" ico="user" title="Usuário Principal" sub="Dados pessoais, contato, endereço e documentos">
         <CadastroPessoaBlock />
       </Section>
 
@@ -1483,7 +1894,7 @@ function ViewCadastrarPaciente({ setActive }) {
         </button>
         <div style={{ display: 'flex', gap: 8 }}>
           <button className="btn btn-outline" onClick={() => setActive('pacientes-lista')}><Ic n="x" s={14} />Cancelar</button>
-          <button className="btn btn-primary"><Ic n="check" s={14} />Salvar Paciente</button>
+          <button className="btn btn-primary"><Ic n="check" s={14} />Salvar Usuário</button>
         </div>
       </div>
     </>);
@@ -1548,7 +1959,7 @@ function ViewListaProfissionais() {
               </div>
             </div>
             <div className="prof-stat">
-              <div className="prof-stat-lbl">Pacientes Ativos</div>
+              <div className="prof-stat-lbl">Usuários Ativos</div>
               <div className="prof-stat-val">{p.patients}</div>
             </div>
             <div className="prof-contact">
@@ -1573,7 +1984,7 @@ function ViewListaProfissionais() {
               <button className="modal-close" onClick={() => setViewProf(null)}><Ic n="x" s={15} /></button>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 14 }}>
-              <div className="metric-card"><div className="mc-label">Pacientes</div><div className="mc-val">{viewProf.patients}</div></div>
+              <div className="metric-card"><div className="mc-label">Usuários</div><div className="mc-val">{viewProf.patients}</div></div>
               <div className="metric-card"><div className="mc-label">Avaliação</div><div className="mc-val" style={{ color: 'var(--g500)' }}>4.9</div></div>
             </div>
             <div style={{ fontSize: 13, marginBottom: 8 }}><b>Contato</b></div>
@@ -1715,7 +2126,7 @@ function ViewEscalas() {
 /* ─── AGENDA ─────────────────────────────────────── */
 function ViewAgenda({ role }) {
   const isProf = role === 'profissional';
-  const isFam = role === 'familia';
+  const isUsuario = role === 'usuario';
   const isAdmin = role === 'admin';
   const [view, setView] = useState('semana');
   const [modalOpen, setModalOpen] = useState(false);
@@ -1725,18 +2136,18 @@ function ViewAgenda({ role }) {
   const days = [{ d: 'Seg', dt: '27', today: false }, { d: 'Ter', dt: '28', today: false }, { d: 'Qua', dt: '29', today: true }, { d: 'Qui', dt: '30', today: false }, { d: 'Sex', dt: '01', today: false }];
   const times = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00'];
   const allEvents = [
-  { col: 0, row: 1, label: 'Fono · Lucas Costa', cls: 'ev-green', spec: 'Fonoaudiologia', pac: { seed: 0, name: 'Lucas Costa' }, prof: { seed: 1, name: 'Dra. Renata Lima', id: 'renata' }, status: 'Confirmada', sala: 'Sala 3', familia: 'costa' },
-  { col: 1, row: 3, label: 'TO · Maria Oliveira', cls: 'ev-blue', spec: 'Terapia Ocupacional', pac: { seed: 2, name: 'Maria Oliveira' }, prof: { seed: 2, name: 'Profa. Cíntia Rocha', id: 'cintia' }, status: 'Confirmada', sala: 'Sala 1', familia: 'oliveira' },
-  { col: 2, row: 0, label: 'Psico · Pedro Santos', cls: 'ev-purple', spec: 'Psicologia', pac: { seed: 3, name: 'Pedro Santos' }, prof: { seed: 3, name: 'Dra. Mariana Souza', id: 'mariana' }, status: 'Confirmada', sala: 'Sala 2', familia: 'santos' },
-  { col: 3, row: 5, label: 'Neuro · Ana Lima', cls: 'ev-yellow', spec: 'Neuropsicologia', pac: { seed: 4, name: 'Ana Lima' }, prof: { seed: 1, name: 'Dr. Rafael Cunha', id: 'rafael' }, status: 'Pendente', sala: 'Sala 4', familia: 'lima' },
-  { col: 4, row: 2, label: 'Fono · Carlos Rocha', cls: 'ev-green', spec: 'Fonoaudiologia', pac: { seed: 5, name: 'Carlos Rocha' }, prof: { seed: 0, name: 'Dra. Renata Lima', id: 'renata' }, status: 'Confirmada', sala: 'Sala 3', familia: 'rocha' },
-  { col: 0, row: 6, label: 'Fono · Beatriz A.', cls: 'ev-green', spec: 'Fonoaudiologia', pac: { seed: 1, name: 'Beatriz Alves' }, prof: { seed: 0, name: 'Dra. Renata Lima', id: 'renata' }, status: 'Confirmada', sala: 'Sala 3', familia: 'alves' },
-  { col: 2, row: 4, label: 'Psico · Maria O.', cls: 'ev-purple', spec: 'Psicologia', pac: { seed: 2, name: 'Maria Oliveira' }, prof: { seed: 3, name: 'Dra. Mariana Souza', id: 'mariana' }, status: 'Confirmada', sala: 'Sala 2', familia: 'oliveira' },
-  { col: 3, row: 1, label: 'Fono · Lucas C.', cls: 'ev-green', spec: 'Fonoaudiologia', pac: { seed: 0, name: 'Lucas Costa' }, prof: { seed: 0, name: 'Dra. Renata Lima', id: 'renata' }, status: 'Confirmada', sala: 'Sala 3', familia: 'costa' }];
+  { col: 0, row: 1, label: 'Fono · Lucas Costa', cls: 'ev-green', spec: 'Fonoaudiologia', pac: { seed: 0, name: 'Lucas Costa' }, prof: { seed: 1, name: 'Dra. Renata Lima', id: 'renata' }, status: 'Confirmada', sala: 'Sala 3', usuario: 'costa' },
+  { col: 1, row: 3, label: 'TO · Maria Oliveira', cls: 'ev-blue', spec: 'Terapia Ocupacional', pac: { seed: 2, name: 'Maria Oliveira' }, prof: { seed: 2, name: 'Profa. Cíntia Rocha', id: 'cintia' }, status: 'Confirmada', sala: 'Sala 1', usuario: 'oliveira' },
+  { col: 2, row: 0, label: 'Psico · Pedro Santos', cls: 'ev-purple', spec: 'Psicologia', pac: { seed: 3, name: 'Pedro Santos' }, prof: { seed: 3, name: 'Dra. Mariana Souza', id: 'mariana' }, status: 'Confirmada', sala: 'Sala 2', usuario: 'santos' },
+  { col: 3, row: 5, label: 'Neuro · Ana Lima', cls: 'ev-yellow', spec: 'Neuropsicologia', pac: { seed: 4, name: 'Ana Lima' }, prof: { seed: 1, name: 'Dr. Rafael Cunha', id: 'rafael' }, status: 'Pendente', sala: 'Sala 4', usuario: 'lima' },
+  { col: 4, row: 2, label: 'Fono · Carlos Rocha', cls: 'ev-green', spec: 'Fonoaudiologia', pac: { seed: 5, name: 'Carlos Rocha' }, prof: { seed: 0, name: 'Dra. Renata Lima', id: 'renata' }, status: 'Confirmada', sala: 'Sala 3', usuario: 'rocha' },
+  { col: 0, row: 6, label: 'Fono · Beatriz A.', cls: 'ev-green', spec: 'Fonoaudiologia', pac: { seed: 1, name: 'Beatriz Alves' }, prof: { seed: 0, name: 'Dra. Renata Lima', id: 'renata' }, status: 'Confirmada', sala: 'Sala 3', usuario: 'alves' },
+  { col: 2, row: 4, label: 'Psico · Maria O.', cls: 'ev-purple', spec: 'Psicologia', pac: { seed: 2, name: 'Maria Oliveira' }, prof: { seed: 3, name: 'Dra. Mariana Souza', id: 'mariana' }, status: 'Confirmada', sala: 'Sala 2', usuario: 'oliveira' },
+  { col: 3, row: 1, label: 'Fono · Lucas C.', cls: 'ev-green', spec: 'Fonoaudiologia', pac: { seed: 0, name: 'Lucas Costa' }, prof: { seed: 0, name: 'Dra. Renata Lima', id: 'renata' }, status: 'Confirmada', sala: 'Sala 3', usuario: 'costa' }];
 
   // Filter events by role
   const events = isProf ? allEvents.filter((e) => e.prof.id === 'renata') :
-  isFam ? allEvents.filter((e) => e.familia === 'costa') :
+  isUsuario ? allEvents.filter((e) => e.usuario === 'costa') :
   filterProf === 'todos' ? allEvents : allEvents.filter((e) => e.prof.id === filterProf);
 
   const novaConsulta =
@@ -1747,7 +2158,7 @@ function ViewAgenda({ role }) {
           <button className="modal-close" onClick={() => setModalOpen(false)}><Ic n="x" s={15} /></button>
         </div>
         <div className="form-grid-2">
-          <div className="fgroup form-span-2"><label>Paciente *</label><select><option>Selecionar paciente...</option><option>Lucas Costa</option><option>Maria Oliveira</option><option>Pedro Santos</option></select></div>
+          <div className="fgroup form-span-2"><label>Usuário *</label><select><option>Selecionar usuário...</option><option>Lucas Costa</option><option>Maria Oliveira</option><option>Pedro Santos</option></select></div>
           <div className="fgroup"><label>Profissional *</label><select><option>Selecionar profissional...</option><option>Dra. Ana Lima</option><option>Dr. Rafael Cunha</option><option>Profa. Cíntia</option></select></div>
           <div className="fgroup"><label>Especialidade</label><select><option>Fonoaudiologia</option><option>Neuropsicologia</option><option>Terapia Ocupacional</option><option>Psicologia</option></select></div>
           <div className="fgroup"><label>Data *</label><input type="date" /></div>
@@ -1771,7 +2182,7 @@ function ViewAgenda({ role }) {
             <div key={k} className={`vtab${view === k ? ' on' : ''}`} onClick={() => setView(k)}>{l}</div>
             )}
           </div>
-          {!isProf && !isFam &&
+          {!isProf && !isUsuario &&
           <select className="select" value={filterProf} onChange={(e) => setFilterProf(e.target.value)} style={{ padding: '8px 12px', borderRadius: 8, background: 'var(--white)', fontSize: 13, fontWeight: 500 }} data-comment-anchor="28bfac90bf-select-1309-11">
             <option value="todos">Todos os profissionais</option>
             <option value="renata">Dra. Renata Lima</option>
@@ -1907,7 +2318,7 @@ function ViewAgenda({ role }) {
               <div style={{ display: 'flex', gap: 12, alignItems: 'center', padding: 12, background: 'var(--bg)', borderRadius: 10 }}>
                 <AvatarIlus seed={selEvent.pac.seed} size={42} />
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 11, color: 'var(--muted)' }}>Paciente</div>
+                  <div style={{ fontSize: 11, color: 'var(--muted)' }}>Usuário</div>
                   <div style={{ fontSize: 14, fontWeight: 700 }}>{selEvent.pac.name}</div>
                 </div>
               </div>
@@ -1944,7 +2355,7 @@ function ViewHistorico({ setActive }) {
   { day: '28', mon: 'ABR', time: '10:30', title: 'Terapia Ocupacional', type: 'Rotina', paciente: { seed: 2, name: 'Maria Oliveira' }, prof: { seed: 2, name: 'Profa. Cíntia' }, status: 'Concluída', obs: 'Trabalho de integração sensorial. Boa tolerância ao toque.' },
   { day: '25', mon: 'ABR', time: '09:00', title: 'Avaliação Neuropsicológica', type: 'Avaliação', paciente: { seed: 3, name: 'Pedro Santos' }, prof: { seed: 3, name: 'Dr. Rafael Cunha' }, status: 'Concluída', obs: 'Reavaliação cognitiva — relatório gerado.' },
   { day: '22', mon: 'ABR', time: '15:00', title: 'Sessão de Psicologia', type: 'Retorno', paciente: { seed: 4, name: 'Ana Costa Lima' }, prof: { seed: 4, name: 'Dra. Mariana Souza' }, status: 'Faltou', obs: 'Paciente não compareceu. Contato realizado pela equipe.' },
-  { day: '20', mon: 'ABR', time: '11:00', title: 'Terapia Ocupacional', type: 'Rotina', paciente: { seed: 0, name: 'Lucas Costa' }, prof: { seed: 2, name: 'Profa. Cíntia' }, status: 'Cancelada', obs: 'Cancelado pela família. Reagendamento realizado.' }];
+  { day: '20', mon: 'ABR', time: '11:00', title: 'Terapia Ocupacional', type: 'Rotina', paciente: { seed: 0, name: 'Lucas Costa' }, prof: { seed: 2, name: 'Profa. Cíntia' }, status: 'Cancelada', obs: 'Cancelado pelo usuária. Reagendamento realizado.' }];
 
   const stats = { total: consultas.length, concluidas: consultas.filter((c) => c.status === 'Concluída').length, canceladas: consultas.filter((c) => c.status === 'Cancelada').length, faltaram: consultas.filter((c) => c.status === 'Faltou').length };
   const stBadge = { Concluída: 'badge-green', Confirmada: 'badge-blue', Cancelada: 'badge-red', Faltou: 'badge-yellow' };
@@ -1958,7 +2369,7 @@ function ViewHistorico({ setActive }) {
             <div key={k} className={`vtab${period === k ? ' on' : ''}`} onClick={() => setPeriod(k)}>{l}</div>
             )}
           </div>
-          <div className="search-box" data-comment-anchor="c588f89a1b-div-1495-11"><Ic n="search" s={13} c="var(--muted)" /><input placeholder="Buscar paciente ou profissional..." value={search} onChange={(e) => setSearch(e.target.value)} style={{ width: 180 }} /></div>
+          <div className="search-box" data-comment-anchor="c588f89a1b-div-1495-11"><Ic n="search" s={13} c="var(--muted)" /><input placeholder="Buscar usuário ou profissional..." value={search} onChange={(e) => setSearch(e.target.value)} style={{ width: 180 }} /></div>
         </div>
       </div>
       {/* summary */}
@@ -2012,7 +2423,7 @@ function ViewHistorico({ setActive }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               <div style={{ display: 'flex', gap: 12, alignItems: 'center', padding: 12, background: 'var(--bg)', borderRadius: 10 }}>
                 <AvatarIlus seed={selConsulta.paciente.seed} size={42} />
-                <div><div style={{ fontSize: 11, color: 'var(--muted)' }}>Paciente</div><div style={{ fontSize: 14, fontWeight: 700 }}>{selConsulta.paciente.name}</div></div>
+                <div><div style={{ fontSize: 11, color: 'var(--muted)' }}>Usuário</div><div style={{ fontSize: 14, fontWeight: 700 }}>{selConsulta.paciente.name}</div></div>
               </div>
               <div style={{ display: 'flex', gap: 12, alignItems: 'center', padding: 12, background: 'var(--bg)', borderRadius: 10 }}>
                 <AvatarIlus seed={selConsulta.prof.seed} size={42} />
@@ -2189,8 +2600,8 @@ function ViewProntuarios() {
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
         <div className="card card-pad">
-          <div className="card-header"><div className="card-title">Dados do paciente</div></div>
-          {[['Nome completo', 'Lucas Costa'], ['Data de nascimento', '12/03/2020 · 6 anos'], ['Responsável', 'Família Costa'], ['Escola', 'E.M. Prof. João Pinheiro'], ['Plano de saúde', 'Não (particular)'], ['Início do atendimento', 'Janeiro de 2025']].map(([k, v], i) =>
+          <div className="card-header"><div className="card-title">Dados do usuário</div></div>
+          {[['Nome completo', 'Lucas Costa'], ['Data de nascimento', '12/03/2020 · 6 anos'], ['Responsável', 'Usuário Costa'], ['Escola', 'E.M. Prof. João Pinheiro'], ['Plano de saúde', 'Não (particular)'], ['Início do atendimento', 'Janeiro de 2025']].map(([k, v], i) =>
           <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '9px 0', borderBottom: i < 5 ? '1px solid var(--border)' : 'none', fontSize: 13 }}>
               <span style={{ color: 'var(--muted)', fontWeight: 500 }}>{k}</span>
               <span style={{ fontWeight: 600, textAlign: 'right' }}>{v}</span>
@@ -2319,7 +2730,7 @@ function ViewTriagem() {
 
   return (
     <>
-      <div><div className="page-title">Triagem / Recepção</div><div className="page-sub">Confirme a chegada dos pacientes para entrarem na fila de atendimento</div></div>
+      <div><div className="page-title">Triagem / Recepção</div><div className="page-sub">Confirme a chegada dos usuários para entrarem na fila de atendimento</div></div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 14 }}>
         <div className="card card-pad" style={{ background: '#fffbeb', borderColor: '#fde68a' }}>
@@ -2339,7 +2750,7 @@ function ViewTriagem() {
       <div className="card card-pad" style={{ marginTop: 14 }}>
         <div className="card-header"><div className="card-title">Confirmar chegada</div></div>
         <div className="fgroup" style={{ marginBottom: 14 }}>
-          <input placeholder="Buscar paciente por nome..." value={search} onChange={(e) => setSearch(e.target.value)} />
+          <input placeholder="Buscar usuário por nome..." value={search} onChange={(e) => setSearch(e.target.value)} />
         </div>
         <div style={{ display: 'grid', gap: 8 }}>
           {agendados.map((p) =>
@@ -2354,7 +2765,7 @@ function ViewTriagem() {
               <button className="btn btn-primary btn-sm" onClick={() => confirmarChegada(p.id)}><Ic n="check" s={13} /> Confirmar chegada</button>
             </div>
           )}
-          {agendados.length === 0 && <div style={{ textAlign: 'center', color: 'var(--muted)', padding: '24px 0', fontSize: 13 }}>Nenhum paciente pendente.</div>}
+          {agendados.length === 0 && <div style={{ textAlign: 'center', color: 'var(--muted)', padding: '24px 0', fontSize: 13 }}>Nenhum usuário pendente.</div>}
         </div>
       </div>
 
@@ -2451,7 +2862,7 @@ function ViewPainel() {
                   <div style={{ fontSize: 14, color: '#9fc4ad' }}>{p.sala} · {p.prof}</div>
                 </div>
               )}
-              {aguardando.length === 0 && <div style={{ color: '#9fc4ad', padding: 24, textAlign: 'center' }}>Sem pacientes aguardando</div>}
+              {aguardando.length === 0 && <div style={{ color: '#9fc4ad', padding: 24, textAlign: 'center' }}>Sem usuários aguardando</div>}
             </div>
           </div>
           <div>
@@ -2505,7 +2916,7 @@ function ViewAtendimento() {
   return (
     <>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12 }}>
-        <div><div className="page-title">Meu Atendimento</div><div className="page-sub">Controle da fila de pacientes que chegaram para sessão</div></div>
+        <div><div className="page-title">Meu Atendimento</div><div className="page-sub">Controle da fila de usuários que chegaram para sessão</div></div>
         <label style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'var(--white)', border: '1px solid var(--border)', padding: '8px 12px', borderRadius: 8, cursor: 'pointer', fontSize: 13, fontWeight: 600 }}>
           <input type="checkbox" checked={autoNext} onChange={(e) => setAutoNext(e.target.checked)} />
           Chamar próximo automaticamente ao finalizar
@@ -2531,7 +2942,7 @@ function ViewAtendimento() {
             </div> :
 
           <div style={{ padding: '24px 0', textAlign: 'center', color: 'var(--muted)' }}>
-              <div style={{ fontSize: 14, marginBottom: 14 }}>Nenhum paciente em atendimento</div>
+              <div style={{ fontSize: 14, marginBottom: 14 }}>Nenhum usuário em atendimento</div>
               <button className="btn btn-primary" disabled={aguardando.length === 0} onClick={chamarProx} style={{ opacity: aguardando.length === 0 ? .5 : 1 }}>
                 <Ic n="play" s={14} /> Chamar próximo
               </button>
@@ -2552,7 +2963,7 @@ function ViewAtendimento() {
 
       {/* Fila */}
       <div className="card card-pad" style={{ marginTop: 14 }}>
-        <div className="card-header"><div className="card-title">Fila de pacientes (ordem de chegada)</div></div>
+        <div className="card-header"><div className="card-title">Fila de usuários (ordem de chegada)</div></div>
         <div style={{ display: 'grid', gap: 8 }}>
           {aguardando.map((p, i) =>
           <div key={p.id} style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '12px 14px', border: '1px solid var(--border)', borderRadius: 10, background: i === 0 ? 'var(--g50)' : 'transparent' }}>
@@ -2567,7 +2978,7 @@ function ViewAtendimento() {
               </button>
             </div>
           )}
-          {aguardando.length === 0 && <div style={{ textAlign: 'center', color: 'var(--muted)', padding: '24px 0', fontSize: 13 }}>Sem pacientes aguardando.</div>}
+          {aguardando.length === 0 && <div style={{ textAlign: 'center', color: 'var(--muted)', padding: '24px 0', fontSize: 13 }}>Sem usuários aguardando.</div>}
         </div>
       </div>
     </>);
@@ -2576,7 +2987,7 @@ function ViewAtendimento() {
 
 /* ─── MEU PERFIL ──────────────────────────────────── */
 function ViewMeuPerfil({ role }) {
-  const p = { admin: { name: 'Administrador', email: 'admin@iverde.com.br', phone: '(11) 4002-8922', role: 'Administrador', since: 'Jan/2023', init: 'AD' }, profissional: { name: 'Dra. Renata Lima', email: 'renata@iverde.com.br', phone: '(11) 98877-6655', role: 'Fonoaudióloga · CRFa 4-12345', since: 'Mar/2022', init: 'RL' }, familia: { name: 'Família Costa', email: 'costa@email.com', phone: '(11) 99966-3344', role: 'Responsável · Lucas Costa', since: 'Set/2023', init: 'FC' } }[role];
+  const p = { admin: { name: 'Administrador', email: 'admin@iverde.com.br', phone: '(11) 4002-8922', role: 'Administrador', since: 'Jan/2023', init: 'AD' }, profissional: { name: 'Dra. Renata Lima', email: 'renata@iverde.com.br', phone: '(11) 98877-6655', role: 'Fonoaudióloga · CRFa 4-12345', since: 'Mar/2022', init: 'RL' }, usuario: { name: 'Usuário Costa', email: 'costa@email.com', phone: '(11) 99966-3344', role: 'Responsável · Lucas Costa', since: 'Set/2023', init: 'UC' } }[role];
   const [edit, setEdit] = useState(false);
   return (
     <>
@@ -2668,9 +3079,9 @@ function ViewAjuda() {
   const [open, setOpen] = useState(0);
   const [search, setSearch] = useState('');
   const faqs = [
-  { q: 'Como agendar uma sessão?', a: 'No menu lateral acesse Consultas > Agenda e clique em "Nova consulta". Selecione o paciente, profissional, data e horário.' },
-  { q: 'Como cadastrar um novo paciente?', a: 'Em Pacientes > Lista de Pacientes, clique em "Novo paciente". Preencha as informações em cada seção (Pessoais, Endereço, Contato, Plano).' },
-  { q: 'Como funciona o Painel da TV?', a: 'O Painel exibe em tempo real os pacientes em atendimento. O Admin confirma a chegada em Triagem; o Profissional chama o paciente em "Meu Atendimento" — o nome aparece no painel com bipe sonoro.' },
+  { q: 'Como agendar uma sessão?', a: 'No menu lateral acesse Consultas > Agenda e clique em "Nova consulta". Selecione o usuário, profissional, data e horário.' },
+  { q: 'Como cadastrar um novo usuário?', a: 'Em Usuários > Lista de Usuários, clique em "Novo usuário". Preencha as informações em cada seção (Pessoais, Endereço, Contato, Plano).' },
+  { q: 'Como funciona o Painel da TV?', a: 'O Painel exibe em tempo real os usuários em atendimento. O Admin confirma a chegada em Triagem; o Profissional chama o usuário em "Meu Atendimento" — o nome aparece no painel com bipe sonoro.' },
   { q: 'Como configurar mensagens automáticas?', a: 'Em Configurações > Mensagens automáticas você pode ativar/desativar WhatsApp e E-mail, escolher quando enviar e personalizar o template com variáveis.' },
   { q: 'Como gerar relatórios?', a: 'Acesse Relatórios no menu lateral. Escolha o tipo de relatório, período e clique em "Exportar PDF" ou "Exportar Excel".' },
   { q: 'Esqueci minha senha, e agora?', a: 'Na tela de login, clique em "Esqueci minha senha". Você receberá um e-mail com instruções para criar uma nova senha.' }];
@@ -2735,7 +3146,7 @@ function ViewConfiguracoes({ role, initialTab }) {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
         <div className="card card-pad">
           <div className="card-header"><div className="card-title">Dados da conta</div></div>
-          {[['Nome', role === 'admin' ? 'Administrador' : role === 'profissional' ? 'Dra. Renata Lima' : 'Família Costa'], ['E-mail', role === 'admin' ? 'admin@iverde.com.br' : role === 'profissional' ? 'renata@iverde.com.br' : 'costa@email.com'], ['Tipo de conta', { admin: 'Administrador', profissional: 'Profissional', familia: 'Responsável' }[role]]].map(([k, v], i) =>
+          {[['Nome', role === 'admin' ? 'Administrador' : role === 'profissional' ? 'Dra. Renata Lima' : 'Usuário Costa'], ['E-mail', role === 'admin' ? 'admin@iverde.com.br' : role === 'profissional' ? 'renata@iverde.com.br' : 'costa@email.com'], ['Tipo de conta', { admin: 'Administrador', profissional: 'Profissional', usuario: 'Responsável' }[role]]].map(([k, v], i) =>
           <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '9px 0', borderBottom: i < 2 ? '1px solid var(--border)' : 'none', fontSize: 13 }}>
               <span style={{ color: 'var(--muted)' }}>{k}</span><span style={{ fontWeight: 600 }}>{v}</span>
             </div>
@@ -2829,9 +3240,9 @@ function renderRichPreview(text) {
 }
 
 function ConfigNotificacoes() {
-  const [wpp, setWpp] = useState({ on: true, when: ['24h', '1h'], tpl: 'Olá *{nome_paciente}*! 👋\n\nLembrete da sua sessão de {especialidade} dia *{data}* às *{hora}* com {profissional} ({sala}).\n\nConfirme respondendo *SIM*. ✅\n— IVE' });
-  const [eml, setEml] = useState({ on: true, when: ['24h'], tpl: 'Olá *{nome_paciente}*,\n\nEste é um lembrete da sua sessão de {especialidade} agendada para *{data}* às *{hora}*.\n\n• Profissional: {profissional}\n• Local: {sala}\n\nQualquer alteração, entre em contato. 🙏\n\n— Equipe IVE' });
-  const vars = ['{nome_paciente}', '{data}', '{hora}', '{profissional}', '{especialidade}', '{sala}'];
+  const [wpp, setWpp] = useState({ on: true, when: ['24h', '1h'], tpl: 'Olá *{nome_usuario}*! 👋\n\nLembrete da sua sessão de {especialidade} dia *{data}* às *{hora}* com {profissional} ({sala}).\n\nConfirme respondendo *SIM*. ✅\n— IVE' });
+  const [eml, setEml] = useState({ on: true, when: ['24h'], tpl: 'Olá *{nome_usuario}*,\n\nEste é um lembrete da sua sessão de {especialidade} agendada para *{data}* às *{hora}*.\n\n• Profissional: {profissional}\n• Local: {sala}\n\nQualquer alteração, entre em contato. 🙏\n\n— Equipe IVE' });
+  const vars = ['{nome_usuario}', '{data}', '{hora}', '{profissional}', '{especialidade}', '{sala}'];
 
   const renderTab = (label, ic, st, set, accent) =>
   <div className="card card-pad" style={{ borderColor: st.on ? accent : 'var(--border)', borderWidth: st.on ? 2 : 1, transition: 'border .2s' }}>
@@ -2864,7 +3275,7 @@ function ConfigNotificacoes() {
         <div style={{ marginTop: 14, padding: 14, background: 'var(--bg)', borderRadius: 10 }}>
           <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--muted)', marginBottom: 8 }}>PRÉ-VISUALIZAÇÃO</div>
           <div style={{ fontSize: 13, lineHeight: 1.55 }}>
-            {renderRichPreview(st.tpl.replace('{nome_paciente}', 'Lucas Costa').replace('{data}', '29/04').replace('{hora}', '14:00').replace('{profissional}', 'Dra. Renata Lima').replace('{especialidade}', 'Fonoaudiologia').replace('{sala}', 'Sala 3'))}
+            {renderRichPreview(st.tpl.replace('{nome_usuario}', 'Lucas Costa').replace('{data}', '29/04').replace('{hora}', '14:00').replace('{profissional}', 'Dra. Renata Lima').replace('{especialidade}', 'Fonoaudiologia').replace('{sala}', 'Sala 3'))}
           </div>
         </div>
       </>}
@@ -2933,7 +3344,7 @@ function Dashboard({ role, setRole, onLogout }) {
 
   const views = {
     'home': <ViewHome role={role} />,
-    'pacientes-lista': <ViewListaPacientes setActive={setActive} />,
+    'pacientes-lista': <ViewListaPacientes setActive={setActive} role={role} />,
     'pacientes-novo': <ViewCadastrarPaciente setActive={setActive} />,
     'profissionais-lista': <ViewListaProfissionais />,
     'profissionais-escalas': <ViewEscalas />,
@@ -2954,7 +3365,7 @@ function Dashboard({ role, setRole, onLogout }) {
 
   const bottomNav = [
   { id: 'home', icon: 'home', label: 'Início' },
-  { id: 'pacientes-lista', icon: 'users', label: 'Pacientes' },
+  { id: 'pacientes-lista', icon: 'users', label: 'Usuários' },
   { id: 'consultas-agenda', icon: 'calendar', label: 'Agenda' },
   { id: 'mensagens', icon: 'msg', label: 'Mensagens' },
   { id: 'configuracoes', icon: 'settings', label: 'Config' }];
@@ -2983,7 +3394,7 @@ function Dashboard({ role, setRole, onLogout }) {
 /* ─── APP ────────────────────────────────────────── */
 function App() {
   const [page, setPage] = useState('login');
-  const [role, setRole] = useState('admin');
+  const [role, setRole] = useState('profissional');
   const login = (r) => {setRole(r);setPage('dash');};
   const switchRole = (r) => {setRole(r);};
   return page === 'login' ?

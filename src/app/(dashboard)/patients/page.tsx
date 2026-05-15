@@ -116,14 +116,14 @@ export default function PatientsView() {
         <>
             <div className="flex justify-between items-start flex-wrap gap-3">
                 <div>
-                    <div className="text-[22px] font-extrabold tracking-tight">Pacientes</div>
+                    <div className="text-[22px] font-extrabold tracking-tight">Usuários</div>
                     <div className="text-[13px] text-(--color-muted) mt-1">
                         Gerenciar cadastros e atendimentos
                     </div>
                 </div>
                 <Link href="/patients/new">
                     <Button>
-                        <Plus size={15} /> Novo Paciente
+                        <Plus size={15} /> Novo Usuário
                     </Button>
                 </Link>
             </div>
